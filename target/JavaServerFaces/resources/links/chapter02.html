@@ -1,0 +1,1908 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+<head>
+  <title>Lógica para computação</title>
+  <link href="css/texto.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Introdução à Lógica Proposicional</h4>
+  </div>
+
+  <h3>
+  <strong>Capítulo 2: Dedução Natural na Lógica Proposicional</strong>
+  <br />
+  Argumentos, Regras de Inferência e Provas
+  </h3>
+
+  <p class="li1">&nbsp;</p>
+
+  <p class="blockquotet"><span class="fonts">A</span>s definições vistas até agora nos permitiram criar uma linguagem formal para a lógica proposicional. Estas definições também nos permitiram ver como se pode descobrir o valor-verdade de expressões nestas linguagens através de tabelas-verdade. Porém isso não é tudo que uma linguagem lógica pode nos fornecer. Ainda é necessário definir como são feitos raciocínios ou argumentações nesta linguagem. A lógica formal lida com um tipo particular de argumento, denominado de <em>argumento dedutivo</em>, que nos permite deduzir uma conclusão Q, com base num conjunto de proposições P<sub>1</sub> a P<sub>n</sub>, onde Q e P<sub>1</sub> a P<sub>n</sub> representam fórmulas inteiras bem-formadas da Lógica Proposicional (e não apenas proposições simples).</p>
+
+  <p class="li1">&nbsp;</p>
+
+  <p class="h1"><a id="ch2.1"><strong>2.1. Argumentos</strong></a></p>
+
+  <p><a id="ch2.1"></a></p>
+
+  <p class="indent2">Quando afirmamos que uma proposição lógica é verdadeira em razão de (ou em consequência) de outras proposições lógicas também serem verdadeiras, estamos, na verdade, expressando um argumento lógico, ou simplesmente, um <b>argumento</b>.&nbsp;</p>
+
+  <p class="indent"><span style="text-indent: 1.5em;">Um argumento pode realmente ser sempre verdadeiro, quando a proposição que é a&nbsp;</span><b style="text-indent: 1.5em;">conclusão</b> <span style="text-indent: 1.5em;">do argumento sempre for verdadeira quando as demais proposições que compõem o argumento (chamadas de</span> <b style="text-indent: 1.5em;">hipóteses</b> <span style="text-indent: 1.5em;">ou</span> <b style="text-indent: 1.5em;">premissas</b><span style="text-indent: 1.5em;">) forem verdadeiras. Neste caso nós temos um argumento</span> <b style="text-indent: 1.5em;">válido</b> <span style="text-indent: 1.5em;">que poderá ser utilizado para fazer raciocínios lógicos corretos. Por outro lado, nem sempre argumentos são válidos. Neste capítulo vamos estudar métodos para garantir ou verificar que um argumento é válido.</span></p>
+
+  <p class="indent"><span style="text-indent: 1.5em;">Um argumento pode ser representado de forma simbólica pela seguinte fórmula da Lógica Proposicional:</span></p>
+
+  <p class="indent1">P<sub>1</sub>&nbsp;∧&nbsp;P<sub>2</sub>&nbsp;∧&nbsp;P<sub>3</sub>&nbsp;∧&nbsp;…&nbsp;∧&nbsp;P<sub>n</sub>&nbsp;→&nbsp;Q</p>
+
+  <p class="indent1">As proposições P<sub>1</sub> a P<sub>n</sub> são as&nbsp;hipóteses ou premissas do argumento. A proposição Q é a conclusão do argumento. Em termos da Linguagem Natural este tipo de simbolismo pode ser lido como:</p>
+
+  <p class="indent1">“P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub> <strong>acarretam</strong> Q” ou</p>
+
+  <p class="indent">“Q <strong>decorre</strong> de P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub>” ou</p>
+
+  <p class="indent">“Q se <strong>deduz</strong> de P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub>” ou ainda</p>
+
+  <p class="indent">“Q se <strong>infere</strong> de P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub>”</p>
+
+  <p class="indent1">Uma interpretação ingênua do argumento acima poderia pressupor que se houver uma situação onde as premissas são verdadeiras e a conclusão também é verdadeira, isso seria suficiente para considerar o argumento como correto ou apropriado. Porém isso não é suficiente: a conclusão Q somente poderá ser considerada uma <i>conclusão lógica</i> das premissas P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub> se e somente se a verdade das proposições P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub>&nbsp;implicar na verdade Q, ou seja, apenas quando a fórmula:</p>
+
+  <p class="indent1">P<sub>1</sub>&nbsp;∧&nbsp;P<sub>2</sub>&nbsp;∧&nbsp;P<sub>3</sub>&nbsp;∧&nbsp;…&nbsp;∧&nbsp;P<sub>n</sub>&nbsp;→&nbsp;Q</p>
+
+  <p class="noindent">for sempre verdadeira (for uma tautologia).&nbsp;</p>
+
+  <p class="indent1">O problema com a interpretação ingênua é que ela poderia assumir como válido um argumento como:</p>
+
+  <p class="indent1">A&nbsp;∧&nbsp;B&nbsp;→&nbsp;C</p>
+
+  <p class="noindent">onde A representa “um dia tem 24 horas”, B representa “bananas são frutas” e C representa “hoje é depois de ontem”. Embora estas três sentenças sejam verdadeiras e portanto, neste caso, A&nbsp;∧&nbsp;B&nbsp;→&nbsp;C seja verdadeiro, não existe nenhuma relação formal (ou real) entre elas e portanto não se pode dizer que um argumento na forma tão genérica quanto A&nbsp;∧&nbsp;B&nbsp;→&nbsp;C seja sempre válido, ou seja, que seja verdadeiro independente do valor verdade das premissas ou da conclusão, mas em função apenas da sua forma.</p>
+
+  <p class="indent">Assim podemos definir que um <strong>argumento válido</strong> é um argumento onde a fórmula:</p>
+
+  <p class="center">P<sub>1</sub>&nbsp;∧&nbsp;P<sub>2</sub>&nbsp;∧&nbsp;P<sub>3</sub>&nbsp;∧&nbsp;…&nbsp;∧&nbsp;P<sub>n</sub>&nbsp;→&nbsp;Q</p>
+
+  <p class="noindent">é uma tautologia.</p>
+
+  <p class="indent">O fato do argumento P<sub>1</sub>&nbsp;∧&nbsp;P<sub>2</sub>&nbsp;∧&nbsp;P<sub>3</sub>&nbsp;∧&nbsp;…&nbsp;∧&nbsp;P<sub>n</sub>&nbsp;→&nbsp;Q ser válido é simbolizado pela seguinte expressão:</p>
+
+  <p class="center">P<sub>1</sub>, P<sub>2</sub>, P<sub>3</sub>, …, P<sub>n</sub> <span class="font-2">╞</span> Q</p>
+
+  <p class="indent1">Esta expressão afirma que a fórmula Q é logicamente implicada pelas premissas P<sub>1</sub>, P<sub>2</sub>, P<sub>3</sub>, …, P<sub>n</sub>, ou seja, que há uma <b>relação de</b> <b>consequência lógica</b> entre as premissas e a conclusão do argumento.</p>
+
+  <p class="indent">Num argumento válido não interessam os valores-verdade das hipóteses nem da conclusão, porque somente a forma do argumento é capaz de garantir sua validade. Por isso ele é denominado de <strong>argumento formal</strong> e esta é a razão por trás do poder de dedução da lógica formal, que pode verificar a validade ou correção de um argumento sem se ater às proposições que o compõem, isto é, sem se importar com seu significado.</p>
+
+  <p class="indent"></p>
+
+  <p class="noindent" style="font-size: medium; text-indent: 0px;"><b>Nota</b>: as vezes pode-se encontrar na literatura o símbolo&nbsp;<span class="font-2">⊢</span>&nbsp;em vez de<span class="font-2">╞</span>&nbsp;para representar a conclusão do argumento. Este símbolo, que será apresentado mais adiante, serve para indicar que existe uma <i>prova</i> ou <i>demonstração</i> do argumento.</p>
+
+  <p class="h1"><a id="ch2.1"></a><a id="ch2.2"><strong>2.2. Tabela-verdade para argumentos</strong></a></p>
+
+  <p><a id="ch2.2"></a></p>
+
+  <p class="indent2">Um argumento é válido se e somente se todas as suas instâncias são válidas. Uma instância é válida se todas as premissas forem verdadeiras e a conclusão também for verdadeira. A validade de um argumento da Lógica Proposicional pode ser testada através de uma versão simplificada da tabela-verdade, onde são colocadas em colunas separadas todas as premissas do argumento e na coluna final é colocada a conclusão do argumento. Agora, cada uma das linhas desta tabela mostra uma das instâncias possíveis do argumento. Assim, o argumento será válido se e somente se nas linhas onde todas as premissas são verdadeiras, então a conclusão também é verdadeira. Caso contrário, existirá nesta tabela-verdade pelo menos uma instância onde as premissas são verdadeiras e a conclusão é falsa, mostrando, então, que o argumento é inválido. Esta situação chama-se <strong>contra-exemplo</strong>. A existência de um contra-exemplo na tabela-verdade mostra que a forma do argumento é inválida.</p>
+
+  <p class="indent">Podemos nos basear na construção de tabelas-verdade para análise sintática (gramatical) para verificarmos se um argumento é válido. Buscamos examinar a sintaxe do cálculo proposicional mostrando como as formas de várias sentenças podem ser expressas como fórmulas (simbolização das sentenças).</p>
+
+  <p class="indent">Para determinar se a forma de um argumento da lógica proposicional é válida, vamos construir uma tabela-verdade para a expressão: P&nbsp;∨&nbsp;Q, <span class="font-1">¬</span> P ╞&nbsp;Q.</p>
+
+  <p class="center"><a id="ch2.2"></a><a id="tab4"><small>Tabela 4 - Tabela-verdade do argumento : P&nbsp;∨&nbsp;Q, <span class="font-1">¬</span> P ╞Q.</small></a></p>
+
+  <p><a id="tab4"></a></p>
+
+  <table align="center" border="1" cellpadding="2" cellspacing="2" class="utable" height="101" rules="all">
+    <tbody>
+      <tr>
+        <td align="center" valign="top">&nbsp; &nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;P&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;Q&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;¬P&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;P&nbsp;∨&nbsp;Q&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;Q&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">1</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">V</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">2</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">3</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">4</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">F</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Esta tabela-verdade serve para testar a validade do argumento, sendo apenas uma versão simplificada da tabela-verdade da fórmula (P&nbsp;∨&nbsp;Q)&nbsp;∧&nbsp;¬P&nbsp;→&nbsp;Q. Nela podemos verificar que a forma do argumento é válida, pois onde as premissas são verdadeiras a conclusão também é verdadeira (destacado na linha 3). Assim, não há situação possível onde as premissas são verdadeiras e a conclusão é falsa, não importa qual a combinação de V e F que seja atribuída a cada premissa.</p>
+
+  <p class="indent">Outro exemplo de argumento onde vamos construir a tabela-verdade para verificarmos se sua forma é válida: P&nbsp;∨&nbsp;Q, Q&nbsp;→&nbsp;¬P ╞&nbsp;Q&nbsp;∧&nbsp;P.</p>
+
+  <p class="center"><a id="tab4"></a><a id="tab5"><small>Tabela 5 - Tabela-verdade do argumento: P&nbsp;∨&nbsp;Q, Q&nbsp;→&nbsp;¬P ╞&nbsp;Q&nbsp;∧&nbsp;P.</small></a></p>
+
+  <p><a id="tab5"></a></p>
+
+  <table align="center" border="1" cellpadding="2" cellspacing="2" class="utable" height="101" rules="all">
+    <tbody>
+      <tr>
+        <td align="center" valign="top">&nbsp; &nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;P&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;Q&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;¬P&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;P&nbsp;∨&nbsp;Q&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;Q&nbsp;→&nbsp;¬P&nbsp;</td>
+
+        <td align="center" valign="top">&nbsp;Q&nbsp;∧&nbsp;P&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">1</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">2</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">F</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">3</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">V</td>
+
+        <td align="center" bgcolor="silver" valign="top">F</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">4</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+
+        <td align="center" valign="top">V</td>
+
+        <td align="center" valign="top">F</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1"><span style="text-indent: 1.5em;">Neste caso verificamos que nas linhas 2 e 3 as premissas são verdadeiras e a conclusão é falsa. Portanto, o argumento é inválido.</span></p>
+
+  <p class="indent">Se na construção da tabela-verdade verificarmos mais de uma instância com todas as premissas verdadeiras, então teremos que avaliar todas elas.</p>
+
+  <p class="indent">No argumento P&nbsp;→&nbsp;¬Q, ¬Q ╞&nbsp;P temos as linhas 2 e 4 em destaque para verificar. Na linha 2, as premissas e a conclusão são verdadeiras. Com esse resultado, o argumento seria válido, entretanto, é necessário avaliar a linha 4 também. Na linha 4 temos o mesmo caso do exemplo anterior, as premissas são verdadeiras e a conclusão é falsa. Portanto, o argumento é inválido.</p>
+
+  <p class="center"><a id="tab5"></a><a id="tab6"><small>Tabela 6 - Tabela-verdade do argumento: P&nbsp;→&nbsp;¬Q, ¬Q <span class="font-2">⊢</span> P.</small></a></p>
+
+  <p><a id="tab6"></a></p>
+
+  <p class="center1" id="c02-fig-003"><img alt="Image" src="resources/f0025-02.jpg" /></p>
+
+  <p class="h1"><a id="tab6"></a><a id="ch2.3"><strong>2.3. Demonstrações formais</strong></a></p>
+
+  <p><a id="ch2.3"></a></p>
+
+  <p class="indent2">Conforme visto anteriormente, para testar se o argumento P<sub>1</sub>&nbsp;∧&nbsp;P<sub>2</sub>&nbsp;∧&nbsp;P<sub>3</sub>&nbsp;∧&nbsp;…&nbsp;∧&nbsp;P<sub>n</sub>&nbsp;→&nbsp;Q é válido, poderíamos simplesmente construir a tabela-verdade correspondente ao argumento. Há, entretanto, um outro método para testar a validade de um argumento que é totalmente independente das tabelas-verdade. Este método é baseado na aplicação de <strong>regras de dedução</strong> (ou <strong>regras de inferência</strong>) que modificam fórmulas de modo a preservar seu valor lógico.</p>
+
+  <p class="indent">A ideia básica deste método é começar com as premissas P<sub>1</sub>, P<sub>2</sub>, … P<sub>n</sub> (supostamente verdadeiras) e tentar aplicar regras de dedução até terminar com a conclusão Q. Esta conclusão teria que ser, então, verdadeira uma vez que o valor lógico verdadeiro é sempre preservado sob as regras de inferência.</p>
+
+  <p class="indent">Dessa forma, uma <b>prova</b> ou <b>demonstração</b> formal da lógica proposicional seria formada por uma série de linhas numeradas denominadas de <b>passos</b> da prova, onde cada passo tem&nbsp;a seguinte estrutura:</p>
+
+  <table align="center" class="table-2a" width="90%">
+    <colgroup>
+      <col width="10%" />
+      <col width="5%" />
+      <col width="70%" />
+      <col width="15%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1.</td>
+
+        <td valign="top">P1</td>
+
+        <td valign="top">Hipótese 1</td>
+
+        <td valign="top"><br /></td>
+      </tr>
+
+      <tr>
+        <td valign="top">2.</td>
+
+        <td valign="top">P2</td>
+
+        <td valign="top">Hipótese 2</td>
+
+        <td valign="top"><br /></td>
+      </tr>
+
+      <tr>
+        <td valign="top">…</td>
+
+        <td valign="top">&nbsp;</td>
+
+        <td valign="top">&nbsp;</td>
+
+        <td valign="top"><br /></td>
+      </tr>
+
+      <tr>
+        <td valign="top">n.</td>
+
+        <td valign="top">Pn</td>
+
+        <td valign="top">Hipótese n</td>
+
+        <td valign="top"><br /></td>
+      </tr>
+
+      <tr>
+        <td valign="top">n+1.</td>
+
+        <td valign="top">F1</td>
+
+        <td valign="top">Fórmula obtida aplicando uma regra sobre fórmulas dos passos anteriores</td>
+
+        <td valign="top">Referências</td>
+      </tr>
+
+      <tr>
+        <td valign="top">n+2.</td>
+
+        <td valign="top">F2</td>
+
+        <td valign="top">Fórmula obtida aplicando uma regra sobre fórmulas dos passos anteriores</td>
+
+        <td valign="top">Referências</td>
+      </tr>
+
+      <tr>
+        <td valign="top">…</td>
+
+        <td valign="top">&nbsp;</td>
+
+        <td valign="top">&nbsp;</td>
+
+        <td valign="top"><br /></td>
+      </tr>
+
+      <tr>
+        <td valign="top">n+m.</td>
+
+        <td valign="top">Fm</td>
+
+        <td valign="top">Fórmula obtida aplicando uma regra sobre fórmulas dos passos&nbsp;anteriores</td>
+
+        <td valign="top">Referências</td>
+      </tr>
+
+      <tr>
+        <td valign="top">&nbsp;</td>
+
+        <td valign="top">Q</td>
+
+        <td valign="top">Fórmula obtida aplicando uma regra sobre fórmulas dos passos&nbsp;anteriores</td>
+
+        <td valign="top">Referências</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Nesta demonstração, a conclusão Q é simplesmente a fórmula contida no último passo, que foi obtida através da aplicação de uma <b>regra de dedução</b>&nbsp;(também chamada de <b>regra de inferência</b>) sobre fórmulas contidas em passos anteriores. A própria forma da regra indica como ela pode ser utilizada e quais passos poderiam ser úteis. Os passos que foram efetivamente usados na aplicação da regra devem ser referenciados no fim do passo, para que se possa verificar se a regra foi realmente utilizada corretamente.</p>
+
+  <p class="indent">A sequência de passos obtidas por este processo é denominada de <strong>sequência de demonstração</strong> da conclusão em função de suas premissas. Esta sequência é a&nbsp;<strong style="text-indent: 1.5em;">prova</strong> (ou <strong style="text-indent: 1.5em;">demonstração</strong>) que a conclusão Q se deduz das hipóteses P<sub style="text-indent: 1.5em;">1</sub>, P<sub style="text-indent: 1.5em;">2</sub>, …, P<sub style="text-indent: 1.5em;">n</sub>.</p>
+
+  <p class="indent">O fato que existe prova para um argumento P<sub>1</sub>&nbsp;∧&nbsp;P<sub>2</sub>&nbsp;∧&nbsp;P<sub>3</sub>&nbsp;∧&nbsp;…&nbsp;∧&nbsp;P<sub>n</sub>&nbsp;→&nbsp;Q é simbolizado através da seguinte expressão:</p>
+
+  <p class="center">P<sub>1</sub>, P<sub>2</sub>, P<sub>3</sub>, …, P<sub>n</sub> <span class="font-2">⊢</span> Q</p>
+
+  <p class="indent">Essa expressão afirma que a conclusão Q pode ser deduzida das premissas P<sub>1</sub>, P<sub>2</sub>, P<sub>3</sub>, …, P<sub>n</sub>, ou seja, que existe uma <b>relação de dedução</b> entre as premissas e &nbsp;a conclusão do argumento.</p>
+
+  <p class="noindent"><strong>Nota</strong>: Muito embora pareça muito mais simples aplicar o método de construção da tabela-verdade para verificar a validade de um argumento, o método da demonstração formal se justifica por duas razões:</p>
+
+  <p class="roman">(i)&nbsp;&nbsp;&nbsp;Quando o número de proposições simples é muito grande, por exemplo, com apenas 40 proposições simples seria necessária uma tabela-verdade com aproximadamente 1 trilhão de linhas.</p>
+
+  <p class="roman">(ii)&nbsp;&nbsp;No caso das lógicas mais expressivas como a lógica de predicados, simplesmente não é possível aplicar o método da tabela-verdade, ou seja, somente nos resta aplicar o método da demonstração formal.</p>
+
+  <p class="indent">Na verdade, na Lógica Proposicional é possível provar que qualquer um dos dois métodos, tabela-verdade ou demonstração formal, pode ser usado para comprovar a validade de um argumento, ou seja, sempre que a tabela-verdade mostrar que o argumento é válido, então haverá uma demonstração formal deste argumento e se houver uma demonstração formal de um argumento, então sua tabela-verdade irá mostrar que este argumento é válido.</p>
+
+  <p class="h1"><a id="ch2.3"></a><a id="ch2.4"><strong>2.4. Regras de dedução natural</strong></a></p>
+
+  <p><a id="ch2.4"></a></p>
+
+  <p class="indent2">O método de dedução utilizado neste livro é denominado de Dedução Natural, por ser considerado um método que se aproxima da forma como deduções lógicas são feitas naturalmente. Este método foi desenvolvido na década de 30 por Gentzen para ajudar nas provas de consistência da Teoria dos Números (NOLT, 1991). O método de dedução empregado neste livro é muito similar aos métodos de dedução formal apresentados em (NOLT, 1991) e (BARONETT, 2005).</p>
+
+  <p class="indent1">Todas as regras de dedução se baseiam em argumentos simples que já se tenha demonstrado por tabela-verdade serem válidos. A tabela 7 apresenta as regras <strong>básicas</strong> de inferência da lógica proposicional.</p>
+
+  <p class="center"><a id="ch2.4"></a><a id="tab7"><small>Tabela 7 - Regras básicas de inferência.</small></a></p>
+
+  <p><a id="tab7"></a></p>
+
+  <table align="center" border="1" cellpadding="2" cellspacing="2" class="utable" height="101" rules="all">
+    <tbody>
+      <tr>
+        <td align="center" valign="top"><b>Inserção de Operadores</b></td>
+
+        <td align="center" valign="top"><b>Eliminação de Operadores</b></td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">Conjunção (<b>Cj</b>)<br />
+        <br />
+        P &nbsp; &nbsp; &nbsp; &nbsp; Q<br />
+        ————<br />
+        P&nbsp;∧&nbsp;Q</td>
+
+        <td align="center" valign="top">Simplificação (<b>Sp</b>)<br />
+        <br />
+        P&nbsp;∧&nbsp;Q &nbsp; &nbsp; P&nbsp;∧&nbsp;Q<br />
+        ——— &nbsp; ———<br />
+        P &nbsp; &nbsp; &nbsp; &nbsp; Q</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">Adição (<b>Ad</b>)<br />
+        <br />
+        P &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; Q<br />
+        ———— &nbsp; &nbsp; ————<br />
+        P&nbsp;∨&nbsp;Q &nbsp; &nbsp; &nbsp; &nbsp; Q&nbsp;∨&nbsp;P</td>
+
+        <td align="center" valign="top">Eliminação da Disjunção (<b>-Dj</b>)<br />
+        <br />
+        P&nbsp;∨&nbsp;Q &nbsp; &nbsp; &nbsp; P&nbsp;→&nbsp;R &nbsp; &nbsp; &nbsp;Q&nbsp;→&nbsp;R<br />
+        ————————————<br />
+        R</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">Introdução da Equivalência (<b>+Eq</b>)<br />
+        <br />
+        P&nbsp;→&nbsp;Q &nbsp; &nbsp;Q&nbsp;→&nbsp;P<br />
+        ——————————<br />
+        P&nbsp;↔&nbsp;Q</td>
+
+        <td align="center" valign="top">Eliminação da Equivalência(<b>-Eq</b>)<br />
+        <br />
+        P&nbsp;↔&nbsp;Q &nbsp; &nbsp; &nbsp; &nbsp; P&nbsp;↔&nbsp;Q<br />
+        ———— &nbsp; &nbsp; ————<br />
+        P&nbsp;→&nbsp;Q &nbsp; &nbsp; &nbsp; &nbsp; Q&nbsp;→&nbsp;P</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">
+          Prova Condicional (<b>PC</b>)<br />
+
+          <table style="border-left: solid 1px #000">
+            <tbody>
+              <tr>
+                <td>P</td>
+              </tr>
+
+              <tr>
+                <td>...</td>
+              </tr>
+
+              <tr>
+                <td>Q</td>
+              </tr>
+            </tbody>
+          </table>————<br />
+          P&nbsp;→&nbsp;Q<br />
+        </td>
+
+        <td align="center" valign="top"><i>Modus Ponens</i> (<b>MP</b>)<br />
+        <br />
+        P &nbsp; &nbsp; &nbsp; P&nbsp;→&nbsp;Q<br />
+        ——————<br />
+        Q</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">
+          Redução Ao Absurdo (<b>RAA</b>)<br />
+
+          <table style="border-left: solid 1px #000">
+            <tbody>
+              <tr>
+                <td>P</td>
+              </tr>
+
+              <tr>
+                <td>...</td>
+              </tr>
+
+              <tr>
+                <td>Q&nbsp;∧&nbsp;¬Q</td>
+              </tr>
+            </tbody>
+          </table>————<br />
+          ¬P<br />
+        </td>
+
+        <td align="center" valign="top">Dupla Negação (<b>DN</b>)<br />
+        <br />
+        ¬¬P<br />
+        ———<br />
+        P</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Estas regras permitem a manipulação de todos os operadores da lógica proposicional. Do lado esquerdo estão listadas as regras que permitem a inserção de um dado operador em uma nova fórmula a ser adicionada no decorrer da prova. As regras do lado direito permitem adicionar uma nova fórmula à demonstração, onde um determinado operador lógico foi eliminado. Como a Lógica Proposicional possui 5 operadores: conjunção (&nbsp;∧&nbsp;), disjunção (&nbsp;∨&nbsp;), negação (¬), implicação (&nbsp;→&nbsp;) e bi-implicação (&nbsp;↔&nbsp;), são necessárias 10 regras no total.</p>
+
+  <p class="indent">As regras básicas são ainda subdivididas em regras de aplicação <b>direta</b> que inclui as regras de Conjunção (<b>Cj</b>), Simplificação (<b>Sp</b>), Adição (<b>Ad</b>), Eliminação da Disjunção (<b>-Dj</b>), Introdução e Eliminação da Equivalência (<b>+Eq</b> e <b>- Eq</b>), <em>Modus Ponens</em> (<b>MP</b>) e Dupla Negação (<b>DN</b>).</p>
+
+  <p class="indent">Duas regras são especiais, permitindo a introdução de hipóteses adicionais, por isso, as regras de Prova Condicional (<b>PC)</b> e Redução Ao Absurdo (<b>RAA</b>), são denominadas de <b>regras hipotéticas</b>.&nbsp;</p>
+
+  <p class="indent">Além destas regras básicas, existe também um conjunto de regras derivadas que podem ser usadas em demonstrações. As regras derivadas são baseadas em argumentos que já foram previamente provados, assim todas as regras derivadas apresentadas na tabela 8 a seguir podem ser substituídas por demonstrações sem o uso delas. Apesar disso, elas podem ser bastante úteis em determinados casos, facilitando bastante o processo de demonstração.</p>
+
+  <p class="center1"><a id="tab7"></a><a id="tab8"><small>Tabela 8 - Regras de inferência derivadas.</small></a></p>
+
+  <p><a id="tab8"></a></p>
+
+  <table align="center" border="1" cellpadding="2" cellspacing="2" class="utable" height="101" rules="all">
+    <tbody>
+      <tr>
+        <td align="center" valign="top"><i>Modus Tollens</i> (<b>MT</b>)<br />
+        <br />
+        P&nbsp;→&nbsp;Q&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;¬Q<br />
+        ————————<br />
+        ¬Q</td>
+
+        <td align="center" valign="top">Silogismo Hipotético (<b>SH</b>)<br />
+        <br />
+        P&nbsp;→&nbsp;Q &nbsp; &nbsp; Q&nbsp;→&nbsp;R<br />
+        ————————<br />
+        P&nbsp;→&nbsp;R</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">Silogismo Disjuntivo (<b>SD</b>)<br />
+        <br />
+        P&nbsp;∨&nbsp;Q&nbsp;&nbsp;¬P<br />
+        —————<br />
+        Q</td>
+
+        <td align="center" valign="top">Dilema Construtivo (<b>DC</b>)<br />
+        <br />
+        P&nbsp;∨&nbsp;Q &nbsp; &nbsp; &nbsp; P&nbsp;→&nbsp;R &nbsp; &nbsp; &nbsp;Q&nbsp;→&nbsp;R<br />
+        ————————————<br />
+        R∨S</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top">Exportação (<b>Exp</b>)<br />
+        <br />
+        (P&nbsp;∧&nbsp;Q)&nbsp;→&nbsp;R<br />
+        ——————————<br />
+        P&nbsp;→(Q&nbsp;→R)</td>
+
+        <td align="center" valign="top">Inconsistência(<b>Inc</b>)<br />
+        <br />
+        P &nbsp; &nbsp; &nbsp; &nbsp;¬P<br />
+        —————<br />
+        Q</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1"><b>Exemplos</b>:</p>
+
+  <p class="indent"><br /></p>
+
+  <p class="indent">Excetuando-se as regras de redução ao absurdo (<strong>RAA</strong>) e prova condicional (<strong>PC</strong>), todas as demais regras de inferência e de equivalência apresentadas nas tabelas 7, 8 e 9 são de aplicação <strong>direta</strong>. Nesta seção serão mostrados exemplos de uso destas regras de aplicação direta.</p>
+
+  <p class="indent">Supondo que A→ (B&nbsp;∧&nbsp;C) e A são duas hipóteses de um argumento, então a seguinte demonstração é válida:</p>
+
+  <table align="center" class="tabbs" rules="rows" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1.</td>
+
+        <td valign="top">A→ (B&nbsp;∧&nbsp;C)</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2.</td>
+
+        <td valign="top">A</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3.</td>
+
+        <td valign="top">B&nbsp;∧&nbsp;C</td>
+
+        <td valign="top">MP 1,2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">As fórmulas das 2 primeiras linhas são inseridas por conta das hipóteses, enquanto que a fórmula da linha 3 é derivada das fórmulas das linhas 1 e 2 pela regra <em>modus ponens.</em></p>
+
+  <p class="indent">Usando a lógica proposicional, provar o seguinte argumento:</p>
+
+  <p class="center">A, B&nbsp;→&nbsp;C, (A&nbsp;∧&nbsp;B)&nbsp;→&nbsp;(C&nbsp;→&nbsp;D), B <span class="font-2">⊢</span> D</p>
+
+  <p class="indent1">Primeiro as hipóteses do argumento:</p>
+
+  <table align="center" class="tabbs" rules="rows" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1.</td>
+
+        <td valign="top">A</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2.</td>
+
+        <td valign="top">B&nbsp;→&nbsp;C</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3.</td>
+
+        <td valign="top">(A&nbsp;∧&nbsp;B)&nbsp;→&nbsp;(C&nbsp;→&nbsp;D)</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4.</td>
+
+        <td valign="top">B</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Alguns passos óbvios (que poderão ser úteis ou não):</p>
+
+  <table align="center" class="tabbs" rules="rows" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">5.</td>
+
+        <td valign="top">C</td>
+
+        <td valign="top">MP 2, 4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6.</td>
+
+        <td valign="top">A&nbsp;∧&nbsp;B</td>
+
+        <td valign="top">Cj 1, 4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">7.</td>
+
+        <td valign="top">C&nbsp;→&nbsp;D</td>
+
+        <td valign="top">MP 3, 6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">E agora, portanto:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">8.</td>
+
+        <td valign="top">D</td>
+
+        <td valign="top">MP 5, 7</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="h1"><a id="tab8"></a><a id="ch2.5"><strong>2.5. Uso das regras hipotéticas</strong></a></p>
+
+  <p><a id="ch2.5"></a></p>
+
+  <p class="indent2">As seis regras básicas de inferência para a Lógica Proposicional que tratam da inclusão e exclusão dos operadores &nbsp;∧&nbsp;,&nbsp;∨&nbsp;e &nbsp;↔&nbsp;, além da regras de exclusão da implicação (<em>Modus Ponens</em>&nbsp;- <b>MP</b>) e da negação (Dupla Negação - <b>DN</b>) são de aplicação direta, não necessitando de um raciocínio hipotético para funcionar.</p>
+
+  <p class="indent">Por outro lado, as duas regras de inclusão da implicação (Prova Condicional - <b>PC</b>) e da negação (Redução Ao Absurdo - <b>RAA</b>) necessitam de raciocínios hipotéticos para serem aplicadas. Estes raciocínios são incorporados na prova na forma de demonstrações auxiliares ou hipotéticas, que têm um caráter “temporário” e que deverão ser descartadas quando a conclusão da demonstração auxiliar for atingida.</p>
+
+  <p class="indent">A forma como os resultados obtidos com a demonstração auxiliar serão usados na prova principal depende da regras de inferência usada.</p>
+
+  <p class="indent">No caso da redução ao absurdo (<strong>RAA</strong>), a demonstração auxiliar é usada para mostrar que a partir de uma fórmula P, usada como hipótese inicial na demonstração auxiliar, é possível demonstrar uma contradição lógica, isto é, uma fórmula do tipo Q&nbsp;∧&nbsp;¬Q. Neste caso a nova fórmula que se pode adicionar na prova principal é ¬P, que pode ser assumida como válida, porque caso contrário se chega a uma contradição lógica.</p>
+
+  <p class="indent">Já no caso da prova condicional (<strong>PC</strong>), a demonstração auxiliar mostra que, caso se assuma a fórmula P como hipótese inicial da demonstração auxiliar, então é possível se deduzir uma dada fórmula Q. Se conseguirmos deduzir, a partir de P e das outras hipóteses, uma outra fórmula Q, então a fórmula P&nbsp;→&nbsp;Q pode ser adicionada na sequência normal de demonstração. Neste caso, a fórmula P&nbsp;→&nbsp;Q adicionada à prova principal resume o fato (provado) que de P se pode deduzir Q.</p>
+
+  <p class="indent">Quando as regras que utilizam raciocínio hipotético são concluídas, então todas as fórmulas que constituem a demonstração auxiliar têm que ser “descartadas” e não mais utilizadas na sequência normal de demonstração. Somente a fórmula que foi demonstrada através do artifício do raciocínio hipotético pode ser usada na demonstração normal.</p>
+
+  <p class="indent">Quando as regras hipotéticas são utilizadas em uma demonstração, algumas considerações devem ser esclarecidas:</p>
+
+  <p class="center1"><a id="ch2.5"></a><a id="tab10"><small>Tabela 9 - Restrições sobre o uso de regras hipotéticas.</small></a></p>
+
+  <p><a id="tab10"></a></p>
+
+  <table cellspacing="0" class="tab-s">
+    <tbody>
+      <tr>
+        <td align="center" class="linett">1)</td>
+
+        <td class="linett">Cada hipótese de uma regra hipotética introduz numa prova o início de uma nova linha vertical. Essa linha continua até a hipótese ser descartada pela finalização da regra hipotética, seja ela &nbsp;<b>PC</b> ou <b>RAA</b>.</td>
+      </tr>
+
+      <tr>
+        <td align="center" class="linet">2)</td>
+
+        <td class="linet">Nenhuma ocorrência de uma fórmula à direita de uma linha vertical pode ser citada em qualquer regra aplicada depois de terminar a linha vertical. Isso é para garantir que a fórmula derivada da hipótese não seja usada indevidamente depois que a hipótese foi descartada.</td>
+      </tr>
+
+      <tr>
+        <td align="center" class="linet">3)</td>
+
+        <td class="linet">Se duas ou mais hipóteses de regras hipotéticas são vigentes simultaneamente, então a ordem na qual elas são descartadas deve ser a ordem inversa na qual elas são introduzidas.</td>
+      </tr>
+
+      <tr>
+        <td align="center" class="linet">4)</td>
+
+        <td class="linet">Uma demonstração não está completa até que todas as hipóteses de regras hipotéticas seja descartadas (ou seja que todas as regras hipotéticas sejam finalizadas). As hipóteses que não são descartadas são premissas adicionais introduzidas ilicitamente na demonstração.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="captions">Adaptado de: NOLT, 1991, p.121.</p>
+
+  <p class="indent1"><b>Exemplos</b>:</p>
+
+  <p class="indent1"><span style="text-indent: 1.5em;">Prove o seguinte argumento, que equivale à regra do silogismo hipotético:</span></p>
+
+  <p class="center">P&nbsp;→&nbsp;Q, Q&nbsp;→&nbsp;R <span class="font-2">⊢</span> P&nbsp;→&nbsp;R</p>
+
+  <p class="indent1">A demonstração é a seguinte e usa a regra de prova condicional:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">P→Q</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">Q→R</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">| P</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">| Q</td>
+
+        <td valign="top">MP 1,3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5</td>
+
+        <td valign="top">| R</td>
+
+        <td valign="top">MP 2,4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6</td>
+
+        <td valign="top">P→R</td>
+
+        <td valign="top">PC 3-5</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Observe que a hipótese da prova condicional (<strong>Hip-PC</strong>) e as fórmulas obtidas a partir dela e das hipóteses normais foram escritas ao lado da barra vertical | , mais à esquerda que as fórmulas pertencentes à sequência normal de demonstração. Isso é para deixar claro o caráter temporário destas fórmulas.</p>
+
+  <p class="indent">Um outro exemplo de uso de prova condicional é usado na demonstração do seguinte argumento:</p>
+
+  <p class="center">P <span class="font-2">⊢</span> (P&nbsp;→&nbsp;Q)&nbsp;→&nbsp;Q</p>
+
+  <p class="indent1">A demonstração é a seguinte:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">P</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">| P→Q</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">| Q</td>
+
+        <td valign="top">MP 1,2</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">(P→Q)→Q</td>
+
+        <td valign="top">PC 2-3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent"><br /></p>
+
+  <p class="indent">A regra da prova condicional também é útil para provar o seguinte argumento:</p>
+
+  <p class="center">A&nbsp;→&nbsp;(A&nbsp;→&nbsp;B) <span class="font-2">⊢</span> A&nbsp;→&nbsp;B</p>
+
+  <p class="indent1"><span style="text-indent: 1.5em;">Usando essa regras a demonstração fica:</span></p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">A&nbsp;→&nbsp;(A&nbsp;→&nbsp;B)</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">| A</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">| A&nbsp;→&nbsp;B</td>
+
+        <td valign="top">MP 1, 2</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4<br />
+        5</td>
+
+        <td valign="top">| B<br />
+        A&nbsp;→&nbsp;B</td>
+
+        <td valign="top">MP 2, 3<br />
+        PC 2-4</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent"><br /></p>
+
+  <p class="indent">A regra de redução ao absurdo&nbsp;pode ser usada para provar o seguinte argumento (que é equivalente à regra de <em>Modus Tollens</em>):</p>
+
+  <p class="center">P&nbsp;→&nbsp;Q, ¬Q <span class="font-2">⊢</span> ¬P</p>
+
+  <p class="indent1">A demonstração fica:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">P→Q</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">¬Q</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">| P</td>
+
+        <td valign="top">Hip-RAA</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">| Q</td>
+
+        <td valign="top">MP 1,3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5</td>
+
+        <td valign="top">| Q&nbsp;∧&nbsp;¬Q</td>
+
+        <td valign="top">Cj 2,4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6</td>
+
+        <td valign="top">¬P</td>
+
+        <td valign="top">RAA 3-5</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Regras hipotéticas podem ser “aninhadas” uma dentro da outra, se isso for necessário. Isso ocorre, por exemplo, na prova de:</p>
+
+  <p class="center">(P&nbsp;∧&nbsp;Q)&nbsp;→&nbsp;R <span class="font-2">⊢</span> P&nbsp;→&nbsp;(Q&nbsp;→&nbsp;R)</p>
+
+  <p class="indent1">Cuja demonstração é a seguinte:</p>
+
+  <p><br /></p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">(P&nbsp;∧&nbsp;Q)→R</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">| P</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">| |Q</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">| |P&nbsp;∧&nbsp;Q</td>
+
+        <td valign="top">Cj 2,3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5</td>
+
+        <td valign="top">| |R</td>
+
+        <td valign="top">MP 1,4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6</td>
+
+        <td valign="top">| Q→R</td>
+
+        <td valign="top">PC 3-5</td>
+      </tr>
+
+      <tr>
+        <td valign="top">7</td>
+
+        <td valign="top">P&nbsp;→&nbsp;(Q→R)</td>
+
+        <td valign="top">PC 2-6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1"><b>Importante</b>:</p>
+
+  <p class="indent1">Sempre que as regras hipotéticas <b>RAA</b> e <b>PC</b> forem usadas em uma demonstração elas devem ser finalizadas antes de se deduzir a conclusão do argumento.</p>
+
+  <div class="box">
+    <a id="tab10"></a>
+
+    <p class="noindent1"><strong>Dicas de dedução para construção das provas</strong></p>
+
+    <ol>
+      <li style="list-style: none"><a id="tab10"></a><br /></li>
+
+      <li>A regra de <em>Modus Ponens</em> é provavelmente a regra de inferência mais intuitiva. Tente usá-la muitas vezes.</li>
+
+      <li>Fórmulas na forma ¬(P&nbsp;∨&nbsp;Q) ou ¬(P&nbsp;∧&nbsp;Q) dificilmente são úteis numa sequência de demonstração. Tente usar as Leis de DeMorgan para convertê-las, respectivamente, em ¬P&nbsp;∧&nbsp;¬Q ou ¬P&nbsp;∨&nbsp;¬Q, separando os componentes individuais de cada fórmula.</li>
+
+      <li>Fórmulas na forma P&nbsp;∨&nbsp;Q dificilmente são úteis numa sequência de demonstração, já que não implicam P nem Q. Tente usar a dupla negação para converter P&nbsp;∨&nbsp;Q em ¬(¬P)&nbsp;∨&nbsp;Q e depois usar a regra do condicional para obter ¬P&nbsp;→&nbsp;Q.</li>
+
+      <li>
+        <a id="tab10">Não há maneira correta de se construir uma prova. Se uma forma pode ser provada, ele pode ser provada por diferentes trocas de regras. Entretanto, as provas mais curtas, mais simples e mais fáceis são obtidas por uma estratégia baseada na estrutura da conclusão. As sugestões da Tabela 11 são guias úteis para o planejamento de tais estratégias. Geralmente, elas levam a provas razoavelmente eficientes, embora alguns problemas requeiram habilidade e engenhosidade.<br />
+        <br /></a>
+
+        <p class="center1"><a id="tab10"></a><a id="tab11">Tabela 10 - Estratégias para prova.</a></p><a id="tab11"></a>
+
+        <table class="tablea" rules="rows" width="90%">
+          <tbody>
+            <tr>
+              <td align="center" class="lineftss"><b>Formato da Conclusão</b></td>
+
+              <td align="center" class="linefta"><b>Estratégia de Prova</b></td>
+            </tr>
+
+            <tr>
+              <td align="center" class="linefts">Fórmula atômica</td>
+
+              <td class="le">Se nenhuma estratégia é imediata, coloca-se como hipótese a negação da conclusão para raa. Se isso for bem-sucedido, então a conclusão pode ser obtida depois de raa, pela aplicação da regra <strong>dupla negação</strong> (<b>DN</b> – eliminação da ¬).</td>
+            </tr>
+
+            <tr>
+              <td align="center" class="linefts">Fórmula negada</td>
+
+              <td class="le">Coloca-se como hipótese a conclusão sem a negação para raa. Se resultar uma contradição, a conclusão pode ser obtida por <b>RAA</b>.</td>
+            </tr>
+
+            <tr>
+              <td align="center" class="linefts">Conjunção</td>
+
+              <td class="le">Prove cada uma das sentenças separadamente e então faça a conjunção delas com a regra <strong>conjunção (Cj</strong>&nbsp;– introdução do ∧).</td>
+            </tr>
+
+            <tr>
+              <td align="center" class="linefts">Disjunção</td>
+
+              <td class="le">Se uma premissa com uma disjunção faz parte do argumento, então tenta-se provar os condicionais necessários para obter a conclusão pela regra de eliminação da disjunção (<b>Sp</b>). Caso contrário, coloca-se como hipótese a negação da conclusão e tenta-se raa. Em algumas situações, é possível provarmos a conclusão diretamente, encontrando uma das premissas e aplicando a adição (<b>Ad</b> – introdução do ∨).</td>
+            </tr>
+
+            <tr>
+              <td align="center" class="linefts">Implicação</td>
+
+              <td class="le">Coloca-se como hipótese o seu antecedente e deriva-se o seu consequente.</td>
+            </tr>
+
+            <tr>
+              <td align="center" class="linefts">Bi-implicação</td>
+
+              <td class="lineftb">Use a regra prova condicional (<b>PC</b>) – introdução do condicional – duas vezes para provar os dois condicionais necessários para obter a conclusão pela regra introdução da bi-implicação ↔(<b>+Eq</b>)</td>
+            </tr>
+          </tbody>
+        </table><a id="tab11"></a>
+      </li>
+    </ol><a id="tab11"></a>
+  </div>
+
+  <p><a id="tab11"></a></p>
+
+  <p class="h1"><a id="tab11"></a><a id="ch2.6"><strong>2.6. Regras de equivalência</strong></a></p>
+
+  <p><a id="ch2.6"></a></p>
+
+  <p class="indent1">Além das regras básicas e derivadas vistas anteriormente, também é possível utilizar na dedução natural as regras baseadas em equivalências tautológicas apresentadas na seção 1.6. Essas regras são denominadas de <strong>regras de equivalência</strong>. A tabela 10, apresentada a seguir, contém as principais regras de equivalência:</p>
+
+  <p class="center"><a id="ch2.6"></a><a id="tab9"><small>Tabela 11 - Regras de equivalência.</small></a></p>
+
+  <p><a id="tab9"></a></p>
+
+  <table align="center" border="1" cellpadding="2" cellspacing="2" class="utable" height="101" rules="all">
+    <tbody>
+      <tr>
+        <td align="center" valign="center">Comutatividade&nbsp;(<b>Cmt</b>)</td>
+
+        <td align="center" valign="top">P&nbsp;∨&nbsp;Q<br />
+        ————<br />
+        Q&nbsp;∨&nbsp;P</td>
+
+        <td align="center" valign="top">P&nbsp;∧&nbsp;Q<br />
+        ————<br />
+        Q&nbsp;∧&nbsp;P</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">Associatividade&nbsp;(<b>Asc</b>)</td>
+
+        <td align="center" valign="top">(P&nbsp;∨&nbsp;Q)&nbsp;∨&nbsp;R<br />
+        ——————<br />
+        Q&nbsp;∨&nbsp;(P&nbsp;∨&nbsp;R)</td>
+
+        <td align="center" valign="top">(P&nbsp;∧&nbsp;Q)&nbsp;∧ R<br />
+        ——————<br />
+        Q&nbsp;∧&nbsp;(P&nbsp;∧ R)</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">Distributividade&nbsp;(<b>Dist</b>)</td>
+
+        <td align="center" valign="top">P&nbsp;∨&nbsp;(Q ∧&nbsp;R)<br />
+        ————————<br />
+        (P&nbsp;∨&nbsp;Q)&nbsp;∧&nbsp;(P&nbsp;∨&nbsp;R)<br />
+        <br />
+        <br />
+        (P&nbsp;∨&nbsp;Q)&nbsp;∧&nbsp;(P&nbsp;∨&nbsp;R)<br />
+        ————————<br />
+        P&nbsp;∨&nbsp;(Q&nbsp;∧&nbsp;R)</td>
+
+        <td align="center" valign="top">P&nbsp;∧&nbsp;(Q ∨&nbsp;R)<br />
+        —————————<br />
+        (P&nbsp;∧&nbsp;Q) ∨&nbsp;(P&nbsp;∧&nbsp;R)<br />
+        <br />
+        <br />
+        (P&nbsp;∧&nbsp;Q)&nbsp;∨&nbsp;(P&nbsp;∧&nbsp;R)<br />
+        —————————<br />
+        P&nbsp;∧&nbsp;(Q&nbsp;∨&nbsp;R)</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">DeMorgan&nbsp;(<b>DMor</b>)</td>
+
+        <td align="center" valign="top">¬(P&nbsp;∨&nbsp;Q)<br />
+        —————<br />
+        ¬P ∧&nbsp;¬Q<br />
+        <br />
+        <br />
+        ¬P&nbsp;∧&nbsp;¬Q<br />
+        —————<br />
+        ¬(P&nbsp;∨&nbsp;Q)</td>
+
+        <td align="center" valign="top">¬(P ∧&nbsp;Q)<br />
+        —————<br />
+        ¬P ∨&nbsp;¬Q<br />
+        <br />
+        <br />
+        ¬P&nbsp;∨&nbsp;¬Q<br />
+        —————<br />
+        ¬(P&nbsp;∧&nbsp;Q)</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">Equivalência&nbsp;do<br />
+        Condicional&nbsp;(<b>EqCond</b>)</td>
+
+        <td align="center" valign="top">P&nbsp;→&nbsp;Q<br />
+        ————<br />
+        ¬P&nbsp;∨&nbsp;Q<br />
+        <br />
+        <br />
+        ¬P&nbsp;∨&nbsp;Q<br />
+        —————<br />
+        P&nbsp;→&nbsp;Q</td>
+
+        <td align="center" valign="top">¬P&nbsp;→&nbsp;Q<br />
+        —————<br />
+        P&nbsp;∨&nbsp;Q<br />
+        <br />
+        <br />
+        P&nbsp;∨&nbsp;Q<br />
+        —————<br />
+        ¬P&nbsp;→&nbsp;Q</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">Contraposição&nbsp;(<b>Contra</b>)</td>
+
+        <td align="center" valign="top">P&nbsp;→&nbsp;Q<br />
+        ————<br />
+        ¬Q&nbsp;→&nbsp;¬P</td>
+
+        <td align="center" valign="top">¬Q&nbsp;→&nbsp;¬P<br />
+        ————<br />
+        P&nbsp;→&nbsp;Q</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">Autoreferência (<b>Auto</b>)</td>
+
+        <td align="center" valign="top">P<br />
+        ———<br />
+        P&nbsp;∨&nbsp;P<br />
+        <br />
+        <br />
+        P&nbsp;∨&nbsp;P<br />
+        ———<br />
+        P</td>
+
+        <td align="center" valign="top">P<br />
+        ————<br />
+        P&nbsp;∧&nbsp;P<br />
+        <br />
+        <br />
+        P&nbsp;∧&nbsp;P<br />
+        ————<br />
+        P</td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="center">Equivalência da<br />
+        Dupla Negação (<b>EqDN</b>)</td>
+
+        <td align="center" valign="top">P<br />
+        ———<br />
+        ¬¬P</td>
+
+        <td align="center" valign="top">¬¬P<br />
+        ———<br />
+        P</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1"><strong>Importante</strong>:</p>
+
+  <ul class="imglistb">
+    <li>Note que as propriedades de equivalência apresentadas na seção 1.6 são “reversíveis”, isto é, pode-se passar da fórmula à esquerda do operador de equivalência ⇔ para a fórmula a direita deste operador e vice-versa. A tabela 10 já inclui todas as possibilidades de "reversão" das equivalências, incluindo os dois "sentidos" possíveis de uso de cada regra de equivalência.</li>
+
+    <li>Isso implica que, diferente das regras de inferência, uma regra de equivalência pode ser aplicada na modificação de partes de uma fórmula. Assim, as fórmulas de uma regra de equivalência são intercambiáveis: pode-se substituir uma subfórmula de uma fórmula por outra equivalente sem alterar sua validade lógica.</li>
+
+    <li>Porém as regras de inferência <strong>não são reversíveis</strong> e <b>não podem ser aplicadas a partes de uma fórmula</b>,&nbsp;isto é, somente pode-se passar da situação prevista no esquema de aplicação da regra, definido acima da barra horizontal, que deve ser "encaixado" em uma fórmula inteira de um passo da demonstração, para a fórmula situada abaixo desta barra. O oposto, pela própria natureza da regra, não é permitido.</li>
+  </ul>
+
+  <p class="indent2"><span style="text-indent: 1.5em;"><b>Exemplos</b>:</span></p>
+
+  <p class="indent1">Provar o seguinte argumento:</p>
+
+  <p class="center">¬A&nbsp;∨&nbsp;B, B&nbsp;→&nbsp;C&nbsp;<span class="font-2">⊢</span>&nbsp;A&nbsp;→&nbsp;C</p>
+
+  <p class="indent1">Sem o uso das regras de equivalência, a prova da validade deste argumento é relativamente complexa:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">¬A&nbsp;∨&nbsp;B</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2<br />
+        3<br />
+        4<br />
+        5</td>
+
+        <td valign="top">B&nbsp;→&nbsp;C<br />
+        | A<br />
+        | | B<br />
+        | B→ B</td>
+
+        <td valign="top">Hip<br />
+        Hip-PC<br />
+        Hip-PC<br />
+        PC 3-3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6<br />
+        7</td>
+
+        <td valign="top">| | ¬A<br />
+        | | B</td>
+
+        <td valign="top">Hip-PC<br />
+        Inc 3,6</td>
+      </tr>
+
+      <tr>
+        <td valign="top">8</td>
+
+        <td valign="top">| ¬A→ B</td>
+
+        <td valign="top">PC 6-7</td>
+      </tr>
+
+      <tr>
+        <td valign="top">9<br />
+        10</td>
+
+        <td valign="top">| B<br />
+        | C</td>
+
+        <td valign="top">-Dj 1,5,8<br />
+        MP 2,9</td>
+      </tr>
+
+      <tr>
+        <td valign="top">11</td>
+
+        <td valign="top">A→C</td>
+
+        <td valign="top">PC 3-10</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1"><span style="text-indent: 1.5em;">Pela regra de equivalência do condicional (<strong>EqCond</strong>) a fórmula&nbsp;</span>1 ¬A&nbsp;∨&nbsp;B pode ser transformada em A→B, tornando muito mais fácil a prova do argumento:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">¬A&nbsp;∨&nbsp;B</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">B&nbsp;→&nbsp;C</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">A&nbsp;→&nbsp;B</td>
+
+        <td valign="top">EqCond 1</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">| A</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5</td>
+
+        <td valign="top">| B</td>
+
+        <td valign="top">MP 3, 4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6<br />
+        7</td>
+
+        <td valign="top">| C<br />
+        A&nbsp;→&nbsp;C</td>
+
+        <td valign="top">MP 2, 5<br />
+        PC 4-6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Embora não pareça, este argumento é muito similar ao argumento que prova a validade do silogismo hipotético (<b>SH</b>), que afirma que de P&nbsp;→&nbsp;Q e de Q&nbsp;→&nbsp;R, pode-se inferir P&nbsp;→&nbsp;R. Usando essa regra a prova deste argumento se torna ainda mais simples:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">¬A&nbsp;∨&nbsp;B</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">B&nbsp;→&nbsp;C</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">A&nbsp;→&nbsp;B</td>
+
+        <td valign="top">EqCond 1</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">A&nbsp;→&nbsp;C</td>
+
+        <td valign="top">SH 2, 3</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="captions">Adaptado de: NOLT, 1991, p. 129.</p>
+
+  <p class="h1"><a id="tab9"></a><a id="ch2.7"><strong>2.7. Prova de teoremas</strong></a></p>
+
+  <p><a id="ch2.7"></a></p>
+
+  <p class="indent2">Um teorema é simplesmente um argumento que não precisa de nenhuma hipótese (ou premissa) para ser válido (ou seja, para ser sempre verdadeiro). Por exemplo, o seguinte argumento é um teorema:</p>
+
+  <p class="center"><span class="font-2">⊢</span> P&nbsp;→&nbsp;(P&nbsp;∨&nbsp;Q)</p>
+
+  <p class="indent1">A prova de um argumento sempre parte de uma regra hipotética (ou redução ao absurdo – <strong>RAA</strong> – ou prova condicional – <strong>PC</strong>).&nbsp;</p>
+
+  <p class="indent1"><b>Exemplos</b>:</p>
+
+  <p class="indent1">No caso do teorema acima a prova pode ser feita pela regra da prova condicional:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">| P</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">| P&nbsp;∨&nbsp;Q</td>
+
+        <td valign="top">Ad 1</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">P&nbsp;→&nbsp;(P&nbsp;∨&nbsp;Q)</td>
+
+        <td valign="top">PC 1-2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Note que não há nenhuma hipótese ou premissa para este argumento, a linha 1 já começa pela regra de dedução da prova condicional.</p>
+
+  <p class="indent1">Outro exemplo de teorema:</p>
+
+  <p class="indent1"></p>
+
+  <p class="center">⊢&nbsp;A&nbsp;→&nbsp;(B→A)</p>
+
+  <p class="indent1">Este teorema pode ser provado da seguinte forma:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">| A</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">| | B</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3<br />
+        4<br />
+        5<br />
+        6<br />
+        7<br />
+        8&nbsp;</td>
+
+        <td valign="top">| | |&nbsp;¬A<br />
+        | | | A&nbsp;∧&nbsp;¬A<br />
+        | |&nbsp;¬¬A<br />
+        | | A<br />
+        |&nbsp;B→A<br />
+        A&nbsp;→&nbsp;(B→A)</td>
+
+        <td valign="top">Hip-RAA<br />
+        Cj 1,3<br />
+        RAA 3-4<br />
+        DN 5<br />
+        PC 2-6<br />
+        PC 1-7</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="h1"><a id="ch2.7"></a><a id="ch2.8"><strong>2.8. Prova de equivalências</strong></a></p>
+
+  <p><a id="ch2.8"></a></p>
+
+  <p class="indent2">Uma equivalência é um teorema sobre uma bi-implicação lógica P&nbsp;↔&nbsp;Q. Neste caso, para provar que a bi-implicação é válida é necessário provar ambos os lados da implicação, ou seja, que de P pode-se deduzir Q e que de Q pode-se deduzir P. Neste caso P e Q são interderiváveis. Para provar a equivalência, seguimos a mesma estratégia usada para provar bi-implicações, criando-se provas separadas para cada lado da regra de introdução da equivalência (<b>+Eq</b>).</p>
+
+  <p class="indent">Exemplo: <span class="font-2">⊢</span> (P&nbsp;∨&nbsp;Q)&nbsp;↔&nbsp;(¬P&nbsp;→&nbsp;Q)</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1</td>
+
+        <td valign="top">| P&nbsp;∨&nbsp;Q</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2</td>
+
+        <td valign="top">| ¬¬P&nbsp;∨&nbsp;Q</td>
+
+        <td valign="top">DN 1</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3</td>
+
+        <td valign="top">| ¬P&nbsp;→&nbsp;Q</td>
+
+        <td valign="top">EqCond 2</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4</td>
+
+        <td valign="top">(P&nbsp;∨&nbsp;Q)&nbsp;→&nbsp;(¬P&nbsp;→&nbsp;Q)</td>
+
+        <td valign="top">PC 1-3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5</td>
+
+        <td valign="top">| ¬P&nbsp;→&nbsp;Q</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6</td>
+
+        <td valign="top">| ¬¬P&nbsp;∨&nbsp;Q</td>
+
+        <td valign="top">EqCond 5</td>
+      </tr>
+
+      <tr>
+        <td valign="top">7</td>
+
+        <td valign="top">| P&nbsp;∨&nbsp;Q</td>
+
+        <td valign="top">EqDN 6</td>
+      </tr>
+
+      <tr>
+        <td valign="top">8</td>
+
+        <td valign="top">(¬P&nbsp;→&nbsp;Q)&nbsp;→&nbsp;(P&nbsp;∨&nbsp;Q)</td>
+
+        <td valign="top">PC 5-7</td>
+      </tr>
+
+      <tr>
+        <td valign="top">9</td>
+
+        <td valign="top">(P&nbsp;∨&nbsp;Q)&nbsp;↔&nbsp;(¬P&nbsp;→&nbsp;Q)</td>
+
+        <td valign="top">+Eq 4,8</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="h1"><a id="ch2.8"></a><a id="ch2.9"><strong>2.9. Simbolização de argumentos verbais</strong></a></p>
+
+  <p><a id="ch2.9"></a></p>
+
+  <p class="indent2">Considere o argumento:</p>
+
+  <p class="indent">“Se as taxas de juros caírem, o mercado vai melhorar. Ou os impostos federais vão cair, ou o mercado não vai melhorar. As taxas de juros vão cair, portanto os impostos vão cair.”</p>
+
+  <p class="indent">Supondo que as proposições simples usadas no argumento acima são representadas pelos seguintes símbolos:</p>
+
+  <table class="indent1tt">
+    <tbody>
+      <tr>
+        <td valign="top">M =</td>
+
+        <td valign="top">“O mercado vai melhorar”</td>
+      </tr>
+
+      <tr>
+        <td valign="top">J&nbsp;&nbsp;&nbsp;=</td>
+
+        <td valign="top">“A taxa de juros vai cair”</td>
+      </tr>
+
+      <tr>
+        <td valign="top">I&nbsp;&nbsp;&nbsp;=</td>
+
+        <td valign="top">“Os impostos federais vão cair”</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Então o argumento verbal acima seria equivalente à seguinte fórmula da lógica proposicional:</p>
+
+  <p class="indent1">(J&nbsp;→&nbsp;M)&nbsp;∧&nbsp;(I&nbsp;∨&nbsp;¬M)&nbsp;∧&nbsp;J&nbsp;→&nbsp;I</p>
+
+  <p class="indent">Que pode ser transformado no seguinte argumento formal:</p>
+
+  <p class="indent">J&nbsp;→&nbsp;M, I&nbsp;∨&nbsp;¬M, J <span class="font-2">⊢</span> I</p>
+
+  <p class="indent1">Uma demonstração possível da validade deste argumento formal é apresentada a seguir:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1.</td>
+
+        <td valign="top">J&nbsp;→&nbsp;M</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2.</td>
+
+        <td valign="top">I&nbsp;∨&nbsp;¬M</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3.</td>
+
+        <td valign="top">J</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4.</td>
+
+        <td valign="top">¬M&nbsp;∨&nbsp;I</td>
+
+        <td valign="top">Cmt 2</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5.</td>
+
+        <td valign="top">M&nbsp;→&nbsp;I</td>
+
+        <td valign="top">EqCond 4</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6.</td>
+
+        <td valign="top">J&nbsp;→&nbsp;I</td>
+
+        <td valign="top">Sh 1, 5</td>
+      </tr>
+
+      <tr>
+        <td valign="top">7.</td>
+
+        <td valign="top">I</td>
+
+        <td valign="top">MP 3, 6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent">Em outro exemplo, considere o argumento:</p>
+
+  <p class="indent1">“Se Linus Torvalds é o criador do Linux, então ele é um ídolo. Se Linus Torvalds é o criador do Linux, então o Bill Gates não pode superá-lo. Portanto, se Linus Torvalds é o criador do Linux, ele é um ídolo e Bill Gates não pode superá-lo.”</p>
+
+  <p class="indent1">As proposições usadas para representar o argumento são:</p>
+
+  <p class="indent1">L – Linus Torvalds é o criador do Linux</p>
+
+  <p class="indent">I – Linus Torvalds é um ídolo</p>
+
+  <p class="indent">B – Bill Gates não pode superá-lo</p>
+
+  <p class="indent1">O argumento verbal acima seria equivalente ao seguinte argumento formal:</p>
+
+  <p class="indent1">L&nbsp;→&nbsp;I, L&nbsp;→&nbsp;B <span class="font-2">⊢</span> L&nbsp;→&nbsp;(I&nbsp;∧&nbsp;B)</p>
+
+  <p class="indent1">Uma demonstração possível da validade deste argumento formal é apresentada a seguir:</p>
+
+  <table align="center" class="tabbs" width="80%">
+    <colgroup>
+      <col width="10%" />
+      <col width="50%" />
+      <col width="40%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1.</td>
+
+        <td valign="top">L&nbsp;→&nbsp;I</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2.</td>
+
+        <td valign="top">L&nbsp;→&nbsp;B</td>
+
+        <td valign="top">Hip</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3.</td>
+
+        <td valign="top">&nbsp;&nbsp;|&nbsp;&nbsp;L</td>
+
+        <td valign="top">Hip-PC</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4.</td>
+
+        <td valign="top">&nbsp;&nbsp;|&nbsp;&nbsp;I</td>
+
+        <td valign="top">MP 1,3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">5.</td>
+
+        <td valign="top">&nbsp;&nbsp;|&nbsp;&nbsp;B</td>
+
+        <td valign="top">MP 2,3</td>
+      </tr>
+
+      <tr>
+        <td valign="top">6.</td>
+
+        <td valign="top">&nbsp; |&nbsp;&nbsp;I&nbsp;∧&nbsp;B</td>
+
+        <td valign="top">Cj 4,5</td>
+      </tr>
+
+      <tr>
+        <td valign="top">7.</td>
+
+        <td valign="top">L&nbsp;→&nbsp;(I&nbsp;∧&nbsp;B)</td>
+
+        <td valign="top">PC 3-6</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

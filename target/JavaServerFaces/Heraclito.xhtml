@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:body>
+
+        <ui:composition template="template/common/commonLayout.xhtml">
+            <ui:define name="header">
+                <title> Projeto Heráclito </title>
+            </ui:define>
+            
+            <ui:define name="menu">
+            <b:navBar brand="Heraclito" brandHref="#projeto" fluid="true">
+                <b:navbarLinks>
+                    <b:navLink value="Acesse" href="#acesse"></b:navLink>
+                    <b:navLink value="Materiais" href="#materias"></b:navLink>
+                    <b:navLink value="Produções" href="#producao"></b:navLink>
+                    <b:navLink value="Links" href="#links"></b:navLink>
+             <!--       <b:dropMenu value="Dropdown" iconAwesome="birthday-cake">
+                        <b:navLink value="Action" href="#"></b:navLink>
+                        <b:navLink value="Another action" href="#"></b:navLink>
+                        <b:navLink value="Something else here" href="#"></b:navLink>
+                        <b:navLink></b:navLink>
+                        <b:navLink header="Nav header"></b:navLink>
+                        <b:navLink value="Separated link" href="#"></b:navLink>
+                        <b:dropMenu value="Nested submenu" iconAwesome="birthday-cake" iconAlign="right">
+                            <b:navLink value="You can nest menus" href="#"></b:navLink>
+                            <b:dropMenu value="Nested sub-submenu">
+                                <b:navLink value="... as deep as ..." href="#"></b:navLink>
+                                <b:dropMenu value="Nested sub-sub-submenu">
+                                    <b:navLink value="... you want!" href="#"></b:navLink>
+                                </b:dropMenu>
+                            </b:dropMenu>
+
+                        </b:dropMenu>
+                        <b:navLink value="One more separated link" href="#"></b:navLink>
+                    </b:dropMenu> -->
+                </b:navbarLinks> 
+                <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
+                <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
+                <b:navbarLinks pull="right" styleClass="hidden-xs">
+                    <b:navLink value="Equipe" href="#"></b:navLink>
+                    <!--<b:dropMenu value="Dropdown">
+                        <b:navLink value="Action" href="#"></b:navLink>
+                        <b:navLink value="Another action" href="#"></b:navLink>
+                        <b:navLink value="Something else here" href="#"></b:navLink>
+                        <b:navLink></b:navLink>
+                        <b:navLink header="Nav header"></b:navLink>
+                        <b:navLink value="Separated link" href="#"></b:navLink>
+                        <b:navLink value="One more separated link" href="#"></b:navLink>
+                    </b:dropMenu>-->
+                </b:navbarLinks>
+            </b:navBar>
+
+            
+            
+            </ui:define>
+            <ui:define name="content">
+                
+                <h1 id="projeto"> O Projeto Heráclito </h1>
+                <p style="font-size: 100%" class="text-justify">
+                    O Ambiente Heráclito auxilia estudantes a resolver vários tipos de exercícios de Lógica, 
+                    começando com exercícios para calcular o valor lógico de uma fórmula, 
+                    passando por exercícios de construção de 
+                    tabelas-verdade e chegando até exercícios de elaboração de provas de argumentos por
+                    meio das regras da Dedução Natural. Para isso o Heráclito disponibiliza
+                    o Caderno Eletrônico LOGOS que permite criar e editar fórmulas, 
+                    tabelas-verdade e provas da Lógica Proposicional. O caderno LOGOS é compatível 
+                    com tablets, smartphones e PCs. O Heráclito também oferece um serviço inteligente 
+                    de tutoria que ajuda os estudantes a resolver seus exercícios.
+                    Para mais informações consulte a página do 
+                    <a href="http://labsim.unipampa.edu.br/projeto8.html">Projeto Heráclito</a>.
+                    <br></br>
+                    O caderno LOGOS pode ser usado em modo online, com o apoio do serviço de 
+                    tutoria, ou em modo offline, como usuário visitante, mas sem a tutoria. 
+                    Para o modo online é necessário se logar ao sistema.
+                </p>
+                
+                <br></br>
+                
+                <a href="login.xhtml"> <img alt="Logo Heraclito" src="resources/links/logo-heraclito.png"> </img> Acesse ao Ambiente Heraclito</a>
+                
+                <br></br>
+                
+                <img alt="Heraclito" src="resources/links/heraclito.jpg" style="width:100%" > </img>
+
+
+                <br></br><br></br><br></br>
+                
+                
+                <h2> Materiais </h2>
+                
+                <div class="panel panel-primary" style="width:100%">
+                    <div class="panel-heading">
+                        Livro Eletrônico - Introdução à Lógica Proposicional 
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6 col-sm-6 col-xs-12"> 
+                            <a class="btn btn-lg btn-block btn-info" href="resources/links/title-sumary.html" 
+                               >Título e Sumário</a>
+                            <a class="btn btn-lg btn-block btn-info" data-toggle="modal" href="resources/links/biblio-apendix.html" 
+                               >
+                                Bibliografia e Apêndices</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12"> 
+                            <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter01.html">
+                                Capitulo 1: Logica Proposicional</a>
+                            <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter02.html">
+                                Capítulo 2: Dedução Natural</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <br></br>
+                
+                <h2> Produção Acadêmica </h2>
+                
+                <br></br>
+                
+                <h2> Links Relacionados </h2>
+                
+                
+
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+
+</html>

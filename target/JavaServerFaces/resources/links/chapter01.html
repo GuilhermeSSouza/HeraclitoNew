@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" xmlns:xml="http://www.w3.org/XML/1998/namespace">
+<head>
+  <title>Lógica para computação</title>
+  <link href="css/texto.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8" />
+</head>
+
+<body>
+  <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Introdução à Lógica Proposicional</h4>
+  </div>
+
+  <h3>
+  <strong>Capítulo 1: Lógica Proposicional</strong>
+  <br />
+  Proposições, Fórmulas e Tabelas-Verdade
+  </h3>
+
+  <p class="li1">&nbsp;</p>
+
+  <p class="blockquotet"><span class="fonts">N</span>este capítulo são apresentadas definições precisas sobre o que são <em>proposições</em>, fórmulas e tautologias que nos permitirão definir uma linguagem formal para a lógica das proposições, ou seja, nos permitirão criar uma <em>Lógica Proposicional</em>.</p>
+
+  <p class="li1">&nbsp;</p>
+
+  <p class="h1"><a id="ch1.1"><strong>1.1 Proposições e operadores lógicos</strong></a></p>
+
+  <p class="indent2"><em>Proposição lógica</em></p>
+
+  <p class="indent">Intuitivamente, uma proposição lógica (ou apenas uma <b>proposição</b>) é uma frase ou sentença da Língua Portuguesa (ou de qualquer outro idioma) que pode assumir apenas um de dois valores-verdade: ou a frase é <i>verdadeira</i> (ela diz uma verdade) ou ela é <i>falsa</i> (diz uma falsidade).  </p>
+
+  <p class="noindent"><b>Observações</b>:&nbsp;</p>
+
+  <ul>
+    <li>Proposições são bastante comuns na linguagem natural, porque, por exemplo, todas as afirmações são naturalmente proposições.</li>
+
+    <li>Existem, entretanto, vários exemplos de frases que não se encaixam na definição de proposição: comandos e solicitações, por exemplo, não são exatamente proposições - quando uma ordem é dada (“feche a porta!”) ou uma solicitação feita (“por favor, me passe o prato”), não há necessariamente um valor-verdade por trás destas frases.&nbsp;</li>
+
+    <li>A linguagem natural também permite escrever sentenças cujo significado não pode ser logicamente determinado (são os famosos <em>paradoxos</em>). Por exemplo, a sentença, aparentemente inocente, “Esta sentença é falsa” não é (nem pode ser) nem verdadeira nem falsa (pense um pouco).</li>
+  </ul>
+
+  <p class="indent1">As proposições são usualmente simbolizadas (representadas) por letras maiúsculas do início do alfabeto: A, B, C, … Os valores lógicos das proposições são representados de forma resumida usando V para verdadeiro e F para falso.</p>
+
+  <p class="indent">As proposições podem ser simples ou compostas. As proposições compostas são formadas de proposições simples conectadas através de <strong>operadores</strong> (ou <strong>conetivos</strong>) <strong>lógicos</strong>. Estes operadores ou conetivos representam as seguintes operações lógicas, que serão descritas mais adiante:</p>
+
+  <ul class="imglistb">
+    <li>Conjunção</li>
+
+    <li>Disjunção</li>
+
+    <li>Negação</li>
+
+    <li>Implicação (ou condicional)</li>
+
+    <li>Bi-implicação (ou bicondicional)</li>
+  </ul>
+
+  <p class="indent"><em>Conjunção de proposições</em></p>
+
+  <p class="indent">O conetivo “<em>e</em>” é a forma mais usual de se formarem proposições compostas através da <strong>conjunção lógica de proposições</strong>. Este conetivo é usado, por exemplo, em sentenças como “gatos são mamíferos e canários são aves”, “3 &lt; 5 e 2 + 3 = 5” etc. A conjunção também pode ser representada por preposições como “mas”, “também” e similares.</p>
+
+  <p class="indent">O símbolo&nbsp;∧&nbsp;é usado para representar formalmente a conjunção lógica. Caso A e B sejam proposições, então a fórmula A&nbsp;∧&nbsp;B representa a conjunção lógica das proposições A e B. Essa fórmula é lida simplesmente como "A e B".</p>
+
+  <p class="noindent"><strong>Exercício 1.1</strong></p>
+
+  <p class="indent">Agora responda as seguintes questões:</p>
+
+  <ol class="ols">
+    <li>Se A é verdadeira e B verdadeira, que valor você atribuiria a A&nbsp;∧&nbsp;B?</li>
+
+    <li>Se A é verdadeira e B falsa, que valor você atribuiria a A&nbsp;∧&nbsp;B?</li>
+
+    <li>Se A é falsa e B verdadeira, que valor você atribuiria a A&nbsp;∧&nbsp;B?</li>
+
+    <li>Se ambas A e B são falsas, que valor você atribuiria a A&nbsp;∧&nbsp;B?</li>
+
+    <li>Construa uma tabela resumindo o resultado das questões (a) até (d). Use V para verdadeiro e F para falso. Mostre em cada linha da tabela a combinação de valores de A, B e de A&nbsp;∧&nbsp;B.</li>
+  </ol>
+
+  <p class="indent">A tabela construída no exercício 1.1 é chamada de <strong>tabela-verdade</strong> do conetivo (ou <strong>operador</strong>) lógico ∧.</p>
+
+  <div class="box">
+    <strong>Dica</strong>: uma <strong>conjunção</strong> somente é <strong>verdadeira</strong> quando todas as proposições que a compõem são <strong>verdadeiras</strong>, e é falsa em todos os outros casos.
+  </div>
+
+  <p class="indent1"><em>Disjunção de proposições</em></p>
+
+  <p class="indent">O símbolo&nbsp;∨&nbsp;será empregado para representar um dos significados usuais do conetivo “ou” em frases da linguagem natural. O significado assumido por este símbolo é o do “ou inclusivo” que somente será falso se ambas as sentenças sendo conectadas por ele forem falsas, isto é, A&nbsp;∨&nbsp;B será falso somente se ambos A e B forem falsos. Diz-se que o símbolo&nbsp;∨&nbsp;representa a disjunção lógica das proposições A e B. A fórmula&nbsp;A &nbsp;∨&nbsp; B é lida como "A ou B".</p>
+
+  <p class="noindent"><strong>Exercício 1.1.2</strong></p>
+
+  <p class="indent">Construa a tabela-verdade do operador &nbsp;∨&nbsp;.</p>
+
+  <div class="box">
+    <strong>Dica</strong>: uma <strong>disjunção</strong> somente é <strong>falsa</strong> quando todas as proposições que a compõem são <strong>falsas</strong>, e é verdadeira em todos os outros casos.
+  </div>
+
+  <p class="indent1"><em>Negação de uma proposição</em></p>
+
+  <p class="indent">Os símbolos ¬ ou ~ serão usados para representar a <strong>negação</strong> de uma proposição. Neste caso, se A é uma proposição verdadeira, então ¬A ou ~A será uma proposição falsa e vice-versa. Ou seja ¬A é a <strong>negação lógica</strong> de A (as vezes o símbolo ‘ (apóstrofo) também é usado para simbolizar a negação). A fórmula ¬A é lida simplesmente como "Não A" ou "Não é verdade que A".</p>
+
+  <p class="noindent"><strong>Exercício 1.1.3</strong></p>
+
+  <p class="indent">Construa a tabela da negação lógica</p>
+
+  <p class="h1"><a id="ch1.2"><strong>1.2. Implicação e bi-implicação</strong></a></p>
+
+  <p class="indent2"><em>Implicação</em></p>
+
+  <p class="indent">O símbolo&nbsp;→&nbsp;será usado para representar sentenças como “se chover, então a rua ficará molhada”, ou então “não estudar implica tirar notas baixas” ou também “não fui ao cinema porque o carro estragou” e sentenças similares. Geralmente, estas sentenças podem ser reescritas no formato “Se sentença A, então sentença B”, que simbolicamente fica apenas: A&nbsp;→&nbsp;B.</p>
+
+  <p class="indent">A noção que este operador lógico pretende capturar é a de existência de implicação ou de consequência entre as sentenças. Dessa forma, a sentença B não poderia ser falsa se a sentença A fosse verdadeira, isto é, voltando aos exemplos, não faria sentido afirmar “se chover, então a rua ficará molhada” se (A) realmente choveu e (B) a rua não ficou molhada (!?). Isso significa que se considera que a sentença simbolizada por A&nbsp;→&nbsp;B seria falsa somente no caso em que A é verdadeira e B falsa. Nos outros casos a expressão A&nbsp;→&nbsp;B seria verdadeira.</p>
+
+  <p class="indent">O símbolo &nbsp;→&nbsp; é o operador de <strong>implicação</strong> (também denominado de <b>condicional</b>). Quando há chance de conflito com a relação de implicação lógica, este operador também pode ser denominado de <strong>implicação material</strong>.</p>
+
+  <p class="indent">A fórmula A&nbsp;→&nbsp;B, é lida como "A implica em B" ou "se A então B". Neste caso a proposição A é denominada de <strong>condição</strong> (ou <strong>antecedente</strong>) da implicação e a proposição B é denominada de <strong>conclusão</strong> (ou <strong>consequente</strong>) desta implicação.</p>
+
+  <p class="indent1"><b>Nota</b>: quando a sentença A na fórmula A &nbsp;→&nbsp; B é falsa, então o resultado de toda a fórmula A → B é verdadeiro independente de B. Isso simplesmente indica que, se assumimos falsidades como verdades, então qualquer coisa é possível.</p>
+
+  <p class="noindent"><strong>Exercício 1.2.1</strong></p>
+
+  <p class="indent">Com base na discussão acima, construa a tabela-verdade de A&nbsp;→&nbsp;B.</p>
+
+  <div class="box">
+    <strong>Dica</strong>: uma <strong>implicação material</strong> A&nbsp;→&nbsp;B somente é <strong>falsa</strong> quando a condição <strong>A</strong> for <strong>verdadeira</strong> e a conclusão <strong>B</strong> for <strong>falsa</strong>. Ela é verdadeira em todos os outros casos.
+  </div>
+
+  <p class="indent1"><em>Bi-implicação ou equivalência</em></p>
+
+  <p class="indent">A operação de <b>bi-implicação</b> ou de <b>equivalência</b> (também denominada de <b>bicondicional</b>) é representada pelo símbolo &nbsp;↔&nbsp; e verifica se duas proposições tem o mesmo valor lógico.</p>
+
+  <p class="indent">O uso de bi-implicações não é comum na linguagem natural, mas existe uma forma tradicional de se traduzir (transliterar) o operador&nbsp;↔&nbsp;para a linguagem natural, através da expressão <em>“se e somente se”</em>, assim a fórmula A&nbsp;↔&nbsp;B pode ser lida como "A bi-implica em B" ou "A se e somente se B".</p>
+
+  <p class="noindent" style="font-size: medium;"><strong>Exercício 1.2.2</strong></p>
+
+  <p class="indent">A operação A↔B pode ser considerada uma abreviação da seguinte fórmula (A→B)&nbsp;∧&nbsp;(B→A), afinal ela é uma "bi-implicação", ou seja, uma implicação dupla. Com essa informação construa a tabela-verdade de A&nbsp;↔&nbsp;B.</p>
+
+  <div class="box">
+    <strong>Dica</strong>: uma bi-implicação material A&nbsp;↔&nbsp;B é verdadeira quando A = B e falsa caso A ≠ B.
+  </div>
+
+  <p class="h1"><a id="ch1.3"><strong>1.3. Fórmulas e precedência</strong></a></p>
+
+  <p class="indent2">Uma fórmula é construída pela composição de símbolos de sentenças simples (A, B, …) e de conetivos lógicos binários (&nbsp;∧&nbsp;, &nbsp;∨&nbsp;,&nbsp;→&nbsp;e &nbsp;↔&nbsp;) e unários (¬, ~). Também podem ser usados parênteses. A precedência usual é:</p>
+
+  <ol>
+    <li>Fórmulas dentro de parênteses (os mais internos primeiro)</li>
+
+    <li>¬, ~ (a negação)</li>
+
+    <li>&nbsp;∧&nbsp; (conjunção)</li>
+
+    <li>&nbsp;∨&nbsp; (disjunção)</li>
+
+    <li>&nbsp;→&nbsp; (implicação material)</li>
+
+    <li>&nbsp;↔&nbsp; (bi-implicação ou equivalência lógica)</li>
+
+    <li>Da esquerda para a direita: &nbsp;∧&nbsp;, &nbsp;∨&nbsp;</li>
+
+    <li>Da direita para a esquerda: &nbsp;→&nbsp;, &nbsp;↔&nbsp;</li>
+  </ol>
+
+  <p class="indent1">Uma fórmula que não tenha nenhum erro de sintaxe em sua escrita (por exemplo, não tenha excesso nem falta de parênteses, operadores ou símbolos estranhos etc.) é usualmente chamada de "fórmula bem-formada" (ou <em>fbf</em>). Na literatura também é muito usado o termo&nbsp;em inglês "<i>well-formed formula"</i> (<em>wff</em>).&nbsp;</p>
+
+  <p class="indent">Neste livro, entretanto, quando nos referirmos a uma <em>fórmula</em>, estaremos assumindo que ela é bem-formada. Exceções são indicadas no texto.&nbsp;</p>
+
+  <p class="indent">Em termos de sintaxe, uma fórmula é uma estrutura que deve ser montada pelas seguintes regras de formação:</p>
+
+  <ol>
+    <li>Qualquer sentença simples A, B, C, ..., A<sub>1</sub>, A<sub>2</sub>, ... é uma fórmula.</li>
+
+    <li>Se <i>P</i> é uma fórmula, então ¬ <i>P</i> também é.</li>
+
+    <li>Se <i>P</i> e <i>Q</i> são fórmulas, então <i>P</i> &nbsp;∧&nbsp; <i>Q</i>, <i>P</i>&nbsp;∨&nbsp;<i>Q</i>, <i>P</i>&nbsp;→&nbsp;<i>Q</i> e <i>P</i>&nbsp;↔&nbsp;<i>Q</i> também são.</li>
+  </ol>
+
+  <p class="indent1">Qualquer coisa que não possa ser montada pelas regras acima <strong>não</strong> é uma fórmula. Essas regras mostram como fórmulas <strong>compostas</strong> ou <strong>complexas</strong> são construídas a partir das fórmulas simples, por aplicações repetidas das regras de formação. As fórmulas que entram na composição de uma fórmula complexa são sub-fórmulas desta fórmula.</p>
+
+  <p class="indent1"><b>Exemplos</b>:</p>
+
+  <p class="indent1">¬ (A&nbsp;∧&nbsp;B)</p>
+
+  <p class="indent1">Pela regra 1 vemos que A e B são fórmulas simples. Vamos chamar a sentença simples A de fórmula <i>P</i>&nbsp;e a sentença simples B de fórmula <i>Q</i>. Seguindo pela regra 3 vemos que P&nbsp;∧&nbsp;Q é uma fórmula e, portanto A&nbsp;∧&nbsp;B também é uma fórmula. Para finalizar, basta chamar esta fórmula&nbsp;A&nbsp;∧&nbsp;B&nbsp;recém formada de <em>P</em>, então, pela regra 2, ¬<em>P</em> é uma fórmula e consequentemente ¬ (A&nbsp;∧&nbsp;B) é uma fórmula corretamente montada (formada) pelas regras de formação.</p>
+
+  <p class="indent1">¬ B &nbsp;∧&nbsp;(C &nbsp;→&nbsp; D)</p>
+
+  <p class="indent1">Também podemos utilizar as regras de formação para "desmontar" uma fórmula, verificando enquanto isso se a fórmula foi corretamente formada. Se dividirmos a fórmula acima em duas partes, denominando ¬ B &nbsp;de <i>P</i> e C &nbsp;→&nbsp; D de <i>Q</i>, então podemos ver que a fórmula acima foi formada pela regra 3:&nbsp;<i>P</i>&nbsp;&nbsp;∧&nbsp;&nbsp;<i>Q.</i> Agora falta verificar se as partes&nbsp;<i>P</i> e <i>Q</i> são realmente fórmulas bem-formadas. No caso de <i>P</i> que é igual a ¬ B é fácil de ver que ela pode ser corretamente montada pela regra 1, para tanto basta considerar a sentença B como a fórmula <em>P</em> dessa regra, resultando em ¬P e portanto em ¬B. O caso da parte <em>Q</em> que é&nbsp;igual a C &nbsp;→&nbsp; D é similar. Basta usar a regra 3 de novo, mas desta vez chamando a sentença C de fórmula <em>P</em> e a sentença D de fórmula <em>Q</em>, resultando em <i style="text-indent: 1.5em;">P</i>&nbsp;→&nbsp;<i style="text-indent: 1.5em;">Q</i> e então em C &nbsp;→&nbsp; D. Não há mais o que "desmontar", portanto a fórmula ¬ B &nbsp;∧&nbsp;(C &nbsp;→&nbsp; D) foi inteiramente desmontada pelas regras de formação, mostrando que ela é uma fórmula bem-formada.</p>
+
+  <p class="indent1">Supondo que A, B e C são proposições lógicas, então as seguintes expressões são fórmulas:</p>
+
+  <p class="indent1" id="c01-fig-001"><img alt="Image" src="resources/f0015-01.jpg" /></p>
+
+  <p class="indent1"><strong>Contra-exemplos (erros mais comuns):</strong></p>
+
+  <p class="indent1">As seguintes fórmulas apresentam alguns erros bastante comuns de escrita (sintaxe) que podem ocorrer nas fórmulas (do lado é indicado o tipo de erro):</p>
+
+  <p class="indent1" id="c01-fig-002"><img alt="Image" src="resources/f0015-02.jpg" /></p>
+
+  <p class="h1"><a id="ch1.4"><strong>1.4. Construção de tabelas-verdade para fórmulas</strong></a></p>
+
+  <p class="indent2">Uma tabela-verdade mostra, em suas colunas mais à esquerda, todas as combinações de valores lógicos que as proposições de uma dada fórmula podem assumir. A partir destes valores de entrada pode-se “calcular” os valores que esta fórmula irá ter para cada uma destas combinações de valores. Este cálculo é feito passo a passo, criando-se colunas intermediárias que ficam posicionadas à direita das colunas de entrada e que contêm os valores das subfórmulas que compõem a fórmula principal. Na última coluna mais à direita se coloca a coluna que contém os valores finais desta fórmula. Resumindo, para se construir a tabela-verdade de uma fórmula lógica pode-se seguir os seguintes passos:</p>
+
+  <p class="noindent1">&nbsp;</p>
+
+  <p class="roman">(i)&nbsp;&nbsp;&nbsp;nas colunas à esquerda coloque os símbolos sentenciais simples (A, B, …), depois,</p>
+
+  <p class="roman">(ii)&nbsp;&nbsp;se houver sentenças simples negadas (¬A, ¬B, …), coloque-as nas próximas colunas e, por fim,</p>
+
+  <p class="roman">(iii)&nbsp;seguindo a precedência, crie uma coluna para cada fórmula composta (não é necessário repetir as sentenças simples negadas).</p>
+
+  <p class="noindent1">&nbsp;</p>
+
+  <p class="indent">A última coluna à direita deve ser a expressão ou fórmula final.</p>
+
+  <p class="indent">As sentenças ou símbolos proposicionais simples pertencentes a uma fórmula definem o número de linhas da tabela-verdade para esta fórmula através de uma regra simples:</p>
+
+  <table class="tabbs" width="100%">
+    <colgroup>
+      <col width="30%" />
+      <col width="70%" />
+    </colgroup>
+
+    <tbody>
+      <tr>
+        <td valign="top">1 símbolo:A</td>
+
+        <td valign="top">2 linhas (2<sup>1</sup> combinações: V e F)</td>
+      </tr>
+
+      <tr>
+        <td valign="top">2 símbolos: A e B</td>
+
+        <td valign="top">4 linhas (2<sup>2</sup> combinações: VV, VF, FV, FF)</td>
+      </tr>
+
+      <tr>
+        <td valign="top">3 símbolos: A, B e C</td>
+
+        <td valign="top">8 linhas (2<sup>3</sup> combinações: VVV, VVF, VFV, VFF, FVV, FVF, FFV, FFF)</td>
+      </tr>
+
+      <tr>
+        <td valign="top">4 símbolos: A, B, C e D</td>
+
+        <td valign="top">16 linhas (2<sup>4</sup> combinações)</td>
+      </tr>
+
+      <tr>
+        <td valign="top"><em>n</em> símbolos: A, B, …</td>
+
+        <td valign="top">2<sup>n</sup> linhas (2<sup>n</sup> combinações)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">A última linha da tabela acima define a regra: para n símbolos proposicionais simples devem existir 2<sup>n</sup> linhas na tabela para representar as 2<sup>n</sup> combinações de valores-verdade possíveis.</p>
+
+  <p class="indent1">Exemplo:</p>
+
+  <p class="indent">O operador de disjunção&nbsp;∨&nbsp;é aplicado sobre duas proposições A&nbsp;∨&nbsp;B. A tabela-verdade deste operador, usando V para indicar verdadeiro e F para indicar falso (que deveria ter sido construída no exercício 1.1.), é igual a:</p>
+
+  <table class="tablea" rules="all" width="60%">
+    <tbody>
+      <tr>
+        <td align="center"><strong>A</strong></td>
+
+        <td align="center"><strong>B</strong></td>
+
+        <td align="center"><strong>A</strong>∨<strong>B</strong></td>
+      </tr>
+
+      <tr>
+        <td align="center"><em>V</em></td>
+
+        <td align="center"><em>V</em></td>
+
+        <td align="center"><em>V</em></td>
+      </tr>
+
+      <tr>
+        <td align="center"><em>V</em></td>
+
+        <td align="center"><em>F</em></td>
+
+        <td align="center"><em>V</em></td>
+      </tr>
+
+      <tr>
+        <td align="center"><em>F</em></td>
+
+        <td align="center"><em>V</em></td>
+
+        <td align="center"><em>V</em></td>
+      </tr>
+
+      <tr>
+        <td align="center"><em>F</em></td>
+
+        <td align="center"><em>F</em></td>
+
+        <td align="center"><em>F</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Outra forma de representar verdadeiro/falso é através de valores numéricos, 0 significa falso e 1 significa verdadeiro (esta é a forma mais comum usada em álgebra booleana e em circuitos lógicos). Usando esta notação, a tabela acima ficaria:</p>
+
+  <table class="tablea" rules="all" width="70%">
+    <tbody>
+      <tr>
+        <td align="center"><strong>A</strong></td>
+
+        <td align="center"><strong>B</strong></td>
+
+        <td align="center"><strong>A</strong>&nbsp;∨&nbsp;<strong>B</strong></td>
+      </tr>
+
+      <tr>
+        <td align="center">0</td>
+
+        <td align="center">0</td>
+
+        <td align="center">0</td>
+      </tr>
+
+      <tr>
+        <td align="center">0</td>
+
+        <td align="center">1</td>
+
+        <td align="center">1</td>
+      </tr>
+
+      <tr>
+        <td align="center">1</td>
+
+        <td align="center">0</td>
+
+        <td align="center">1</td>
+      </tr>
+
+      <tr>
+        <td align="center">1</td>
+
+        <td align="center">1</td>
+
+        <td align="center">1</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="indent1">Note que, quando se usa 0 e 1, a disposição dos valores verdadeiros e falsos muda. No caso de se usar V e F, geralmente se começa com a linha superior toda em V e as demais linhas vão aos poucos sendo preenchidas com F até que na linha inferior todos os valores são F. No caso de se usar 0 e 1 a disposição é exatamente contrária. O reflexo destas diferentes disposições aparece claramente na última coluna.</p>
+
+  <p class="indent">Neste texto somente será usada a primeira representação, com V para verdadeiro e F para falso, que é a forma usual da lógica proposicional.</p>
+
+  <p class="noindent"><strong>Exercício 1.4.1</strong></p>
+
+  <p class="indent">Agora construa tabelas-verdade para as seguintes fórmulas:</p>
+
+  <p class="indent1" id="c01-fig-003"><img alt="Image" src="resources/f0016-01.jpg" /></p>
+
+  <p class="h1"><a id="ch1.5"><strong>1.5. Tautologias e contradições</strong></a></p>
+
+  <p class="indent2">Uma tautologia é uma fórmula que assume apenas o valor V, ou seja, que é sempre verdadeira. Uma tautologia é “intrinsecamente verdadeira” pela sua própria estrutura; ela é verdadeira independente de qualquer valor lógico atribuído às suas letras de proposição.</p>
+
+  <p class="indent">Uma <strong>contradição</strong> é o oposto de uma tautologia, ou seja, é uma fórmula que assume apenas o valor F independente de qualquer combinação de valores-verdade atribuída às proposições lógicas simples que entram em sua composição.</p>
+
+  <p class="indent">No caso da lógica proposicional, para demonstrar que uma fórmula é uma tautologia ou uma contradição basta construir sua tabela-verdade.</p>
+
+  <p class="indent">O exercício (1.4.1.d) (A→B)&nbsp;↔&nbsp;(¬B&nbsp;→&nbsp;¬A) apresentado acima é um exemplo de tautologia (basta conferir sua tabela-verdade).</p>
+
+  <p class="noindent"><strong>Exercício 1.5.1</strong></p>
+
+  <p class="indent">Descobrir quais das seguintes fórmulas são tautologias, contradições ou fórmulas contingentes (fórmulas “simples” que não são tautologias ou contradições).</p>
+
+  <p class="indent1" id="c01-fig-004"><img alt="Image" src="resources/f0017-01.jpg" /></p>
+
+  <p class="h1"><a id="ch1.6"><strong>1.6. Equivalências tautológicas e Leis de DeMorgan</strong></a></p>
+
+  <p class="indent2"><em>Equivalências tautológicas</em></p>
+
+  <p class="indent">Considere que P e Q sejam duas fórmulas lógicas quaisquer e que P&nbsp;↔&nbsp;Q seja uma tautologia, então pela própria definição do conetivo &nbsp;↔&nbsp;, sempre que P for V numa dada linha da tabela-verdade de P&nbsp;↔&nbsp;Q, a fórmula Q também deverá ser V nesta linha. O mesmo acontece para quando P tem valor F. Neste caso se diz que P e Q são <strong>fórmulas equivalentes</strong>.</p>
+
+  <p class="indent">Esta propriedade é denotada pelo operador&nbsp;⇔&nbsp;de equivalência tautológica entre as fórmulas P e Q, simbolicamente fica P&nbsp;⇔&nbsp;Q.</p>
+
+  <p class="indent">Na tabela a seguir são apresentadas algumas equivalências tautológicas que definem propriedades importantes da disjunção e conjunção:</p>
+
+  <p class="noindent"><small>Tabela 1 - Equivalências da disjunção (&nbsp;∨&nbsp;) e da conjunção (&nbsp;∧&nbsp;).</small></p>
+
+  <p class="noindent1" id="c01-fig-005"><img alt="Image" src="resources/f0017-02.jpg" /></p>
+
+  <p class="indent1">Na tabela a seguir são apresentadas algumas equivalências tautológicas que permitem reescrever ou redefinir os outros operadores:</p>
+
+  <p class="noindent"><small>Tabela 2 - Equivalências dos outros operadores.</small></p>
+
+  <p class="noindent1" id="c01-fig-006"><img alt="Image" src="resources/f0017-03.jpg" /></p>
+
+  <p class="noindent"><strong>Exercício 1.6.1</strong></p>
+
+  <p class="indent">Demonstrar, pelo uso da tabela-verdade, as equivalências tautológicas acima (não precisa repetir as demonstrações para a equivalência comutativa, associativa e contraposição).</p>
+
+  <p class="indent1"><em>Leis de De Morgan</em></p>
+
+  <p class="indent">As equivalências vistas anteriormente permitem efetuar vários tipos de manipulações ou alterações numa fórmula sem que ela altere seu significado. Além destas fórmulas, entretanto, seria interessante que houvesse maneiras de se converter proposições conectadas pelo operador&nbsp;∨&nbsp;em proposições conectadas por ∧. Estas equivalências são denominadas Leis de DeMorgan em homenagem ao matemático inglês do século XIX Augustus DeMorgan, que foi o primeiro a enunciá-las.</p>
+
+  <p class="noindent" id="c01-fig-007"><img alt="Image" src="resources/f0018-01.jpg" /></p>
+
+  <p class="h1"><a id="ch1.7"><strong>1.7. Simbolização de proposições</strong></a></p>
+
+  <p class="indent2">A seguir são apresentados alguns exemplos tanto de passagem de uma fórmula para texto quando de texto para fórmula.</p>
+
+  <p class="indent">Supondo que A = “hoje está chovendo”, B = “hoje faz frio” e C = “hoje vamos para a praia”, então a seguinte fórmula:</p>
+
+  <p class="center">A&nbsp;∧&nbsp;B&nbsp;∧&nbsp;¬C</p>
+
+  <p class="indent1">Poderia ser versada para o português de várias formas diferentes:</p>
+
+  <ol class="ols">
+    <li><em>Hoje está chovendo, hoje faz frio e não é verdade que hoje vamos para a praia.</em></li>
+
+    <li><em>Hoje está chovendo, faz frio e não vamos para a praia.</em></li>
+
+    <li><em>Hoje está chovendo e faz frio, todavia não vamos para a praia.</em></li>
+
+    <li><em>Hoje está chovendo e faz frio, mas não vamos para a praia hoje.</em></li>
+  </ol>
+
+  <p class="indent1">A frase (a) que é uma transliteração direta da fórmula A&nbsp;∧&nbsp;B&nbsp;∧&nbsp;¬C, embora correta do ponto de vista gramatical, simplesmente não é usada pelo excessivo formalismo. As demais formas são mais usuais (e existem muitas outras equivalentes). Note que a negação quase nunca é colocada no início da proposição. Note também que são usadas várias formas de conjunções além do conetivo “e”: é usada a vírgula no caso (b) e as conjunções adversativas “todavia” e “mas” nos casos (c) e (d).</p>
+
+  <p class="indent">Usando os mesmos significados para os símbolos A, B e C, a fórmula a seguir:</p>
+
+  <p class="center">(A&nbsp;∧&nbsp;B)&nbsp;∨&nbsp;C</p>
+
+  <p class="indent1">Poderia ser versada para o português das seguintes formas:</p>
+
+  <p class="indent1"><em>Hoje está chovendo e faz frio, ou hoje vamos para a praia.</em></p>
+
+  <p class="indent"><em>Ou hoje está chovendo e faz frio, ou hoje vamos para a praia.</em></p>
+
+  <p class="indent"><em>Ou hoje está chovendo e faz frio, ou então hoje vamos para a praia.</em></p>
+
+  <p class="indent1">A fórmula:</p>
+
+  <p class="center">¬(Α&nbsp;∧&nbsp;B)</p>
+
+  <p class="indent1">É um pouco mais complexa de ser versada, por conta da negação de uma subfórmula em parênteses, algo simplesmente não usado na linguagem natural. A fórmula poderia ser transliterada no seguinte texto:</p>
+
+  <p class="indent1"><em>Não é verdade que hoje está chovendo e fazendo frio.</em></p>
+
+  <p class="indent1">Mas este texto é ambíguo, podendo representar a fórmula ¬Α&nbsp;∧&nbsp;B. Uma representação mais razoável da fórmula ¬(Α&nbsp;∧&nbsp;B) exigiria a retirada dos parênteses, algo que somente pode ser feito pelo uso das Leis de DeMorgan. Neste caso a fórmula se torna:</p>
+
+  <p class="center">¬Α&nbsp;∨&nbsp;¬B</p>
+
+  <p class="indent">Facilmente versada para:</p>
+
+  <p class="indent1"><em>Hoje não está chovendo ou hoje não está fazendo frio.</em></p>
+
+  <p class="indent1">A seguir são apresentados exemplos de texto, com sua simbolização equivalente:</p>
+
+  <p class="indent1"><em>Se hoje está chovendo, então ou vamos para a praia, ou está fazendo frio.</em></p>
+
+  <p class="center">A→(C&nbsp;∨&nbsp;B)</p>
+
+  <p class="indent1"><em>Hoje não está chovendo, nem fazendo frio, portanto vamos para a praia.</em></p>
+
+  <p class="center">(¬A&nbsp;∧&nbsp;¬B)→C</p>
+
+  <p class="indent1"><em>Hoje não vamos para a praia, porque está chovendo e fazendo frio.</em></p>
+
+  <p class="center">(A&nbsp;∧&nbsp;B)→¬C</p>
+
+  <p class="h1"><a id="ch1.8"><strong>1.8. Expressões em português e operadores lógicos</strong></a></p>
+
+  <p class="indent2">Devido à riqueza da língua portuguesa, palavras com significados semelhantes são representadas pelo mesmo operador lógico. A tabela a seguir mostra expressões comuns em português associadas a diversos operadores lógicos.</p>
+
+  <p class="noindent"><small>Tabela 3 - Expressões em português.</small></p>
+
+  <table cellpadding="5" cellspacing="5" class="table-2" rules="all" width="100%">
+    <tbody>
+      <tr>
+        <td valign="top">Expressão em português</td>
+
+        <td valign="top">Operador lógico</td>
+
+        <td valign="top">Expressão lógica</td>
+      </tr>
+
+      <tr>
+        <td valign="top">E; mas; também</td>
+
+        <td valign="top">Conjunção</td>
+
+        <td valign="top">A&nbsp;∧&nbsp;B</td>
+      </tr>
+
+      <tr>
+        <td valign="top">Ou</td>
+
+        <td valign="top">Disjunção</td>
+
+        <td valign="top">A&nbsp;∨&nbsp;B</td>
+      </tr>
+
+      <tr>
+        <td valign="top">Se A, então B<br />
+        A implica B<br />
+        A, logo B<br />
+        A somente se B<br />
+        A é condição suficiente para B</td>
+
+        <td valign="top">Condicional</td>
+
+        <td valign="top">A&nbsp;→&nbsp;B</td>
+      </tr>
+
+      <tr>
+        <td valign="top">A se e somente se B</td>
+
+        <td valign="top">Bicondicional</td>
+
+        <td valign="top">A&nbsp;↔&nbsp;B</td>
+      </tr>
+
+      <tr>
+        <td valign="top">Não A<br />
+        É falso que A…<br />
+        Não é verdade que A…<br />
+        Não é o caso que A…</td>
+
+        <td valign="top">Negação</td>
+
+        <td valign="top">¬ A</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

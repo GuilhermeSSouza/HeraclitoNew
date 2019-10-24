@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:body>
+
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="header">
+
+                <!-- Quando quiser sobrescrever o elemento basta colocar codigo nessa areá. Se não chamar a area (usando <ui: define name ="hearder"> </ui:define>), ela renderiza a area do layout. 
+                Desta forma, quando não quiser a area padrão nem modificar, apenas ocutar, basta chamar o elemento e deixar o interior da tag em branco-->
+                <h2>This is page header</h2>
+            </ui:define>
+            <ui:define name="header">
+
+                <h2>This is page menu</h2>
+            </ui:define>
+
+            <ui:define name="content">
+                <h2>This is page content</h2>
+            </ui:define>
+
+            <ui:define name="footer">
+                <h2>This is page  Footer</h2>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>
