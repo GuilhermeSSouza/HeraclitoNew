@@ -5,14 +5,24 @@
  */
 package com.unipampa.edu.chart;
 
+import com.unipampa.edu.DAO.ConexaoDB;
+import com.unipampa.edu.DAO.ConnectionFactory;
+import com.unipmpa.edu.controller.DadosGrafico;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.Axis;
@@ -40,6 +50,7 @@ import org.primefaces.model.chart.PieChartModel;
  * @author heraclitoserver
  */
 @ManagedBean
+@SessionScoped
 public class ChartView implements Serializable {
 
     private LineChartModel lineModel1;
@@ -65,6 +76,11 @@ public class ChartView implements Serializable {
     private BarChartModel animatedModel2;
     private LineChartModel multiAxisModel;
     private LineChartModel dateModel;
+    DadosGrafico dg = new DadosGrafico();
+    
+    
+    
+    
 
     @PostConstruct
     public void init() {
@@ -81,6 +97,7 @@ public class ChartView implements Serializable {
         createCombinedModel();
         createMultiAxisModel();
         createDateModel();
+        
     }
 
     public void itemSelect(ItemSelectEvent event) {
@@ -113,7 +130,7 @@ public class ChartView implements Serializable {
     public PieChartModel getPieModel1() {
         return pieModel1;
     }
-
+    
     public PieChartModel getPieModel2() {
         return pieModel2;
     }
@@ -539,19 +556,78 @@ public class ChartView implements Serializable {
         createPieModel2();
         createLivePieModel();
     }
+    
+    
 
     private void createPieModel1() {
-        pieModel1 = new PieChartModel();
+       
+        List<Dado> dado = null;
+        try {
+            dado = getDado(1);
+        } catch (Exception ex) {
+            Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        pieModel1 = new PieChartModel();       
+        for (Dado dadolist : dado) {
+            pieModel1.set(dadolist.getNomeparametro(), dadolist.getValorparametro());
+        }
+        
+       
 
-        pieModel1.set("Brand 1", 540);
-        pieModel1.set("Brand 2", 325);
-        pieModel1.set("Brand 3", 702);
-        pieModel1.set("Brand 4", 421);
 
-        pieModel1.setTitle("Simple Pie");
+        pieModel1.setTitle("Total de Exercicios Realizados");
         pieModel1.setLegendPosition("w");
         pieModel1.setShadow(false);
     }
+    
+    public static List<Dado> getDado(int iduser) throws Exception{
+    List<Dado> dado = new ArrayList<Dado>();
+        Dado novoDado;
+        String query = "SELECT exercicio.corretoexercicio, count(exercicio.corretoexercicio) FROM heraclitodb.exercicio where exercicio.user_iduser = ? group by exercicio.corretoexercicio";
+        
+        try {
+             
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+
+            st.setInt(1, iduser);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                int correto = rs.getInt(1);
+                int qtdade = rs.getInt(2);
+                
+                if(correto == 0){
+                    novoDado = new Dado("Errado", qtdade);
+                
+                }else{
+                    novoDado = new Dado("Correto", qtdade);
+                }
+                
+                dado.add(novoDado);
+
+                
+
+            }
+
+            ConnectionFactory.closeConnection(conn, st, rs);
+
+            return dado;
+
+        } catch (SQLException e) {
+            return null;
+        }
+    
+    
+    
+    
+    
+    
+    }
+    
 
     private void createPieModel2() {
         pieModel2 = new PieChartModel();

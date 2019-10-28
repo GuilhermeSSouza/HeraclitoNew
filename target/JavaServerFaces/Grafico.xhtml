@@ -18,9 +18,13 @@
             <ui:define name="content">
                 <p> Gráficos do User: Guilherme</p>
 
-                <p:chart type="pie" model="#{chartView.pieModel1}" style="width:400px;height:300px" />
-                <br />
-                <p:chart type="pie" model="#{chartView.pieModel2}" style="width:400px;height:300px" />
+                <p:chart type="pie" model="#{graficoBean.pieModel1}" style="width:400px;height:300px" />
+                <br></br>
+                <p:chart type="pie" model="#{graficoBean.pieModel2}" style="width:400px;height:300px" />
+                <br></br>
+                
+                <p:chart type="pie" model="#{graficoBean.pieModel3}" style="width:400px;height:300px" />
+                <br></br>
 
             </ui:define>
 
