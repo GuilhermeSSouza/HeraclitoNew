@@ -1,0 +1,30 @@
+
+19/09/2019
+
+1. Configuração do ambiente:{ Instalar:{ glasfish, java, jade, banco mysql, netbeans, gitkraken} configurar: {glasfish, banco, jade}
+
+2. Depoy do sistema que está no server <Link> dentro do glassfish, e jade.
+
+3. Lendo documentação do jade.
+
+4. Execultado o sistema para conhecer as funcionalidades.
+
+5. Reengenharia do codigo fonte.
+
+6. Usando o debug para verificar o fluxo de execução de algumas funcionalidades.
+
+7. Verificando erro (Analise do codigo, e propor solução) (fazer imagem)
+
+8. Análise dos dados gerados pelo sistema, criação do squema sql, implantando o banco, configurando o workbench.
+
+9. Escrevendo modulo que salva os dados no banco + teste basicos
+
+10. Incorporando o banco ao sistema atual
+
+11. Iniciando nova aplicação (Do jeito certo) Usando Maven, jsp, jsf, servelt, primeface, bootsface, mysql..
+
+12. Implantando templates (com header, menu, conntent e footer) Bastanto assim, importar o template e sobreesrcever o content.
+
+13. Adicionando modulo de gráficos, uma exibição do dados coletados do sistema original.
+
+14. Deixando o abiente preparado para migrar os modulos do sistema antigo para a nova aplicação. (Formas, provas, gerenciar turmas, e visualizar graficos)
