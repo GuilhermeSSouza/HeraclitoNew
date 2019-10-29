@@ -6,22 +6,55 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    
-    
-    
+
+
+
     <h:body>
 
         <ui:composition template="/template/common/commonLayout.xhtml">
             <ui:define name="header">
-                              
-            </ui:define>
-            
-            <ui:define name="content">
-                <h2>This is page content</h2>
+
             </ui:define>
 
-            <ui:define name="footer">
-                <h2>This is page  Footer</h2>
+            <ui:define name="content">
+                <div class="jumbotron title">
+                    <div class="container">
+                        <h1 class="text-center" style="font-size: 200%">
+                            Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
+                        </h1>
+                        <p class="text-right" style="font-size: 120%">
+                            <i> 
+                                O debate é pai e rei de todas as coisas
+                                (Heráclito de Éfeso, circa 504 AC)
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <br></br>
+                
+                <h2> Materiais </h2>
+                
+                <div class="panel panel-primary" style="width:100%">
+                    <div class="panel-heading">
+                        Livro Eletrônico - Introdução à Lógica Proposicional 
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6 col-sm-6 col-xs-12"> 
+                            <a class="btn btn-lg btn-block btn-info" href="resources/links/title-sumary.html" 
+                               >Título e Sumário</a>
+                            <a class="btn btn-lg btn-block btn-info" data-toggle="modal" href="resources/links/biblio-apendix.html" 
+                               >
+                                Bibliografia e Apêndices</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12"> 
+                            <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter01.html">
+                                Capitulo 1: Logica Proposicional</a>
+                            <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter02.html">
+                                Capítulo 2: Dedução Natural</a>
+                        </div>
+                    </div>
+                </div>
+
             </ui:define>
 
         </ui:composition>

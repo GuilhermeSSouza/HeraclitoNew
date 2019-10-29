@@ -5,7 +5,15 @@
  */
 package com.unipmpa.edu.controller;
 
+import com.unipampa.edu.DAO.ConnectionFactory;
+import com.unipampa.edu.model.User;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -21,41 +29,43 @@ public class LoginBean {
 
     private String usermane;
     private String userpassword;
-    private Boolean isLogin;
+    private Boolean isLogin = false;
+    private User user = null;
 
     public LoginBean() {
     }
 
-    public String logar() {
+    public void logar() {
 
-        if (usermane.equals("guilthys@gmail.com") && userpassword.equals("Cg758469")) {
+        try {
+            user = login(usermane, userpassword);
+        } catch (Exception ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (user != null) {
 
             FacesContext fc = FacesContext.getCurrentInstance();
             HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
             session.setAttribute("isLogin", true);
-            
+            session.setAttribute("iduser", user.getId());
+            session.setAttribute("User", user);
 
-            return "/Home";
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Home.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
         this.isLogin = false;
 
-        return "";
-    }
-
-       public void isLogado() throws IOException {
-
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
-        this.isLogin = (Boolean) session.getAttribute("isLogin");
-
-        if (isLogin) {
-
-         FacesContext.getCurrentInstance().getExternalContext().redirect("/Home.xhtml");;
-
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");;
     }
 
     public String getUsermane() {
@@ -80,6 +90,62 @@ public class LoginBean {
 
     public void setIsLogin(Boolean isLogin) {
         this.isLogin = isLogin;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User login(String login, String senha) throws Exception {
+
+        User userlogin = null;
+        String query = "SELECT iduser, nomeuser, emailuser, acessouser FROM heraclitodb.user where emailuser = ? and senhauser = ?;";
+
+        try {
+
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement st = conn.prepareStatement(query);
+
+            st.setString(1, login);
+
+            st.setString(2, senha);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                userlogin = new User();
+                userlogin.setId(rs.getString(1));
+                userlogin.setName(rs.getString(2));
+                userlogin.setEmail(rs.getString(3));
+                userlogin.setAcesso(rs.getString(4));
+
+            }
+
+            ConnectionFactory.closeConnection(conn, st, rs);
+
+            return userlogin;
+
+        } catch (SQLException e) {
+            return null;
+        }
+
+    }
+    
+    
+    public void logout(){
+    
+    FacesContext fc = FacesContext.getCurrentInstance();
+            fc.getExternalContext().invalidateSession();
+        try {
+            fc.getCurrentInstance().getExternalContext().redirect("Heraclito.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+    
     }
 
 }

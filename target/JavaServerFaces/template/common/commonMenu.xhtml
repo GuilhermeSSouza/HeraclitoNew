@@ -7,9 +7,9 @@
       >
     <body>
         <ui:composition>
-            
-             <b:form>
-                <b:navBar brand="Home Heraclito" brandHref="#" fluid="true">
+
+            <b:form>
+                <b:navBar brand="Home Heraclito" brandHref="Home.xhtml" fluid="true">
                     <b:navbarLinks>
                         <b:navLink value="Exercico" href="#"></b:navLink>
                         <b:navLink value="Prova" href="#"></b:navLink>
@@ -40,21 +40,26 @@
                     <!-- Following line is needed for TBS 3.0.1 (panel content overflow issue) -->
                     <b:navbarLinks pull="right"><b:navLink value="    " href="#"></b:navLink></b:navbarLinks>
                     <b:navbarLinks pull="right" styleClass="hidden-xs">
-                        <b:navLink value="Logout" href="#"> <b:iconAwesome  value="arrow-right "></b:iconAwesome></b:navLink>
-                        <!--<b:dropMenu value="Dropdown">
-                            <b:navLink value="Action" href="#"></b:navLink>
-                            <b:navLink value="Another action" href="#"></b:navLink>
-                            <b:navLink value="Something else here" href="#"></b:navLink>
-                            <b:navLink></b:navLink>
-                            <b:navLink header="Nav header"></b:navLink>
-                            <b:navLink value="Separated link" href="#"></b:navLink>
-                            <b:navLink value="One more separated link" href="#"></b:navLink>
-                        </b:dropMenu>-->
+
+                        <b:navLink>
+                            <b:form>
+                                <b:commandButton style="border: none" value="Logout" action="#{loginBean.logout()}"> </b:commandButton> 
+                            </b:form> 
+                        </b:navLink><!--
+                    <b:dropMenu value="Dropdown">
+                        <b:navLink value="Action" href="#"></b:navLink>
+                        <b:navLink value="Another action" href="#"></b:navLink>
+                        <b:navLink value="Something else here" href="#"></b:navLink>
+                        <b:navLink></b:navLink>
+                        <b:navLink header="Nav header"></b:navLink>
+                        <b:navLink value="Separated link" href="#"></b:navLink>
+                        <b:navLink value="One more separated link" href="#"></b:navLink>
+                    </b:dropMenu>-->
                     </b:navbarLinks>
                 </b:navBar>
-                </b:form>
+            </b:form>
 
-            
+
         </ui:composition>
     </body>
 </html>

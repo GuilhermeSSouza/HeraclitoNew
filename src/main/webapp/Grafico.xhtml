@@ -16,7 +16,7 @@
 
             </ui:define>
             <ui:define name="content">
-                <p> Gráficos do User: Guilherme</p>
+                <p> Informações do usúario: #{graficoBean.nome}</p>
 
                 <p:chart type="pie" model="#{graficoBean.pieModel1}" style="width:400px;height:300px" />
                 <br></br>
@@ -24,6 +24,8 @@
                 <br></br>
                 
                 <p:chart type="pie" model="#{graficoBean.pieModel3}" style="width:400px;height:300px" />
+                <br></br>
+                <p:chart type="line" model="#{graficoBean.lineModel2}" style="width:400px;height:300px" />
                 <br></br>
 
             </ui:define>

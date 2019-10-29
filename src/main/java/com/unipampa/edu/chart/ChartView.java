@@ -5,9 +5,8 @@
  */
 package com.unipampa.edu.chart;
 
-import com.unipampa.edu.DAO.ConexaoDB;
+
 import com.unipampa.edu.DAO.ConnectionFactory;
-import com.unipmpa.edu.controller.DadosGrafico;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,7 +75,7 @@ public class ChartView implements Serializable {
     private BarChartModel animatedModel2;
     private LineChartModel multiAxisModel;
     private LineChartModel dateModel;
-    DadosGrafico dg = new DadosGrafico();
+    
     
     
     
