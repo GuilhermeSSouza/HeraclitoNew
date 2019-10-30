@@ -6,7 +6,9 @@
 package com.unipampa.edu.model;
 
 /**
- *
+ * Model do User do sistema, criado para manter user ou parte dos dados na 
+ * session a fim de diminuir buscar ao banco (Poucos dados é viavél, sobrecarregar a ssession não é recomendado
+ * pode ser melhor fazer varias consultas ao banco)
  * @author heraclitoserver
  */
 public class User {
@@ -14,11 +16,20 @@ public class User {
     private String name;
     private String id;
     private String email;
-    private String acesso; /* verificar a prioridade e gerar as restrições de conteudo que ele pode acessar*/
+    private String acesso; /* verificar a prioridade e gerar as restrições de 
+    conteudo que ele pode acessar - (Pensando no futuro quando o sistema suportar
+    criar e gerenciar turmas de alunos, essa restrição pode ser usada na criação do filter-- ou mesmo dentro da session)*/
 
     public User() {
     }
 
+    /**
+     * Contrutor basico
+     * @param name
+     * @param id
+     * @param email
+     * @param acesso 
+     */
     public User(String name, String id, String email, String acesso) {
         this.name = name;
         this.id = id;

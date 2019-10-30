@@ -18,6 +18,7 @@
             <ui:define name="content">
                 <p> Informações do usúario: #{graficoBean.nome}</p>
 
+                <!-- Basta chamar a variavel que fica na bean. Graficos basicos estão na class ChartView, todos os modelos e exemplos -->
                 <p:chart type="pie" model="#{graficoBean.pieModel1}" style="width:400px;height:300px" />
                 <br></br>
                 <p:chart type="pie" model="#{graficoBean.pieModel2}" style="width:400px;height:300px" />

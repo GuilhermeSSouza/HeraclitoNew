@@ -36,7 +36,8 @@ import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
- *
+ * Bean usada para gerar graficos basicos para o usuario que logar no sistema
+ * (Não existe cadastro, o banco é compartilhado pela versão antiga do Heraclito e essa que será talvez a nova versao)
  * @author heraclitoserver
  */
 @ManagedBean
@@ -56,6 +57,12 @@ public class GraficoBean implements Serializable {
     private String idUser;
     private String userAcesso;
 
+    
+    /**
+     * Verifica se ao tentar acessar uma URL diretamente, o usuario existe, caso não, redireciona para o login.
+     * Essa não é a forma mais eficaz de realizar isso. Filter jsf, ou alguma API do hibernet, etc é seguramente melhor.
+     * Mas devido as informações aqui não serem de alto risto, um teste com sessio pode ser suficiente. (Verificar no futuro esse ponto)
+     */
     public GraficoBean() {
         userLogado();
 

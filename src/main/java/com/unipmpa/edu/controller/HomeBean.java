@@ -15,7 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Bean basica que controla ações da HOME
  * @author heraclitoserver
  */
 @ManagedBean

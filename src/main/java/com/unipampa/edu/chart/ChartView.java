@@ -47,6 +47,12 @@ import org.primefaces.model.chart.PieChartModel;
 /**
  *
  * @author heraclitoserver
+ * Essa classe contem exemplos de todos os modelos basicos de graficos possivéis 
+ * feitos com primeface. 
+ * Existem outras bibliotecas interessantes (Mas o prime foi devido a parte do 
+ * codigo usar bootsface, então usar um core comun é até certo ponto mais pratico que varias libs ao memso tempo )
+ * 
+ * Essa estrutura de classe pode ser replicada para cada grafico, ou para conjuntos deles
  */
 @ManagedBean
 @SessionScoped
@@ -193,7 +199,10 @@ public class ChartView implements Serializable {
     public LineChartModel getDateModel() {
         return dateModel;
     }
-
+    /**
+     * 
+     * @return livePieModel tipo de grafico
+     */
     public PieChartModel getLivePieModel() {
         int random1 = (int) (Math.random() * 1000);
         int random2 = (int) (Math.random() * 1000);
@@ -207,6 +216,10 @@ public class ChartView implements Serializable {
         return livePieModel;
     }
 
+    /**
+     * 
+     * @return  Grafico de linhas. Com duas series de dados, que pode ser otimo compartivo
+     */
     private LineChartModel initCategoryModel() {
         LineChartModel model = new LineChartModel();
 
@@ -232,6 +245,9 @@ public class ChartView implements Serializable {
         return model;
     }
 
+    /**
+     * Definido e iniciando elemntos para renderizar graficos
+     */
     private void createLineModels() {
         lineModel1 = initLinearModel();
         lineModel1.setTitle("Linear Chart");
