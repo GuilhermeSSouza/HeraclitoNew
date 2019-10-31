@@ -16,9 +16,28 @@
 
             </ui:define>
             <ui:define name="content">
-                <p> Informações do usúario: #{graficoBean.nome}</p>
-
+                 <div class="jumbotron title">
+                    <div class="container">
+                        <h1 class="text-center" style="font-size: 200%">
+                            Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
+                        </h1>
+                        <p class="text-right" style="font-size: 120%">
+                            <i> 
+                                O debate é pai e rei de todas as coisas
+                                (Heráclito de Éfeso, circa 504 AC)
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <br></br>
+                              
+                
+                
+                
                 <!-- Basta chamar a variavel que fica na bean. Graficos basicos estão na class ChartView, todos os modelos e exemplos -->
+                
+                
+                
                 <p:chart type="pie" model="#{graficoBean.pieModel1}" style="width:400px;height:300px" />
                 <br></br>
                 <p:chart type="pie" model="#{graficoBean.pieModel2}" style="width:400px;height:300px" />

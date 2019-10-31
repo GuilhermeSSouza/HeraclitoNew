@@ -1,0 +1,195 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:body>
+
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="header">
+                <title> Nova Prova</title>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta> 
+                <meta http-equiv="X-UA-Compatible" content="IE=Edge" ></meta>
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div class="jumbotron title">
+                    <div class="container">
+                        <h1 class="text-center" style="font-size: 200%">
+                            Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
+                        </h1>
+                        <p class="text-right" style="font-size: 120%">
+                            <i> 
+                                O debate é pai e rei de todas as coisas
+                                (Heráclito de Éfeso, circa 504 AC)
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <br></br>
+
+
+                <!-- Alguns simblos dentro do codigo não é reconhecido pelo UTF-8...-->
+
+
+
+
+
+
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingZero">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
+                                    Prova Personalizada
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+                            <div class="panel-body" >
+                                <p style="font-size: 100%" class="text-justify">
+                                    A entrada deve ser no formato:
+                                    <br> </br> <samp>HIPÓTESE 1, HIPÓTESE 2, HIPÓTESE 3, ..., HIPÓTESE N |- CONCLUSÃO</samp>
+                                    <br> </br> Por exemplo:
+                                    <br> </br> <!--<samp > A^(BvC), (~~A)->D, D<->E |- E</samp>-->
+                                    <br> </br>
+                                </p>
+                                <h:form role="form" id="novaprova" >
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="HIPÓTESE 1, HIPÓTESE 2, HIPÓTESE 3, ..., HIPÓTESE N |- CONCLUSÃO" name="cabecalho0" />
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br>
+
+                    </br>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Exemplos de Provas Básicas
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <h:form role="form" id="optionExercicio">
+                                    <div class="form-group">
+                                        <select class="form-control" name="cabecalho1">
+                                            <option >C,B->A,C->B|-A</option>
+                                            <option >~A->(B->C),~A,B|-C</option>
+                                            <option >(A^B)->(C^D),~~A,B|-D</option>
+                                            <option >A|-A^A</option>
+                                            <option >A,~~(A->B)|-Bv~B</option>
+                                            <option >~A,B->A|-~B</option>
+                                            <option >A->B,A->(B->C)|-(A->C)</option>
+                                            <option >(C->D)->C|-(C->D)->D</option>
+                                            <option >~A,AvB|-B</option>
+                                            <option >(A ^ B) -> C, A |- B -> C</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    </br>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Exemplos de Provas Intermediárias
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <h:form role="form" id="cadastro" >
+                                    <div class="form-group">
+                                        <select class="form-control" name="cabecalho2">
+                                            <option >A->(B->C),Av~D,B|-D->C</option>
+                                            <option >A->B,B->(C->D),A->(B->C)|-A->D</option>
+                                            <option >~Av~B|-~(A^B)</option>
+                                            <option >A^B|-~(A->~B)</option>
+                                            <option >A^B|-A->B</option>
+                                            <option ><!--A<->B,B<->C|-A<->C--></option>
+                                            <option > <!--A<->B|-~A<->~C--></option>
+                                            <option >~A->A|-A</option>
+                                            <option >~A|-A->B</option>
+                                            <option >~AvB|-~(A^~B)</option>
+                                            <option >A->B,A->~B|-~A</option>
+                                            <option >(A->B)^(A->C)|-A->(B^C)</option>
+                                            <option >A->B|-(A^C)->(B^C)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    </br>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Exemplos de Provas Avançadas
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                <form role="form" id="cadastro" action="">
+                                    <div class="form-group">
+                                        <select class="form-control" name="cabecalho3">
+                                            <option >AvB|-BvA</option>
+                                            <option >A->B|-(AvC)->(BvC)</option>
+                                            <option >|-A->(B->(A^B))</option>
+                                            <option > <!--|-~(A<->~A) --></option>
+                                            <option >|-(A->B)->(~B->~A)</option>
+                                            <option >|-(A^B)v(~Av~B)</option>
+                                            <option >|-B->(Av~A)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                </br>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

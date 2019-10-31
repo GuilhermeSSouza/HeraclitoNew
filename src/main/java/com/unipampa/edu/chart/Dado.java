@@ -36,14 +36,26 @@ public class Dado implements Serializable{
         return valorparametro;
     }
 
+    /**
+     *
+     * @param valorparametro
+     */
     public void setValorparametro(int valorparametro) {
         this.valorparametro = valorparametro;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNomeparametro() {
         return nomeparametro;
     }
 
+    /**
+     *
+     * @param nomeparametro
+     */
     public void setNomeparametro(String nomeparametro) {
         this.nomeparametro = nomeparametro;
     }

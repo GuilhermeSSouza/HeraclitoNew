@@ -10,8 +10,17 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 
+/**
+ *
+ * @author heraclitoserver
+ */
 public class ConnectionFactory {
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public static Connection getConnection() throws Exception{
       try{
 
@@ -23,14 +32,33 @@ public class ConnectionFactory {
             throw new Exception(e.getMessage());
         }
     }   
+
+    /**
+     *
+     * @param conn
+     * @param stmt
+     * @param rs
+     * @throws Exception
+     */
     public static void closeConnection(Connection conn, Statement stmt, ResultSet rs)throws Exception{
         close(conn,stmt,rs);
     }
 
+    /**
+     *
+     * @param conn
+     * @param stmt
+     * @throws Exception
+     */
     public static void closeConnection(Connection conn, Statement stmt)throws Exception{
         close(conn,stmt,null);
     }
 
+    /**
+     *
+     * @param conn
+     * @throws Exception
+     */
     public static void closeConnection(Connection conn)throws Exception{
         close(conn,null,null);
     }

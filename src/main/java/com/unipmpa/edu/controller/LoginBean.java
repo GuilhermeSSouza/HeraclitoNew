@@ -32,9 +32,15 @@ public class LoginBean {
     private Boolean isLogin = false;
     private User user = null;
 
+    /**
+     *
+     */
     public LoginBean() {
     }
 
+    /**
+     *
+     */
     public void logar() {
 
         try {
@@ -68,38 +74,77 @@ public class LoginBean {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUsermane() {
         return usermane;
     }
 
+    /**
+     *
+     * @param usermane
+     */
     public void setUsermane(String usermane) {
         this.usermane = usermane;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUserpassword() {
         return userpassword;
     }
 
+    /**
+     *
+     * @param userpassword
+     */
     public void setUserpassword(String userpassword) {
         this.userpassword = userpassword;
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getIsLogin() {
         return isLogin;
     }
 
+    /**
+     *
+     * @param isLogin
+     */
     public void setIsLogin(Boolean isLogin) {
         this.isLogin = isLogin;
     }
 
+    /**
+     *
+     * @return user
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     *
+     * @param user
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     *
+     * @param login
+     * @param senha
+     * @return User
+     * @throws Exception
+     */
     public User login(String login, String senha) throws Exception {
 
         User userlogin = null;
@@ -134,7 +179,9 @@ public class LoginBean {
 
     }
     
-    
+    /**
+     *
+     */
     public void logout(){
     
     FacesContext fc = FacesContext.getCurrentInstance();

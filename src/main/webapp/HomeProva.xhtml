@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"          
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:body>
+
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="header">
+
+                <title> Exercicios</title>
+                <!-- algum arquivo, scrip, etc para esse pagina em questão-->
+
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div class="jumbotron title">
+                    <div class="container">
+                        <h1 class="text-center" style="font-size: 200%">
+                            Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
+                        </h1>
+                        <p class="text-right" style="font-size: 120%">
+                            <i> 
+                                O debate é pai e rei de todas as coisas
+                                (Heráclito de Éfeso, circa 504 AC)
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <br></br>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b>LOGOS</b> - Caderno de Estudos e Exercícios de Lógica
+                            </div>
+                            <div class="panel-body">
+                                <div id="Panel"> 
+                                    <h:form>
+                                        <b:commandButton id="buttonEditorFormulasProposicionais" class="btn btn-lg btn-block btn-primary" action="NovoExercicio.xhtml">
+                                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                            Novo Exercício sobre Fórmula
+                                        </b:commandButton>
+
+                                        <b:commandButton id="buttonEditorProvasArgumentos" class="btn btn-lg btn-block btn-primary" action="NovaProva.xhtml">
+                                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                            Nova Prova de Argumento
+                                            <!--
+                                            
+                                            Teste se dentro da session existe alguma prova ainda por terminar
+                                            
+                                            <c:if test="${empty manager}">Nova Prova de Argumento</c:if>
+                                            <c:if test="${not empty manager}">Continuar Prova de Argumento</c:if> -->
+                                        </b:commandButton>
+                                    </h:form>
+
+                                    <!--
+                                    <button id="buttonNotasDeAula" class="btn btn-lg btn-block btn-info" data-toggle="modal" data-target="#modalNotasDeAula">
+                                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                        Notas de Aula
+                                    </button>
+                                    -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>           
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

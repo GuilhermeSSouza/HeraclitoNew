@@ -82,11 +82,9 @@ public class ChartView implements Serializable {
     private LineChartModel multiAxisModel;
     private LineChartModel dateModel;
     
-    
-    
-    
-    
-
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         createLineModels();
@@ -105,6 +103,10 @@ public class ChartView implements Serializable {
         
     }
 
+    /**
+     *
+     * @param event
+     */
     public void itemSelect(ItemSelectEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected",
                 "Item Index: " + event.getItemIndex() + ", Series Index:" + event.getSeriesIndex());
@@ -112,90 +114,178 @@ public class ChartView implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    /**
+     *
+     * @return lineModel1
+     */
     public LineChartModel getLineModel1() {
         return lineModel1;
     }
 
+    /**
+     *
+     * @return lineModel2
+     */
     public LineChartModel getLineModel2() {
         return lineModel2;
     }
 
+    /**
+     *
+     * @return zoomModel
+     */
     public LineChartModel getZoomModel() {
         return zoomModel;
     }
 
+    /**
+     *
+     * @return combinedModel
+     */
     public CartesianChartModel getCombinedModel() {
         return combinedModel;
     }
 
+    /**
+     *
+     * @return areaModel
+     */
     public CartesianChartModel getAreaModel() {
         return areaModel;
     }
 
+    /**
+     *
+     * @return pieModel1
+     */
     public PieChartModel getPieModel1() {
         return pieModel1;
     }
     
+    /**
+     *
+     * @return pieModel2
+     */
     public PieChartModel getPieModel2() {
         return pieModel2;
     }
 
+    /**
+     *
+     * @return meterGaugeModel1
+     */
     public MeterGaugeChartModel getMeterGaugeModel1() {
         return meterGaugeModel1;
     }
 
+    /**
+     *
+     * @return meterGaugeModel2
+     */
     public MeterGaugeChartModel getMeterGaugeModel2() {
         return meterGaugeModel2;
     }
 
+    /**
+     *
+     * @return donutModel1
+     */
     public DonutChartModel getDonutModel1() {
         return donutModel1;
     }
 
+    /**
+     *
+     * @return donutModel2
+     */
     public DonutChartModel getDonutModel2() {
         return donutModel2;
     }
 
+    /**
+     *
+     * @return fillToZero
+     */
     public CartesianChartModel getFillToZero() {
         return fillToZero;
     }
 
+    /**
+     *
+     * @return bubbleModel1
+     */
     public BubbleChartModel getBubbleModel1() {
         return bubbleModel1;
     }
 
+    /**
+     *
+     * @return bubbleModel2
+     */
     public BubbleChartModel getBubbleModel2() {
         return bubbleModel2;
     }
 
+    /**
+     *
+     * @return ohlcModel
+     */
     public OhlcChartModel getOhlcModel() {
         return ohlcModel;
     }
 
+    /**
+     *
+     * @return ohlcModel2
+     */
     public OhlcChartModel getOhlcModel2() {
         return ohlcModel2;
     }
 
+    /**
+     *
+     * @return barModel
+     */
     public BarChartModel getBarModel() {
         return barModel;
     }
 
+    /**
+     *
+     * @return
+     */
     public HorizontalBarChartModel getHorizontalBarModel() {
         return horizontalBarModel;
     }
 
+    /**
+     *
+     * @return horizontalBarModel
+     */
     public LineChartModel getAnimatedModel1() {
         return animatedModel1;
     }
 
+    /**
+     *
+     * @return animatedModel2
+     */
     public BarChartModel getAnimatedModel2() {
         return animatedModel2;
     }
 
+    /**
+     *
+     * @return multiAxisModel
+     */
     public LineChartModel getMultiAxisModel() {
         return multiAxisModel;
     }
 
+    /**
+     *
+     * @return dateModel
+     */
     public LineChartModel getDateModel() {
         return dateModel;
     }
@@ -524,7 +614,10 @@ public class ChartView implements Serializable {
         yAxis.setMax(250);
         yAxis.setTickAngle(50);
     }
-
+    /**
+     * 
+     * @return  model
+     */
     private BubbleChartModel initBubbleModel() {
         BubbleChartModel model = new BubbleChartModel();
 
@@ -538,7 +631,10 @@ public class ChartView implements Serializable {
 
         return model;
     }
-
+    /**
+     * 
+     * @return  model
+     */
     private LineChartModel initLinearModel() {
         LineChartModel model = new LineChartModel();
 
@@ -596,6 +692,12 @@ public class ChartView implements Serializable {
         pieModel1.setShadow(false);
     }
     
+    /**
+     *
+     * @param iduser
+     * @return List Dado
+     * @throws Exception
+     */
     public static List<Dado> getDado(int iduser) throws Exception{
     List<Dado> dado = new ArrayList<Dado>();
         Dado novoDado;
@@ -673,7 +775,10 @@ public class ChartView implements Serializable {
         donutModel2.setDataFormat("value");
         donutModel2.setShadow(false);
     }
-
+    /**
+     * 
+     * @return  model
+     */
     private DonutChartModel initDonutModel() {
         DonutChartModel model = new DonutChartModel();
 
@@ -718,7 +823,10 @@ public class ChartView implements Serializable {
 
         fillToZero.addSeries(series1);
     }
-
+    /**
+     * 
+     * @return MeterGaugeChartModel
+     */
     private MeterGaugeChartModel initMeterGaugeModel() {
         List<Number> intervals = new ArrayList<Number>() {
             {

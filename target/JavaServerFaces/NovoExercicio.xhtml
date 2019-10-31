@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:body>
+
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="header">
+
+                <title> Novo Exercicio</title>
+            </ui:define>
+            
+
+            <ui:define name="content">
+                
+                
+                <div class="jumbotron title">
+                    <div class="container">
+                        <h1 class="text-center" style="font-size: 200%">
+                            Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
+                        </h1>
+                        <p class="text-right" style="font-size: 120%">
+                            <i> 
+                                O debate é pai e rei de todas as coisas
+                                (Heráclito de Éfeso, circa 504 AC)
+                            </i>
+                        </p>
+                    </div>
+                </div>
+                <br></br>
+                
+                
+                
+                
+                
+                <div id="validacoes" class="form-group" style="display: none;">
+                    <div class="alert alert-danger">
+                        <a id="fecharValidacoes" href="#" class="close">&times;</a>
+                        <ul id="mensagemValidacao"></ul>
+                    </div>
+                </div>
+
+                <div class="panel-group" id="accordionEditor" role="tablist" aria-multiselectable="false">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEditor1">
+                            <h4 class="panel-title">
+                                <a id="exercicioPersonalizado" data-toggle="collapse" data-parent="#accordionEditor" href="#collapseEditor1" aria-expanded="true" aria-controls="collapseEditor1">
+                                    Exercício Personalizado
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEditor1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="exercicioPersonalizado">
+                            <!--
+                            -->
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="formula">Fórmula</label>
+                                    <input id="formula" type="text" class="form-control" placeholder="(A v B) ^ C" />
+                                </div>
+                                <!--                
+                                                <div class="form-group">
+                                                    <label for="tipoExercicio">Tipo de exercício</label>
+                                                    <select id="tipoExercicio" class="form-control">
+                                                        <option value="">Selecione...</option>
+                                                    </select>
+                                                </div>
+                                -->
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="modoSupervisionado" type="checkbox" /> Modo supervisionado
+                                        </label>
+                                    </div>                    
+                                </div>
+                                <!--
+                                                <div class="form-group">
+                                                    <button id="btnComecarPersonalizado" class="btn btn-primary">Começar</button>
+                                                </div>
+                                -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Começar Exercício</div>
+                                    <div class="panel-body">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <!--                        <div class="form-group"> -->
+                                            <button id="btnComecarExercDecomposicao" class="btn btn-block btn-primary">Decomposição de Fórmula</button>
+                                            <!--                        </div> -->
+                                            <!--                        <div class="form-group"> -->
+                                            <button id="btnComecarExercAvaliacao" class="btn btn-block btn-primary">Avaliação de Fórmula</button>
+                                            <!--                       </div> -->
+                                            <!--                       <div class="form-group"> -->
+                                            <button id="btnComecarExercTabVerdade" class="btn btn-block btn-primary">Construção de Tabela-Verdade</button>
+                                            <!--                       </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--
+                            -->
+                        </div>
+                    </div>
+
+                    <br>
+                        
+                    </br>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingEditor2">
+                            <h4 class="panel-title">
+                                <a id="listaExercicios" data-toggle="collapse" data-parent="#accordionEditor" href="#collapseEditor2" aria-expanded="false" aria-controls="collapseEditor2">
+                                    Exemplos de Exercícios
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseEditor2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="listaExercícios">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <select id="exercicio" class="form-control" name="cabecalho">
+                                        <option value="">Selecione...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button id="btnComecarListaExercicios" type="button" class="btn btn-primary">Começar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+
+            
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

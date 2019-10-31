@@ -20,6 +20,9 @@ public class User {
     conteudo que ele pode acessar - (Pensando no futuro quando o sistema suportar
     criar e gerenciar turmas de alunos, essa restrição pode ser usada na criação do filter-- ou mesmo dentro da session)*/
 
+    /**
+     *
+     */
     public User() {
     }
 
@@ -37,38 +40,74 @@ public class User {
         this.acesso = acesso;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAcesso() {
         return acesso;
     }
 
+    /**
+     *
+     * @param acesso
+     */
     public void setAcesso(String acesso) {
         this.acesso = acesso;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -77,6 +116,11 @@ public class User {
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

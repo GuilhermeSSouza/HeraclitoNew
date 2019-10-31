@@ -26,17 +26,16 @@ public class HomeBean {
     private String idUser;
     private String userAcesso;
    
-    
-    
-    
-    
+    /**
+     *
+     */
     public HomeBean() {
         userLogado();
     }
     
-    
-    
-    
+    /**
+     *
+     */
     public final void userLogado() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -56,14 +55,26 @@ public class HomeBean {
 
     }
 
+    /**
+     *
+     * @return nameUser
+     */
     public String getNameUser() {
         return nameUser;
     }
 
+    /**
+     *
+     * @return idUser
+     */
     public String getIdUser() {
         return idUser;
     }
 
+    /**
+     *
+     * @return userAcesso
+     */
     public String getUserAcesso() {
         return userAcesso;
     }

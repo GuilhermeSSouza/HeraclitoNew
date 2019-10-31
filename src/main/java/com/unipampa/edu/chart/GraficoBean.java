@@ -68,6 +68,9 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
 
@@ -76,6 +79,9 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     */
     public final void userLogado() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -95,6 +101,10 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     * @param event
+     */
     public void itemSelect(ItemSelectEvent event) {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected",
                 "Item Index: " + event.getItemIndex() + ", Series Index:" + event.getSeriesIndex());
@@ -102,29 +112,52 @@ public class GraficoBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    /**
+     *
+     * @return
+     */
     public PieChartModel getPieModel1() {
         return pieModel1;
     }
 
+    /**
+     *
+     * @return
+     */
     public PieChartModel getPieModel2() {
         return pieModel2;
     }
 
+    /**
+     *
+     * @return
+     */
     public PieChartModel getPieModel3() {
         return pieModel3;
     }
 
+    /**
+     *
+     * @return
+     */
     public LineChartModel getLineModel1() {
 
         return lineModel1;
     }
 
+    /**
+     *
+     * @return
+     */
     public LineChartModel getLineModel2() {
 
         return lineModel2;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public String getNome(){
         return nameUser;
     }
@@ -279,6 +312,12 @@ public class GraficoBean implements Serializable {
         pieModel3.setShadow(false);
     }
 
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
     public static List<Dado> getDado(String iduser) throws Exception {
         List<Dado> dado = new ArrayList<Dado>();
         Dado novoDado;
@@ -319,6 +358,12 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
     public static List<Dado> getDadoNivel(String iduser) throws Exception {
         List<Dado> dado = new ArrayList<Dado>();
         Dado novoDado;
@@ -363,6 +408,12 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
     public static List<Dado> getDadoPasso(String iduser) throws Exception {
         List<Dado> dado = new ArrayList<Dado>();
         Dado novoDado;
@@ -403,6 +454,12 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
     public static List<Dado> getDadoRegras(String iduser) throws Exception {
         List<Dado> dado = new ArrayList<Dado>();
         Dado novoDado;
@@ -435,6 +492,12 @@ public class GraficoBean implements Serializable {
 
     }
 
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
     public static List<Dado> getDadoRegrasCorreto(String iduser) throws Exception {
         List<Dado> dado = new ArrayList<Dado>();
         Dado novoDado;
