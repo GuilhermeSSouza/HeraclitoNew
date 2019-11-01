@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:body>
+
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="header">
+                <title> Provador</title>
+                
+                
+            </ui:define>
+
+
+            <ui:define name="content">
+                <div class="row modalprovador">
+                    <div class="col-md-4 col-sm-4 col-xs-4" style="border-right:1px solid #eee; height:98%px">
+                        <h:form class="form" role="form" id="provador"> <!--action="<%=response.encodeUrl("modal/prova/response/provador.jsp")%>"-->
+                            <input type="hidden" id="provador_regra" name="regra" />
+                            <input type="hidden" class="form-control" id="linha1" name="linha1" />
+                            <input type="hidden" class="form-control" id="linha2" name="linha2" />
+                            <input type="hidden" class="form-control" id="linha3" name="linha3" />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="campolinha" class="form-group"  style="display: none;">
+                                        <input type="text" class="form-control" placeholder="Linha" name="str" />
+                                    </div>
+                                    <div id="campolado" class="form-group" style="display: none;">
+                                        <select class="form-control" name="lado">
+                                            <option value="ESQUERDA"> Esquerda </option>
+                                            <option value="DIREITA"> Direita </option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" style="display: none;" name="hiddensubmit" />
+                                </div>
+                                <div id="divisorcamporegra"  style="display: none;"><hr></hr></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5><strong> Regras básicas de inferência </strong></h5>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-primary btn-xs btn-block" value="Ad" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" >
+                                                <!--<title <b>Ad</b>: Adição<br>P<br> <br>PvQ<br>Precisa informar a linha da fórmula P e o lado></title>-->
+                                                AD 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="Cj" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" > <!--title="<b>Cj</b>:Conjunção<br>P Q<br> <br>P^Q<br>Precisa informar as linhas das fórmulas P e Q"> --> 
+                                                CJ 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-primary btn-xs btn-block" value="Sp" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top"> 
+                                                <!--title="<b>Sp</b>: Simplificação:<br>P^Q P^Q<br> <br>  P     Q  <br>Precisa informar a linha com a fórmula P^Q e o lado"> -->
+                                                SP
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="MP" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top">  <!--title="<b>MP</b>: Modus Ponens:<br>P P→Q<br> <br>Q<br>Precisa informar as linhas das fórmulas P e P→Q"> -->
+                                                MP 
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="DN" onClick="reply_click(this)"
+                                                    data-toggle="tooltip" data-html="true" data-placement="top">  <!--title="<b>DN</b>: Dupla Negação<br>~~P<br>  <br>P<br>Precisa informar a linha da fórmula ~~P"> -->
+                                                DN 
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="-Dj" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" > <!--title="<b>-Dj</b>: Eliminação da Disjunção<br>PvQ P→R Q→R<br> <br>R<br>Precisa informar as linhas com as fórmulas PvQ, P→R e Q→R">--> 
+                                                -Dj 
+                                            </button>
+
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="+Eq" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top"> <!--title="<b>+Eq</b>: Introdução da Equivalência<br>P→Q Q→P<br> <br>P↔Q<br>Precisa informar as linhas com as fórmulas P→Q e Q→P"> -->
+                                                +Eq
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-primary btn-xs btn-block" value="-Eq" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top"> <!--title="<b>-Eq</b>: Eliminação da Equivalência<br>P↔Q  P↔Q<br> <br>P→Q  Q→P<br>Precisa informar a linha com a fórmula P↔Q e o lado"> -->
+                                                -Eq 
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-primary btn-xs btn-block" value="HPC" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" >
+                                                <!--title="<b>HPC</b>:Hipótese para PC<br>| P<br>| ...<br>| Q<br> <br>P→Q<br>Abre uma Prova Condicional (PC), entre com fórmula P->Q a ser provada"> -->
+                                                HPC 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="PC" onClick="reply_click(this)"  
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" >
+                                                <!--title="<b>PC</b>: Fecha Prova Condicional<br>| P<br>| ...<br>| Q<br> <br>P→Q<br>Precisa informar a linha final com a fórmula Q">-->
+                                                PC 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-primary btn-xs btn-block" value="HRAA" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top"> 
+                                                <!--title="<b>HRAA</b>:Hipótese para RAA<br>|    P   <br>|   ...   <br>|Q^~Q<br> <br>~P<br>Abre uma Redução Ao Absurdo (RAA), entre com fórmula ~P a ser provada"> -->
+                                                HRAA 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-primary btn-xs btn-block" value="RAA"  onClick="reply_click(this)"  
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" >
+                                                <!--title="<b>RAA</b>: Fecha Redução Ao Absurdo<br>|    P   <br>|   ...   <br>|Q^~Q<br> <br>~P<br>Precisa informar a linha final com a fórmula Q^~Q (ó aceita fórmulas no formato Q^~Q)">-->
+                                                RAA 
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5><strong> Regras de inferência derivadas </strong></h5>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-info btn-xs btn-block" value="DC" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" > <!--title="<b>DC</b>: Dilema Construtivo:<br>PvQ P→R Q→S<br>  <br>R v S<br>Precisa informar as 3 linhas com as fórmulas P^Q, P→R e Q→S"> -->
+                                                DC 
+                                            </button>
+
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-info btn-xs btn-block" value="EXP" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top">  <!--title="<b>EXP</b>: Exportação:<br>(P^Q)→R<br> <br>P→(Q→R)<br>Precisa informar uma linha com a fórmula (P^Q)→R"> -->
+                                                EXP 
+                                            </button>
+
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-info btn-xs btn-block" value="INC" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top">  <!--title="<b>INC</b>: Inconsistência:<br>P ~P<br> <br>Q<br>Precisa informar as 2 linhas com as fórmulas P e ~P, e depois entrar com a fórmula Q">  -->
+                                                INC 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-info btn-xs btn-block" value="MT" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" > <!--title="<b>MT</b>: Modus Tollens:<br>P→Q ~Q<br> <br>~P<br>Precisa informar as 2 linhas com as fórmulas P→Q e ~Q"> -->
+                                                MT 
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-info btn-xs btn-block" value="SD" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top">  <!--title="<b>SD</b>: Silogismo Disjuntivo<br>PvQ ~P    ~PvQ P<br> <br>     Q               Q     <br>Precisa informar as 2 linhas com as fórmulas PvQ e ~P">--> 
+                                                SD 
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-info btn-xs btn-block" value="SH" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top">  <!--title="<b>SH</b>: Silogismo Hipotético<br>P→Q Q→R<br>  <br>P→R<br>Precisa informar as 2 linhas com as fórmulas P→Q e P→R"> -->
+                                                SH 
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12 row-margin">
+                                            <button type="submit" class="btooltip btn btn-info btn-xs btn-block" value="CL" onClick="reply_click(this)" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" title="CL:  Copiar Linha. Precisa informar a linha da fórmula P"> 
+                                                CL 
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr></hr>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <a class="btooltip btn btn-default btn-xs btn-block finalizar" 
+                                               > <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span> Desfazer </a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <a class="btooltip btn btn-default btn-xs btn-block"
+                                               > <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span> Refazer </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <button value="Hip" type="button" class="btooltip btn btn-default btn-xs btn-block"
+                                                    > Adicionar Hip </button>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <a class="btooltip btn btn-default btn-xs btn-block" > 
+                                                Mostrar HIP 
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <a type="button" class="btooltip btn btn-default btn-xs btn-block finalizar" 
+                                               data-toggle="tooltip" data-html="true" data-placement="top" title="Retorna ao estado inicial da prova"> 
+                                                <span class="glyphicon glyphicon-fast-backward " aria-hidden="true"></span> Limpar </a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <a type="button" class="btooltip btn  
+                                               btn-default btn-xs btn-block finalizar" 
+                                               data-toggle="tooltip" data-html="true" data-placement="top" title="Termina a proova. Permite início de nova prova">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Finalizar </a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-default btn-xs btn-block" id="buttonZoomIn"
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" title="Aumenta zoom da tela"> 
+                                                <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <button type="button" class="btooltip btn btn-default btn-xs btn-block" id="buttonZoomOut" 
+                                                    data-toggle="tooltip" data-html="true" data-placement="top" title="Diminui zoom da tela">
+                                                <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <button type="button" class="btn btn-lg btn-default btn-xs btn-block" 
+                                                    data-html="true" accesskey="" data-toggle="popover" 
+                                                    title="Operações Logicas" data-placement="right" data-container="#prova_tabela">
+                                                Expressões
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 col-xs-12 row-margin">
+                                            <div class="dropdown">
+                                                <button class="btn btn-lg btn-default btn-xs btn-block dropdown-toggle" type="button" data-toggle="dropdown">Ajuda
+                                                    <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#" onclick="requestTutorHint();">Dica?</a></li>
+                                                    <li><a href="#" onclick="requestTutorExample();">Exemplo?</a></li>
+                                                    <li><a href="#" onclick="requestTutorStatus();">Quanto falta?</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        <c:if test="${not empty provador_erro}">
+                            <div class="overlay">
+                                <div class="alert alert-danger"  style="position: relative; left: -50%; top: -50%;">
+                                    <a href="#" class="close" data-dismiss="alert" onClick="removeMessages()">&times;</a>
+                                    <!--<c:out value="${provador_erro}" />-->
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty provador_sucesso}">
+                            <div class="overlay">
+                                <div class="alert alert-success"  style="position: relative; left: -50%;">
+                                    <a href="#" class="close" data-dismiss="alert" onClick="removeMessages()">&times;</a>
+                                    <!--<c:out value="${provador_sucesso}" />-->
+                                </div>
+                            </div>
+                        </c:if>
+                        <div class="overlay" id="tutoralertdialog" style="display: none;">
+                            <div class="alert alert-danger"  style="position: relative; left: -50%; top: -50%;">
+                                <a href="#" class="close" data-dismiss="alert" onClick="removeMessages()">&times;</a>
+                                <p id="tutoralertmsg"> AVISO </p>
+                            </div>
+                        </div>
+                        <table class="table table-hover" id="prova_tabela">
+                            <tbody>
+                                <!--<c:out value="${manager}"  escapeXml="false"/>-->
+                            </tbody>            
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="well">
+                            <p id="tutorconsole">Mensagens do tutor</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overlayHelp" id="tutorhelpdialog" style="display: none;">
+                    <div class="alert alert-info"  style="position: relative; left: -20%; top: -20%;">
+                        <a  class="close" data-dismiss="alert">&times;</a>
+                        <p id="tutorhelpmsg"> AVISO </p>
+                    </div>
+                </div>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </h:body>
+
+</html>
