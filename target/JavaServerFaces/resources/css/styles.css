@@ -16,10 +16,10 @@ align-content: center;
 }
 
 .card{
-height: 370px;
+height: 650px;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: 380px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
@@ -63,9 +63,9 @@ color: white;
 
 .remember input
 {
-width: 20px;
+width: 23px;
 height: 20px;
-margin-left: 15px;
+margin-left: 20px;
 margin-right: 5px;
 }
 

@@ -11,13 +11,17 @@
         <ui:composition template="template/common/commonLayout.xhtml">
             <ui:define name="header">
                 <title> Projeto Heráclito </title>
+                
+                <link rel="stylesheet" type="text/css" href="resources/css/menu-style.css"></link>
+
+
             </ui:define>
 
             <ui:define name="menu">
-                <b:navBar brand="Heraclito" brandHref="#projeto" fluid="true">
+                <b:navBar class="navbar navbar-inverse" brand="Heraclito" brandHref="#projeto" fluid="true" fixed="top">
                     <b:navbarLinks>
                         <b:navLink value="Acesse" href="#acesse"></b:navLink>
-                        <b:navLink value="Materiais" href="#materias"></b:navLink>
+                        <b:navLink value="Materiais" href="#materiais"></b:navLink>
                         <b:navLink value="Produções" href="#producao"></b:navLink>
                         <b:navLink value="Links" href="#links"></b:navLink>
                         <!--       <b:dropMenu value="Dropdown" iconAwesome="birthday-cake">
@@ -55,117 +59,109 @@
                         </b:dropMenu>-->
                     </b:navbarLinks>
                 </b:navBar>
-
-
-
             </ui:define>
-            <ui:define name="content">
+            <ui:define name="content" >
+                
+                <h1 id="projeto" style="background-color:#009045; border-radius: 10px; width: 100%; height:100px;text-align: left"> O Projeto Heráclito </h1>
+                        <p style="font-size: 100%" class="text-justify">
+                            O Ambiente Heráclito auxilia estudantes a resolver vários tipos de exercícios de Lógica, 
+                            começando com exercícios para calcular o valor lógico de uma fórmula, 
+                            passando por exercícios de construção de 
+                            tabelas-verdade e chegando até exercícios de elaboração de provas de argumentos por
+                            meio das regras da Dedução Natural. Para isso o Heráclito disponibiliza
+                            o Caderno Eletrônico LOGOS que permite criar e editar fórmulas, 
+                            tabelas-verdade e provas da Lógica Proposicional. O caderno LOGOS é compatível 
+                            com tablets, smartphones e PCs. O Heráclito também oferece um serviço inteligente 
+                            de tutoria que ajuda os estudantes a resolver seus exercícios.
+                            Para mais informações consulte a página do 
+                            <a href="http://labsim.unipampa.edu.br/projeto8.html">Projeto Heráclito</a>.
+                            <br></br>
+                            O caderno LOGOS pode ser usado em modo online, com o apoio do serviço de 
+                            tutoria, ou em modo offline, como usuário visitante, mas sem a tutoria. 
+                            Para o modo online é necessário se logar ao sistema.
+                        </p>
 
-                <h1 id="projeto"> O Projeto Heráclito </h1>
-                <p style="font-size: 100%" class="text-justify">
-                    O Ambiente Heráclito auxilia estudantes a resolver vários tipos de exercícios de Lógica, 
-                    começando com exercícios para calcular o valor lógico de uma fórmula, 
-                    passando por exercícios de construção de 
-                    tabelas-verdade e chegando até exercícios de elaboração de provas de argumentos por
-                    meio das regras da Dedução Natural. Para isso o Heráclito disponibiliza
-                    o Caderno Eletrônico LOGOS que permite criar e editar fórmulas, 
-                    tabelas-verdade e provas da Lógica Proposicional. O caderno LOGOS é compatível 
-                    com tablets, smartphones e PCs. O Heráclito também oferece um serviço inteligente 
-                    de tutoria que ajuda os estudantes a resolver seus exercícios.
-                    Para mais informações consulte a página do 
-                    <a href="http://labsim.unipampa.edu.br/projeto8.html">Projeto Heráclito</a>.
-                    <br></br>
-                    O caderno LOGOS pode ser usado em modo online, com o apoio do serviço de 
-                    tutoria, ou em modo offline, como usuário visitante, mas sem a tutoria. 
-                    Para o modo online é necessário se logar ao sistema.
-                </p>
+                        <br></br>
 
-                <br></br>
+                        <a id="acesse" href="login.xhtml" style="width:100%"> <img alt="Logo Heraclito" src="resources/links/logo-heraclito.png" style="width:50%" > </img> Acesse o Heraclito</a>
 
-                <a id="acesse" href="login.xhtml"> <img alt="Logo Heraclito" src="resources/links/logo-heraclito.png"> </img> Acesse ao Ambiente Heraclito</a>
+                        <br></br>
 
-                <br></br>
-
-                <img alt="Heraclito" src="resources/links/heraclito.jpg" style="width:100%" > </img>
-
-
-                <br></br><br></br><br></br>
+                        <img alt="Heraclito" src="resources/links/heraclito.jpg" style="width:100%" > </img>
 
 
-                <h2> Materiais </h2>
+                        <br></br><br></br><br></br>
 
-                <div class="panel panel-primary" style="width:100%">
-                    <div class="panel-heading">
-                        Livro Eletrônico - Introdução à Lógica Proposicional 
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-6 col-sm-6 col-xs-12"> 
-                            <a class="btn btn-lg btn-block btn-info" href="resources/links/title-sumary.html" 
-                               >Título e Sumário</a>
-                            <a class="btn btn-lg btn-block btn-info" data-toggle="modal" href="resources/links/biblio-apendix.html" 
-                               >
-                                Bibliografia e Apêndices</a>
+
+                        <h2 id="materiais" style="background-color:#009045; border-radius: 10px; width: 100%; height:50px;text-align: left"> Livro de Lógica </h2>
+
+                        <div class="panel panel-primary" style="width:100%">
+                            <div class="panel-heading">
+                                Livro Eletrônico - Introdução à Lógica Proposicional 
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-6 col-sm-6 col-xs-12"> 
+                                    <a class="btn btn-lg btn-block btn-info" href="resources/links/title-sumary.html" 
+                                       >Título e Sumário</a>
+                                    <a class="btn btn-lg btn-block btn-info" data-toggle="modal" href="resources/links/biblio-apendix.html" 
+                                       >
+                                        Bibliografia e Apêndices</a>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12"> 
+                                    <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter01.html">
+                                        Capitulo 1: Logica Proposicional</a>
+                                    <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter02.html">
+                                        Capítulo 2: Dedução Natural</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12"> 
-                            <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter01.html">
-                                Capitulo 1: Logica Proposicional</a>
-                            <a class="btn btn-lg btn-block btn-info" href="resources/links/chapter02.html">
-                                Capítulo 2: Dedução Natural</a>
-                        </div>
-                    </div>
-                </div>
 
-                <br></br>
+                        <br></br>
 
-                <h2 id="producao"> Produção Acadêmica </h2>
+                        <h2 id="producao" style="background-color:#009045; border-radius: 10px; width: 100%; height:50px;text-align: left"> Produção Acadêmica </h2>
 
-                <br></br>
+                        <br></br>
 
-                <h2 id="links"> Links Relacionados </h2>
-                <br></br>
-                <h2 id="equipe"> Outras informações - Equipe </h2>
-                <br></br>
+                        <h2 id="links" style="background-color:#009045; border-radius: 10px; width: 100%; height:50px;text-align: left"> Links Relacionados </h2>
+                        <br></br>
+                        <h2 id="equipe" style="background-color:#009045; border-radius: 10px; width: 100%; height:50px;text-align: left"> Outras informações - Equipe </h2>
+                        <br></br>
 
-                <p style="font-size: 100%" class="text-justify">
-                    <p> <b>Ambiente de Ensino de Lógica Proposicional</b>
-                </p>
-                <p> Grupo de Pesquisa TAOS3 - 
-                    Aplicações em Tecnologias de Agentes, Ontologias e Simulação 3D</p>
-                <p> Pós-Graduação em Computação Aplicada (PIPCA) -
-                    Escola Politécnica - UNISINOS</p>
-                <p> Pós-Graduação em Informática na Educação (PGIE) - 
-                    CINTED - UFRGS</p>
-                <br />
+                        <p style="font-size: 100%" class="text-justify">
+                            <p> <b>Ambiente de Ensino de Lógica Proposicional</b>
+                            </p>
+                            <p> Grupo de Pesquisa TAOS3 - 
+                                Aplicações em Tecnologias de Agentes, Ontologias e Simulação 3D</p>
+                            <p> Pós-Graduação em Computação Aplicada (PIPCA) -
+                                Escola Politécnica - UNISINOS</p>
+                            <p> Pós-Graduação em Informática na Educação (PGIE) - 
+                                CINTED - UFRGS</p>
+                            <br />
 
-                <p> <b>Equipe:</b><br />
-                    <ul>
-                        <li>João Carlos Gluz - Arquiteto do Sistema</li>
-                        <li>Fabiane Penteado - Modelo de Mediação</li>
-                        <li>Cristiano Galafassi - Agente de Mediação</li>
-                        <li>Marcel Mossmann - Editor de Provas de Argumentos (versão Java)</li>
-                        <li>Lucas Gomes - Editor de Provas de Argumentos (versão Android)</li>
-                        <li>Rafael Kock Peres (UFRGS) - Editor de Provas de Argumentos (versão HTML5)</li>
-                        <li>Alessandro Alves - Editor de Exercícios sobre Fórmulas (versão Java) </li>
-                        <li>Rafael Bueno - Editor de Exercícios sobre Fórmulas (versão HTML5) </li>
-                    </ul></p>
-                <br />
-                <p> <b>Subsistemas:</b><br />
-                    <ul>
-                        <li>Caderno Eletrônico Logos - Versão 0.5 (Dezembro/2016)</li>
-                        <li>Editor de Provas de Argumentos - Versão 0.5 (Dezembro/2016)</li>
-                        <li>Editor de Exercícios de Fórmulas - Versão 0.5 (Dezembro/2016)</li>
-                        <li>Sistema Tutor Inteligente Heráclito - Versão 0.5 (Dezembro/2016)</li>
-                    </ul></p>
-                <br />
-                <p> 
-                    Contato: <a href="mailto:heraclitoobaa@gmail.com" target="_top">heraclitoobaa@gmail.com</a>
-                </p>
-                </p>
-
-
-
-               
-
+                            <p> <b>Equipe:</b><br />
+                                <ul>
+                                    <li>João Carlos Gluz - Arquiteto do Sistema</li>
+                                    <li>Fabiane Penteado - Modelo de Mediação</li>
+                                    <li>Cristiano Galafassi - Agente de Mediação</li>
+                                    <li>Marcel Mossmann - Editor de Provas de Argumentos (versão Java)</li>
+                                    <li>Lucas Gomes - Editor de Provas de Argumentos (versão Android)</li>
+                                    <li>Rafael Kock Peres (UFRGS) - Editor de Provas de Argumentos (versão HTML5)</li>
+                                    <li>Alessandro Alves - Editor de Exercícios sobre Fórmulas (versão Java) </li>
+                                    <li>Rafael Bueno - Editor de Exercícios sobre Fórmulas (versão HTML5) </li>
+                                </ul></p>
+                            <br />
+                            <p> <b>Subsistemas:</b><br />
+                                <ul>
+                                    <li>Caderno Eletrônico Logos - Versão 0.5 (Dezembro/2016)</li>
+                                    <li>Editor de Provas de Argumentos - Versão 0.5 (Dezembro/2016)</li>
+                                    <li>Editor de Exercícios de Fórmulas - Versão 0.5 (Dezembro/2016)</li>
+                                    <li>Sistema Tutor Inteligente Heráclito - Versão 0.5 (Dezembro/2016)</li>
+                                </ul></p>
+                            <br />
+                            <p> 
+                                Contato: <a href="mailto:heraclitoobaa@gmail.com" target="_top">heraclitoobaa@gmail.com</a>
+                            </p>
+                        </p>
             </ui:define>
         </ui:composition>
 

@@ -4,11 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+          
+      xmlns:b="http://bootsfaces.net/ui">
 
     <h:head>
-        <h:outputStylesheet name="common-style.css" library="css" />
-        
+
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
     </h:head>
@@ -26,16 +27,22 @@
                     <ui:include src="/template/common/commonMenu.xhtml" />
                 </ui:insert>
             </div>
-            <div id="content">
-                <ui:insert name="content" >
-                    <ui:include src="/template/common/commonContent.xhtml" />
-                </ui:insert>
-            </div>
-            <div id="footer">
-                <ui:insert name="footer" >
-                    <ui:include src="/template/common/commonFooter.xhtml" />
-                </ui:insert>
-            </div>
+            <b:row>
+                <b:column span="2"> </b:column>
+                <b:column span="8">
+                    <div id="content" style="margin-top: 60px; background-color: ghostwhite; border-radius: 10px">
+                        <ui:insert name="content" >
+                            <ui:include src="/template/common/commonContent.xhtml" />
+                        </ui:insert>
+                    </div>
+                    <div id="footer">
+                        <ui:insert name="footer" >
+                            <ui:include src="/template/common/commonFooter.xhtml" />
+                        </ui:insert>
+                    </div>
+                </b:column>
+                <b:column span="2"> </b:column>
+            </b:row>
 
         </div>
 

@@ -3,9 +3,7 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
 
@@ -13,12 +11,14 @@
 
         <ui:composition template="/template/common/commonLayout.xhtml">
             <ui:define name="header">
+                <title> Home</title>
+                <link rel="stylesheet" type="text/css" href="resources/css/menu-style.css"></link>
 
             </ui:define>
 
             <ui:define name="content">
-                <div class="jumbotron title">
-                    <div class="container">
+                <div class="jumbotron title" style="width: 100%; background-color:#009045; border-radius: 10px">
+                    <div class="container" >
                         <h1 class="text-center" style="font-size: 200%">
                             Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
                         </h1>
@@ -34,7 +34,7 @@
                 
                 <h2> Materiais </h2>
                 
-                <div class="panel panel-primary" style="width:100%">
+                <div class="panel panel-primary" style="width: 100%" >
                     <div class="panel-heading">
                         Livro Eletrônico - Introdução à Lógica Proposicional 
                     </div>

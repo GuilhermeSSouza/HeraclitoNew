@@ -13,14 +13,14 @@
 
                 <title> Exercicios</title>
                 <!-- algum arquivo, scrip, etc para esse pagina em questão-->
-
+                <link rel="stylesheet" type="text/css" href="resources/css/menu-style.css"></link>
             </ui:define>
 
             <ui:define name="content">
 
-                <div class="jumbotron title">
-                    <div class="container">
-                        <h1 class="text-center" style="font-size: 200%">
+                <div class="jumbotron title" style=" background-color:#009045; border-radius: 10px">
+                    <div class="container" >
+                        <h1 class="text-center" style="font-size: 200% ">
                             Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
                         </h1>
                         <p class="text-right" style="font-size: 120%">
@@ -36,44 +36,43 @@
 
 
 
-                <div class="row">
-                    <div class="col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>LOGOS</b> - Caderno de Estudos e Exercícios de Lógica
-                            </div>
-                            <div class="panel-body">
-                                <div id="Panel"> 
-                                    <h:form>
-                                        <b:commandButton id="buttonEditorFormulasProposicionais" class="btn btn-lg btn-block btn-primary" action="NovoExercicio.xhtml">
-                                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                                            Novo Exercício sobre Fórmula
-                                        </b:commandButton>
+              
 
-                                        <b:commandButton id="buttonEditorProvasArgumentos" class="btn btn-lg btn-block btn-primary" action="NovaProva.xhtml">
-                                            <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                                            Nova Prova de Argumento
-                                            <!--
-                                            
-                                            Teste se dentro da session existe alguma prova ainda por terminar
-                                            
-                                            <c:if test="${empty manager}">Nova Prova de Argumento</c:if>
-                                            <c:if test="${not empty manager}">Continuar Prova de Argumento</c:if> -->
-                                        </b:commandButton>
-                                    </h:form>
-
-                                    <!--
-                                    <button id="buttonNotasDeAula" class="btn btn-lg btn-block btn-info" data-toggle="modal" data-target="#modalNotasDeAula">
+                    <div class="panel panel-default" style="width: 100%">
+                        <div class="panel-heading">
+                            <b>LOGOS</b> - Caderno de Estudos e Exercícios de Lógica
+                        </div>
+                        <div class="panel-body">
+                            <div id="Panel"> 
+                                <h:form>
+                                    <b:commandButton id="buttonEditorFormulasProposicionais" class="btn btn-lg btn-block btn-primary" action="NovoExercicio.xhtml">
                                         <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                                        Notas de Aula
-                                    </button>
-                                    -->
+                                        Novo Exercício sobre Fórmula
+                                    </b:commandButton>
 
-                                </div>
+                                    <b:commandButton id="buttonEditorProvasArgumentos" class="btn btn-lg btn-block btn-primary" action="NovaProva.xhtml">
+                                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                        Nova Prova de Argumento
+                                        <!--
+                                        
+                                        Teste se dentro da session existe alguma prova ainda por terminar
+                                        
+                                        <c:if test="${empty manager}">Nova Prova de Argumento</c:if>
+                                        <c:if test="${not empty manager}">Continuar Prova de Argumento</c:if> -->
+                                    </b:commandButton>
+                                </h:form>
+
+                                <!--
+                                <button id="buttonNotasDeAula" class="btn btn-lg btn-block btn-info" data-toggle="modal" data-target="#modalNotasDeAula">
+                                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                    Notas de Aula
+                                </button>
+                                -->
+
                             </div>
                         </div>
-                    </div>           
-                </div>
+                    </div>
+
             </ui:define>
 
         </ui:composition>
