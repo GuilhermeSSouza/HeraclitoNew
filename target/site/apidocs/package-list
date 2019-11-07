@@ -1,4 +1,11 @@
 com.unipampa.edu.DAO
+com.unipampa.edu.bayesagent
 com.unipampa.edu.chart
+com.unipampa.edu.constantes
+com.unipampa.edu.credenciais
+com.unipampa.edu.execption
+com.unipampa.edu.heraclito
 com.unipampa.edu.model
+com.unipampa.edu.proposicional
+com.unipampa.edu.regra
 com.unipmpa.edu.controller
