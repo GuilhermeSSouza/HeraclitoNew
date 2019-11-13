@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.unipampa.edu.DAO.ConnectionFactoryTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 1.151 sec <<< FAILURE! - in com.unipampa.edu.DAO.ConnectionFactoryTest
+testCloseConnection_Connection(com.unipampa.edu.DAO.ConnectionFactoryTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.ConnectionFactoryTest.testCloseConnection_Connection(ConnectionFactoryTest.java:56)
+
+testCloseConnection_Connection_Statement(com.unipampa.edu.DAO.ConnectionFactoryTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.ConnectionFactoryTest.testCloseConnection_Connection_Statement(ConnectionFactoryTest.java:48)
+
+testCloseConnection_3args(com.unipampa.edu.DAO.ConnectionFactoryTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.ConnectionFactoryTest.testCloseConnection_3args(ConnectionFactoryTest.java:39)
+
+testGetConnection(com.unipampa.edu.DAO.ConnectionFactoryTest)  Time elapsed: 1.149 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<null> but was:<com.mysql.cj.jdbc.ConnectionImpl@80503>
+	at com.unipampa.edu.DAO.ConnectionFactoryTest.testGetConnection(ConnectionFactoryTest.java:28)
+

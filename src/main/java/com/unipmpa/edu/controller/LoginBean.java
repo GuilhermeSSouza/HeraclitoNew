@@ -162,7 +162,7 @@ public class LoginBean {
 
             while (rs.next()) {
                 userlogin = new User();
-                userlogin.setId(rs.getString(1));
+                userlogin.setId(rs.getInt(1));
                 userlogin.setName(rs.getString(2));
                 userlogin.setEmail(rs.getString(3));
                 userlogin.setAcesso(rs.getString(4));

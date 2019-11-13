@@ -14,7 +14,7 @@ package com.unipampa.edu.model;
 public class User {
     
     private String name;
-    private String id;
+    private int id;
     private String email;
     private String acesso; /* verificar a prioridade e gerar as restrições de 
     conteudo que ele pode acessar - (Pensando no futuro quando o sistema suportar
@@ -33,11 +33,17 @@ public class User {
      * @param email
      * @param acesso 
      */
-    public User(String name, String id, String email, String acesso) {
+    public User(String name, int id, String email, String acesso) {
         this.name = name;
         this.id = id;
         this.email = email;
         this.acesso = acesso;
+    }
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    
     }
 
     /**
@@ -60,7 +66,7 @@ public class User {
      *
      * @return
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -68,7 +74,7 @@ public class User {
      *
      * @param id
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -104,23 +110,14 @@ public class User {
         this.acesso = acesso;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 59 * hash + (this.acesso != null ? this.acesso.hashCode() : 0);
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + (this.email != null ? this.email.hashCode() : 0);
         return hash;
     }
 
-    /**
-     *
-     * @param obj
-     * @return
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -133,20 +130,16 @@ public class User {
             return false;
         }
         final User other = (User) obj;
-        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+        if (this.id != other.id) {
             return false;
         }
-        if ((this.acesso == null) ? (other.acesso != null) : !this.acesso.equals(other.acesso)) {
+        if ((this.email == null) ? (other.email != null) : !this.email.equals(other.email)) {
             return false;
         }
         return true;
     }
-    
-    
-    
-    
-    
-    
+
+   
     
     
 }

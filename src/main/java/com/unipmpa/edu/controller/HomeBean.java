@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 public class HomeBean {
     
     private String nameUser;
-    private String idUser;
+    private int idUser;
     private String userAcesso;
    
     /**
@@ -67,7 +67,7 @@ public class HomeBean {
      *
      * @return idUser
      */
-    public String getIdUser() {
+    public int getIdUser() {
         return idUser;
     }
 

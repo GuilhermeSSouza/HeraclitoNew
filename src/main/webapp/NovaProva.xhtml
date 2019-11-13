@@ -4,14 +4,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
     <h:body>
 
         <ui:composition template="/template/common/commonLayout.xhtml">
             <ui:define name="header">
+
                 <title> Nova Prova</title>
-                 
+
                 <meta http-equiv="X-UA-Compatible" content="IE=Edge" ></meta>
+                <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
                 <link rel="stylesheet" type="text/css" href="resources/css/menu-style.css"></link>
             </ui:define>
 
@@ -33,7 +37,7 @@
                 <br></br>
 
 
-                <!-- Alguns simblos dentro do codigo não é reconhecido pelo UTF-8...-->
+                <!-- Alguns simblos dentro do codigo nÃÂ£o ÃÂ© reconhecido pelo UTF-8...-->
 
 
 
@@ -58,12 +62,13 @@
                                     <br> </br> <!--<samp > A^(BvC), (~~A)->D, D<->E |- E</samp>-->
                                     <br> </br>
                                 </p>
+
                                 <h:form role="form" id="novaprova" >
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="HIPÓTESE 1, HIPÓTESE 2, HIPÓTESE 3, ..., HIPÓTESE N |- CONCLUSÃO" name="cabecalho0" />
+                                        <h:inputText  class="form-control" value ="#{homeProvaBean.novaProva}" ></h:inputText>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                        <h:commandButton class="btn btn-primary" value ="ComeÃ§ar" action="#{homeProvaBean.exercicoHipotese()}" ></h:commandButton>
                                     </div>
                                 </h:form>
                             </div>
@@ -87,7 +92,29 @@
                             <div class="panel-body">
                                 <h:form role="form" id="optionExercicio">
                                     <div class="form-group">
-                                        <select class="form-control" name="cabecalho1">
+                                        <select value= "" class="form-control" name="cabecalho1">
+
+
+                                            <b:selectOneMenu value = "#{homeProvaBean.selectProvaBasica}"> 
+                                                <f:selectItem itemValue = "C,B->A,C->B|-A" itemLabel = "C,B->A,C->B|-A" /> 
+                                                <f:selectItem itemValue = "~A->(B->C),~A,B|-C" itemLabel = "~A->(B->C),~A,B|-C" /> 
+                                                <f:selectItem itemValue = "(A^B)->(C^D),~~A,B|-D" itemLabel = "(A^B)->(C^D),~~A,B|-D" /> 
+
+                                                <f:selectItem itemValue = "A|-A^A" itemLabel = "A|-A^A" /> 
+                                                <f:selectItem itemValue = "A^B|-A->B" itemLabel = "A^B|-A->B" /> 
+
+
+                                                <f:selectItem itemValue = "A,~~(A->B)|-Bv~B" itemLabel = "A,~~(A->B)|-Bv~B" /> 
+                                                <f:selectItem itemValue = "~AvB|-~(A^~B)" itemLabel = "~AvB|-~(A^~B)" /> 
+                                                <f:selectItem itemValue = "A->B,A->(B->C)|-(A->C)" itemLabel = "~A,B->A|-~B" /> 
+
+                                                <f:selectItem itemValue = "A->B,A->~B|-~A" itemLabel = "A->B,A->~B|-~A" /> 
+                                                <f:selectItem itemValue = "(A->B)^(A->C)|-A->(B^C)" itemLabel = "(A->B)^(A->C)|-A->(B^C)" /> 
+                                                <f:selectItem itemValue = "A->B|-(A^C)->(B^C)" itemLabel = "A->B|-(A^C)->(B^C)" /> 
+                                            </b:selectOneMenu> 
+
+
+                                            <!--
                                             <option >C,B->A,C->B|-A</option>
                                             <option >~A->(B->C),~A,B|-C</option>
                                             <option >(A^B)->(C^D),~~A,B|-D</option>
@@ -97,11 +124,11 @@
                                             <option >A->B,A->(B->C)|-(A->C)</option>
                                             <option >(C->D)->C|-(C->D)->D</option>
                                             <option >~A,AvB|-B</option>
-                                            <option >(A ^ B) -> C, A |- B -> C</option>
+                                            <option >(A ^ B) -> C, A |- B -> C</option>-->
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                        <h:commandButton  value= "ComeÃ§ar" class="btn btn-primary" action="#{homeProvaBean.provaBasica()}"></h:commandButton>
                                     </div>
                                 </h:form>
                             </div>
@@ -124,24 +151,48 @@
                             <div class="panel-body">
                                 <h:form role="form" id="cadastro" >
                                     <div class="form-group">
-                                        <select class="form-control" name="cabecalho2">
+
+
+
+                                        <b:selectOneMenu value = "#{homeProvaBean.selectProvaIntermediaria}"> 
+                                            <f:selectItem itemValue = "A->(B->C),Av~D,B|-D->C" itemLabel = "A->(B->C),Av~D,B|-D->C" /> 
+                                            <f:selectItem itemValue = "A->B,B->(C->D),A->(B->C)|-A->D" itemLabel = "A->B,B->(C->D),A->(B->C)|-A->D" /> 
+                                            <f:selectItem itemValue = "~Av~B|-~(A^B)" itemLabel = "~Av~B|-~(A^B)" /> 
+
+                                            <f:selectItem itemValue = "A^B|-~(A->~B)" itemLabel = "A^B|-~(A->~B)" /> 
+                                            <f:selectItem itemValue = "A^B|-A->B" itemLabel = "A^B|-A->B" /> 
+
+
+                                            <f:selectItem itemValue = "~A->A|-A" itemLabel = "~A->A|-A" /> 
+                                            <f:selectItem itemValue = "~AvB|-~(A^~B)" itemLabel = "~AvB|-~(A^~B)" /> 
+                                            <f:selectItem itemValue = "~Av~B|-~(A^B)" itemLabel = "~Av~B|-~(A^B)" /> 
+
+                                            <f:selectItem itemValue = "A->B,A->~B|-~A" itemLabel = "A->B,A->~B|-~A" /> 
+                                            <f:selectItem itemValue = "(A->B)^(A->C)|-A->(B^C)" itemLabel = "(A->B)^(A->C)|-A->(B^C)" /> 
+                                            <f:selectItem itemValue = "A->B|-(A^C)->(B^C)" itemLabel = "A->B|-(A^C)->(B^C)" /> 
+                                        </b:selectOneMenu> 
+
+
+
+                                        <!--
+                                        <select value="" class="form-control" name="cabecalho2">
                                             <option >A->(B->C),Av~D,B|-D->C</option>
                                             <option >A->B,B->(C->D),A->(B->C)|-A->D</option>
                                             <option >~Av~B|-~(A^B)</option>
                                             <option >A^B|-~(A->~B)</option>
                                             <option >A^B|-A->B</option>
-                                            <option ><!--A<->B,B<->C|-A<->C--></option>
-                                            <option > <!--A<->B|-~A<->~C--></option>
+                                            <option >A &lt;->B,B &lt;->C|-A &lt;->C</option>
+                                            <option > A<->B|-~A<->~C</option>
                                             <option >~A->A|-A</option>
                                             <option >~A|-A->B</option>
                                             <option >~AvB|-~(A^~B)</option>
                                             <option >A->B,A->~B|-~A</option>
                                             <option >(A->B)^(A->C)|-A->(B^C)</option>
                                             <option >A->B|-(A^C)->(B^C)</option>
-                                        </select>
+                                        </select>-->
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                        <h:commandButton class="btn btn-primary" value="Começar" action="#{homeProvaBean.provaIntermediarias()}"></h:commandButton>
                                     </div>
                                 </h:form>
                             </div>
@@ -162,20 +213,35 @@
                         </div>
                         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                             <div class="panel-body">
-                                <form role="form" id="cadastro" action="">
+                                <form role="form"  action="">
                                     <div class="form-group">
-                                        <select class="form-control" name="cabecalho3">
+
+
+
+                                        <b:selectOneMenu value = "#{homeProvaBean.selectProvaAvancada}"> 
+                                            <f:selectItem itemValue = "AvB|-BvA" itemLabel = "AvB|-BvA" /> 
+                                            <f:selectItem itemValue = "A->B|-(AvC)->(BvC)" itemLabel = "A->B|-(AvC)->(BvC)" /> 
+                                            <f:selectItem itemValue = "|-A->(B->(A^B))" itemLabel = "|-A->(B->(A^B))" /> 
+
+                                            <f:selectItem itemValue = "|-(A->B)->(~B->~A)" itemLabel = "|-(A->B)->(~B->~A)" /> 
+                                            <f:selectItem itemValue = "|-(A^B)v(~Av~B)" itemLabel = "|-(A^B)v(~Av~B)" /> 
+                                            <f:selectItem itemValue = "|-B->(Av~A)" itemLabel = "|-B->(Av~A)" /> 
+                                        </b:selectOneMenu> 
+
+
+
+                                        <!--<select value="" class="form-control" name="cabecalho3">
                                             <option >AvB|-BvA</option>
                                             <option >A->B|-(AvC)->(BvC)</option>
                                             <option >|-A->(B->(A^B))</option>
-                                            <option > <!--|-~(A<->~A) --></option>
+                                            <option > |-~(A<->~A) </option>
                                             <option >|-(A->B)->(~B->~A)</option>
                                             <option >|-(A^B)v(~Av~B)</option>
                                             <option >|-B->(Av~A)</option>
-                                        </select>
+                                        </select>-->
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Começar</button>
+                                        <h:commandButton value="Começar" class="btn btn-primary" action="#{homeProvaBean.provaAvancadas()}"></h:commandButton>
                                     </div>
                                 </form>
                             </div>
@@ -186,6 +252,7 @@
                 <br>
 
                 </br>
+
             </ui:define>
 
         </ui:composition>

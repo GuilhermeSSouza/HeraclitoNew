@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: com.unipampa.edu.DAO.PassoDBTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.295 sec <<< FAILURE! - in com.unipampa.edu.DAO.PassoDBTest
+testSelectPassoList(com.unipampa.edu.DAO.PassoDBTest)  Time elapsed: 0.067 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<null> but was:<[]>
+	at com.unipampa.edu.DAO.PassoDBTest.testSelectPassoList(PassoDBTest.java:55)
+
+testSelectByLastIDPasso(com.unipampa.edu.DAO.PassoDBTest)  Time elapsed: 0.035 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0> but was:<-1>
+	at com.unipampa.edu.DAO.PassoDBTest.testSelectByLastIDPasso(PassoDBTest.java:76)
+
+testInsertPasso(com.unipampa.edu.DAO.PassoDBTest)  Time elapsed: 0.132 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.PassoDBTest.testInsertPasso(PassoDBTest.java:34)
+
+testSelectPasso(com.unipampa.edu.DAO.PassoDBTest)  Time elapsed: 0.007 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.PassoDBTest.testSelectPasso(PassoDBTest.java:45)
+
+testUpdatePassoCorreto(com.unipampa.edu.DAO.PassoDBTest)  Time elapsed: 0.054 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<false> but was:<true>
+	at com.unipampa.edu.DAO.PassoDBTest.testUpdatePassoCorreto(PassoDBTest.java:66)
+

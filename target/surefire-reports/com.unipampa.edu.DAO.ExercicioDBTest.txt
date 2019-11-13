@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.unipampa.edu.DAO.ExercicioDBTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 0.173 sec <<< FAILURE! - in com.unipampa.edu.DAO.ExercicioDBTest
+testUpdateExercicioCorreto(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.006 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<false> but was:<true>
+	at com.unipampa.edu.DAO.ExercicioDBTest.testUpdateExercicioCorreto(ExercicioDBTest.java:75)
+
+testUpdateExercicioHoraFim(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.006 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<false> but was:<true>
+	at com.unipampa.edu.DAO.ExercicioDBTest.testUpdateExercicioHoraFim(ExercicioDBTest.java:65)
+
+testSelectExercicio(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.007 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.ExercicioDBTest.testSelectExercicio(ExercicioDBTest.java:45)
+
+testSelectExercicioList(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.032 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<null> but was:<[]>
+	at com.unipampa.edu.DAO.ExercicioDBTest.testSelectExercicioList(ExercicioDBTest.java:54)
+
+testSelectByLastID(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.008 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0> but was:<-1>
+	at com.unipampa.edu.DAO.ExercicioDBTest.testSelectByLastID(ExercicioDBTest.java:96)
+
+testUpdateExercicioAjuda(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.009 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<false> but was:<true>
+	at com.unipampa.edu.DAO.ExercicioDBTest.testUpdateExercicioAjuda(ExercicioDBTest.java:86)
+
+testInsertExercico(com.unipampa.edu.DAO.ExercicioDBTest)  Time elapsed: 0.105 sec  <<< FAILURE!
+java.lang.AssertionError: The test case is a prototype.
+	at com.unipampa.edu.DAO.ExercicioDBTest.testInsertExercico(ExercicioDBTest.java:35)
+

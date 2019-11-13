@@ -1,0 +1,52 @@
+-------------------------------------------------------------------------------
+Test set: com.unipampa.edu.model.ExerciciobancoTest
+-------------------------------------------------------------------------------
+Tests run: 12, Failures: 0, Errors: 12, Skipped: 0, Time elapsed: 0.268 sec <<< FAILURE! - in com.unipampa.edu.model.ExerciciobancoTest
+testGetAjuda(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.013 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testGetAjuda(ExerciciobancoTest.java:63)
+
+testGetInico(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testGetInico(ExerciciobancoTest.java:101)
+
+testGetId(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testGetId(ExerciciobancoTest.java:25)
+
+testSetId(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testSetId(ExerciciobancoTest.java:35)
+
+testSetCorreto(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testSetCorreto(ExerciciobancoTest.java:54)
+
+testGetFromula(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testGetFromula(ExerciciobancoTest.java:82)
+
+testGetCorreto(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testGetCorreto(ExerciciobancoTest.java:44)
+
+testGetFim(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testGetFim(ExerciciobancoTest.java:120)
+
+testSetFromula(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testSetFromula(ExerciciobancoTest.java:92)
+
+testSetFim(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testSetFim(ExerciciobancoTest.java:130)
+
+testSetAjuda(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testSetAjuda(ExerciciobancoTest.java:73)
+
+testSetInico(com.unipampa.edu.model.ExerciciobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.ExerciciobancoTest.testSetInico(ExerciciobancoTest.java:111)
+

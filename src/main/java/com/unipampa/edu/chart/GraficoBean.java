@@ -54,7 +54,7 @@ public class GraficoBean implements Serializable {
     
     
     private String nameUser;
-    private String idUser;
+    private int idUser;
     private String userAcesso;
 
     
@@ -202,7 +202,7 @@ public class GraficoBean implements Serializable {
         regras.setLabel("Regras");
 
         try {
-            dado = getDadoRegras(idUser);
+            dado = getDadoRegras(String.valueOf(idUser));
         } catch (Exception ex) {
             Logger.getLogger(GraficoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -258,7 +258,7 @@ public class GraficoBean implements Serializable {
     private void createPieModel2() {
         List<Dado> dado = null;
         try {
-            dado = getDadoNivel(idUser);
+            dado = getDadoNivel(String.valueOf(idUser));
         } catch (Exception ex) {
             Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -278,7 +278,7 @@ public class GraficoBean implements Serializable {
 
         List<Dado> dado = null;
         try {
-            dado = getDado(idUser);
+            dado = getDado(String.valueOf(idUser));
         } catch (Exception ex) {
             Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -297,7 +297,7 @@ public class GraficoBean implements Serializable {
 
         List<Dado> dado = null;
         try {
-            dado = getDado(idUser);
+            dado = getDado(String.valueOf(idUser));
         } catch (Exception ex) {
             Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);
         }
