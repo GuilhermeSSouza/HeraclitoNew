@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------------
+Test set: com.unipampa.edu.model.PassobancoTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 10, Skipped: 0, Time elapsed: 0.167 sec <<< FAILURE! - in com.unipampa.edu.model.PassobancoTest
+testGetRegra(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0.022 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testGetRegra(PassobancoTest.java:63)
+
+testGetId(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testGetId(PassobancoTest.java:25)
+
+testSetId(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testSetId(PassobancoTest.java:35)
+
+testGetProbabilidade(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testGetProbabilidade(PassobancoTest.java:101)
+
+testSetCorreto(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testSetCorreto(PassobancoTest.java:54)
+
+testSetHoraExecultado(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testSetHoraExecultado(PassobancoTest.java:92)
+
+testGetHoraExecultado(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0.005 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testGetHoraExecultado(PassobancoTest.java:82)
+
+testGetCorreto(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testGetCorreto(PassobancoTest.java:44)
+
+testSetProbabilidade(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testSetProbabilidade(PassobancoTest.java:111)
+
+testSetRegra(com.unipampa.edu.model.PassobancoTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.NullPointerException
+	at com.unipampa.edu.model.PassobancoTest.testSetRegra(PassobancoTest.java:73)
+

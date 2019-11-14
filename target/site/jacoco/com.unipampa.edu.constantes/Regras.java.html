@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Regras.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.constantes</a> &gt; <span class="el_source">Regras.java</span></div><h1>Regras.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.constantes;
+
+/**
+ *
+ * @author gia
+ */
+<span class="nc" id="L12">public enum Regras {</span>
+
+<span class="nc" id="L14">    HIP(&quot;Hip&quot;, &quot;Hipótese&quot;, false),</span>
+<span class="nc" id="L15">    CH(&quot;CH&quot;, &quot;Criar Hipótese&quot;, false),</span>
+<span class="nc" id="L16">    HPC(&quot;HPC&quot;, &quot;Hipótese PC&quot;, false),</span>
+<span class="nc" id="L17">    HRAA(&quot;HRAA&quot;, &quot;Hipótese RAA&quot;, false),</span>
+<span class="nc" id="L18">    RAA(&quot;RAA&quot;, &quot;Redução ao Absurdo&quot;, false),</span>
+<span class="nc" id="L19">    DN(&quot;DN&quot;, &quot;Dupla Negação&quot;, false),</span>
+<span class="nc" id="L20">    PC(&quot;PC&quot;, &quot;Prova Condicional&quot;, false),</span>
+<span class="nc" id="L21">    MP(&quot;MP&quot;, &quot;Modus Ponens&quot;, false),</span>
+<span class="nc" id="L22">    CJ(&quot;Cj&quot;, &quot;Conjunção&quot;, false),</span>
+<span class="nc" id="L23">    SP(&quot;Sp&quot;, &quot;Simplificação&quot;, false),</span>
+<span class="nc" id="L24">    AD(&quot;Ad&quot;, &quot;Adição&quot;, false),</span>
+<span class="nc" id="L25">    MDJ(&quot;-Dj&quot;, &quot;Remoção da Disjunção&quot;, false),</span>
+<span class="nc" id="L26">    PEQ(&quot;+Eq&quot;, &quot;Introdução da Equivalência&quot;, false),</span>
+<span class="nc" id="L27">    MEQ(&quot;-Eq&quot;, &quot;Eliminação da Equivalência&quot;, false),</span>
+<span class="nc" id="L28">    CL(&quot;CL&quot;, &quot;Copiar Linha&quot;, false),</span>
+<span class="nc" id="L29">    MT(&quot;MT&quot;, &quot;Modus Tollens&quot;, true),</span>
+<span class="nc" id="L30">    SH(&quot;SH&quot;, &quot;Silogismo Hipotético&quot;, true),</span>
+<span class="nc" id="L31">    SD(&quot;SD&quot;, &quot;Silogismo Disjuntivo&quot;, true),</span>
+<span class="nc" id="L32">    DC(&quot;DC&quot;, &quot;Dilema Construtivo&quot;, true),</span>
+<span class="nc" id="L33">    EXP(&quot;EXP&quot;, &quot;Exportação&quot;, true),</span>
+<span class="nc" id="L34">    INC(&quot;INC&quot;, &quot;Inconsistência&quot;, true);</span>
+
+    private final String sigla;
+    private final String nome;
+    private final Boolean ehDerivada;
+
+<span class="nc" id="L40">    Regras(String sigla, String nome, Boolean ehDerivada) {</span>
+<span class="nc" id="L41">        this.sigla = sigla;</span>
+<span class="nc" id="L42">        this.nome = nome;</span>
+<span class="nc" id="L43">        this.ehDerivada = ehDerivada;</span>
+<span class="nc" id="L44">    }</span>
+
+    public String getSigla() {
+<span class="nc" id="L47">        return this.sigla;</span>
+    }
+
+    public String getTutorID() {
+/*  
+    // lower case sigla = tutor ID
+    HIP(&quot;Hip&quot;, &quot;Hipótese&quot;, false),
+        write_rule(hip) :- !, write('Hip').
+    CH(&quot;CH&quot;, &quot;Criar Hipótese&quot;, false),
+        write_rule(ch) :- !, write('CH').
+    RAA(&quot;RAA&quot;, &quot;Redução ao Absurdo&quot;, false),
+        write_rule(raa) :- !, write('RAA').
+    DN(&quot;DN&quot;, &quot;Dupla Negação&quot;, false),
+        write_rule(dn) :- !, write('DN').
+    PC(&quot;PC&quot;, &quot;Prova Condicional&quot;, false),
+        write_rule(pc) :- !, write('PC').
+    MP(&quot;MP&quot;, &quot;Modus Ponens&quot;, false),
+        write_rule(mp) :- !, write('MP').
+    MT(&quot;MT&quot;, &quot;Modus Tollens&quot;, true),
+        write_rule(mt) :- !, write('MT').
+    SH(&quot;SH&quot;, &quot;Silogismo Hipotético&quot;, true),
+        write_rule(sh) :- !, write('SH')
+    SD(&quot;SD&quot;, &quot;Silogismo Disjuntivo&quot;, true),
+        write_rule(sd) :- !, write('SD').
+    DC(&quot;DC&quot;, &quot;Dilema Construtivo&quot;, true),
+        write_rule(dc) :- !, write('DC').
+    INC(&quot;INC&quot;, &quot;Inconsistência&quot;, true);
+        write_rule(inc) :- !, write('Inc').
+
+    // lower case sigla != tutor ID
+    HPC(&quot;HPC&quot;, &quot;Hipótese PC&quot;, false),
+        write_rule(hippc) :- !, write('Hip-PC').
+    HRAA(&quot;HRAA&quot;, &quot;Hipótese RAA&quot;, false),
+        write_rule(hipraa) :- !, write('Hip-RAA').
+    CJ(&quot;Cj&quot;, &quot;Conjução&quot;, false),
+        write_rule(conj) :- !, write('Cj').
+    SP(&quot;Sp&quot;, &quot;Simplificação&quot;, false),
+        write_rule(simp) :- !, write('Sp').
+    AD(&quot;Ad&quot;, &quot;Adição&quot;, false),
+        write_rule(adic) :- !, write('Ad').
+    MDJ(&quot;-Dj&quot;, &quot;Remoção da Disjunção&quot;, false),
+        write_rule(djelim) :- !, write('-Dj').
+    PEQ(&quot;+Eq&quot;, &quot;Introdução da Equivalência&quot;, false),
+        write_rule(eqintrod) :- !, write('+Eq').
+    MEQ(&quot;-Eq&quot;, &quot;Eliminação da Equivalência&quot;, false),
+        write_rule(eqelim) :- !, write('-Eq').
+    CL(&quot;CL&quot;, &quot;Copiar Linha&quot;, false),
+        write_rule(idem) :- !, write('Idem').
+    EXP(&quot;EXP&quot;, &quot;Exportação&quot;, true),
+        write_rule(export) :- !, write('Exp').
+    
+*/
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (this.sigla==&quot;HPC&quot;)</span>
+<span class="nc" id="L100">                return &quot;hippc&quot;;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        else if (this.sigla==&quot;HRAA&quot;)</span>
+<span class="nc" id="L102">                return &quot;hipraa&quot;;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        else if (this.sigla==&quot;Cj&quot;)</span>
+<span class="nc" id="L104">                return &quot;conj&quot;;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        else if (this.sigla==&quot;Sp&quot;)</span>
+<span class="nc" id="L106">                return &quot;simp&quot;;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        else if (this.sigla==&quot;Ad&quot;)</span>
+<span class="nc" id="L108">                return &quot;adic&quot;;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        else if (this.sigla==&quot;-Dj&quot;)</span>
+<span class="nc" id="L110">                return &quot;djelim&quot;;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        else if (this.sigla==&quot;+Eq&quot;)</span>
+<span class="nc" id="L112">                return &quot;eqintrod&quot;;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        else if (this.sigla==&quot;-Eq&quot;)</span>
+<span class="nc" id="L114">                return &quot;eqelim&quot;;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        else if (this.sigla==&quot;CL&quot;)</span>
+<span class="nc" id="L116">                return &quot;idem&quot;;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        else if (this.sigla==&quot;Exp&quot;)</span>
+<span class="nc" id="L118">                return &quot;export&quot;;</span>
+        else    
+<span class="nc" id="L120">                return this.sigla.toLowerCase();</span>
+        
+}
+    public String getNome() {
+<span class="nc" id="L124">        return this.nome;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

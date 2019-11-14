@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.unipampa.edu.DAO.ConnectionFactoryTest" time="1.151" tests="4" errors="0" skipped="0" failures="4">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.unipampa.edu.DAO.ConnectionFactoryTest" time="0.838" tests="4" errors="0" skipped="3" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64"/>
@@ -60,31 +60,13 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase name="testCloseConnection_Connection" classname="com.unipampa.edu.DAO.ConnectionFactoryTest" time="0">
-    <failure message="The test case is a prototype." type="java.lang.AssertionError">java.lang.AssertionError: The test case is a prototype.
-	at com.unipampa.edu.DAO.ConnectionFactoryTest.testCloseConnection_Connection(ConnectionFactoryTest.java:56)
-</failure>
-    <system-out><![CDATA[closeConnection
-]]></system-out>
+    <skipped/>
   </testcase>
   <testcase name="testCloseConnection_Connection_Statement" classname="com.unipampa.edu.DAO.ConnectionFactoryTest" time="0">
-    <failure message="The test case is a prototype." type="java.lang.AssertionError">java.lang.AssertionError: The test case is a prototype.
-	at com.unipampa.edu.DAO.ConnectionFactoryTest.testCloseConnection_Connection_Statement(ConnectionFactoryTest.java:48)
-</failure>
-    <system-out><![CDATA[closeConnection
-]]></system-out>
+    <skipped/>
   </testcase>
   <testcase name="testCloseConnection_3args" classname="com.unipampa.edu.DAO.ConnectionFactoryTest" time="0">
-    <failure message="The test case is a prototype." type="java.lang.AssertionError">java.lang.AssertionError: The test case is a prototype.
-	at com.unipampa.edu.DAO.ConnectionFactoryTest.testCloseConnection_3args(ConnectionFactoryTest.java:39)
-</failure>
-    <system-out><![CDATA[closeConnection
-]]></system-out>
+    <skipped/>
   </testcase>
-  <testcase name="testGetConnection" classname="com.unipampa.edu.DAO.ConnectionFactoryTest" time="1.149">
-    <failure message="expected:&lt;null&gt; but was:&lt;com.mysql.cj.jdbc.ConnectionImpl@80503&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<null> but was:<com.mysql.cj.jdbc.ConnectionImpl@80503>
-	at com.unipampa.edu.DAO.ConnectionFactoryTest.testGetConnection(ConnectionFactoryTest.java:28)
-]]></failure>
-    <system-out><![CDATA[getConnection
-]]></system-out>
-  </testcase>
+  <testcase name="testGetConnection" classname="com.unipampa.edu.DAO.ConnectionFactoryTest" time="0.837"/>
 </testsuite>

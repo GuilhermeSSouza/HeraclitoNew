@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TruthTableEvaluator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.proposicional</a> &gt; <span class="el_source">TruthTableEvaluator.java</span></div><h1>TruthTableEvaluator.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.proposicional;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.unipampa.edu.heraclito.StringHelper;
+import static com.wagnerandade.coollection.Coollection.from;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.TreeMap;
+import org.antlr.v4.misc.OrderedHashMap;
+
+/**
+ *
+ * @author rafaelbueno
+ */
+<span class="nc" id="L23">public class TruthTableEvaluator {</span>
+
+    private static final String ALIAS_END_FORMULA = &quot;final&quot;;
+    
+    public static List&lt;TruthTableColumn&gt; generateLogicValue(String[] variables) {
+
+<span class="nc" id="L29">        List&lt;TruthTableColumn&gt; variablesWithValues = new ArrayList&lt;TruthTableColumn&gt;(variables.length);</span>
+<span class="nc" id="L30">        int totalLines = (int) Math.pow(2, variables.length);</span>
+<span class="nc" id="L31">        int fator = 1;</span>
+
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (String variable : variables) {</span>
+<span class="nc" id="L34">            TruthTableColumn column = new TruthTableColumn();</span>
+<span class="nc" id="L35">            column.setName(variable);</span>
+
+<span class="nc" id="L37">            fator *= 2;</span>
+<span class="nc" id="L38">            int totalLogicValue = totalLines / fator;</span>
+
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            while (column.getValues().size() &lt; totalLines) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                for (int j = 1; j &gt;= 0; j--) {</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">                    Boolean logicValue = (j == 1);</span>
+
+<span class="nc bnc" id="L44" title="All 2 branches missed.">                    for (int z = 0; z &lt; totalLogicValue; z++) {</span>
+<span class="nc" id="L45">                        column.getValues().add(logicValue);</span>
+                    }
+                }
+            }
+
+<span class="nc" id="L50">            variablesWithValues.add(column);</span>
+        }
+
+<span class="nc" id="L53">        return variablesWithValues;</span>
+    }
+
+    public static Boolean evaluateTruthTable(String formula, List&lt;TruthTableColumn&gt; tableToEvaluate) throws SyntaxException {
+<span class="nc" id="L57">        List&lt;TruthTableColumn&gt; generatedTable = generateTruthTableForFormula(formula);</span>
+<span class="nc" id="L58">        return compareTruthTable(generatedTable, tableToEvaluate, formula);</span>
+    }
+
+    public static List&lt;TruthTableColumn&gt; evaluateTruthTablePartial(String formula, List&lt;TruthTableColumn&gt; tableToEvaluate) throws SyntaxException {
+<span class="nc" id="L62">        List&lt;TruthTableColumn&gt; generatedTable = generateTruthTableForFormula(formula);</span>
+<span class="nc" id="L63">        return compareTruthTablePartial(generatedTable, tableToEvaluate, formula);</span>
+    }
+
+    public static List&lt;TruthTableColumn&gt; generateTruthTableForFormula(String formula) throws SyntaxException {
+<span class="nc" id="L67">        Kryo kryo = new Kryo();</span>
+<span class="nc" id="L68">        List&lt;Node&gt; lines = new ArrayList&lt;Node&gt;();</span>
+
+<span class="nc" id="L70">        Node node = ParserHelper.parseFormula(formula);</span>
+<span class="nc" id="L71">        String[] variables = NodeHelper.extractVariables(node);</span>
+<span class="nc" id="L72">        List&lt;TruthTableColumn&gt; variablesWithValues = generateLogicValue(variables);</span>
+
+<span class="nc" id="L74">        int totalLines = variablesWithValues.get(0).getValues().size();</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        for (int x = 0; x &lt; totalLines; x++) {</span>
+<span class="nc" id="L77">            HashMap&lt;String, Boolean&gt; values = new OrderedHashMap&lt;String, Boolean&gt;();</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            for (int y = 0; y &lt; variables.length; y++) {</span>
+<span class="nc" id="L80">                values.put(</span>
+<span class="nc" id="L81">                        variablesWithValues.get(y).getName(),</span>
+<span class="nc" id="L82">                        variablesWithValues.get(y).getValues().get(x)</span>
+                );
+            }
+
+<span class="nc" id="L86">            Node newNode = kryo.copy(node);</span>
+<span class="nc" id="L87">            NodeHelper.setVariablesValues(newNode, values);</span>
+<span class="nc" id="L88">            newNode.calculateValue();</span>
+<span class="nc" id="L89">            lines.add(newNode);</span>
+        }
+
+<span class="nc" id="L92">        return extractTruthTable(lines);</span>
+    }
+
+    private static List&lt;TruthTableColumn&gt; extractTruthTable(List&lt;Node&gt; lines) {
+
+<span class="nc" id="L97">        ArrayList&lt;ArrayList&lt;Node&gt;&gt; tableRows = new ArrayList&lt;ArrayList&lt;Node&gt;&gt;();</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for (Node line : lines) {</span>
+<span class="nc" id="L100">            tableRows.add((ArrayList&lt;Node&gt;) convertToTableRow(line));</span>
+<span class="nc" id="L101">        }</span>
+
+<span class="nc" id="L103">        return convertLinesToColumns(tableRows);</span>
+    }
+
+    private static List&lt;Node&gt; convertToTableRow(Node node) {
+<span class="nc" id="L107">        List&lt;Node&gt; variables = new ArrayList&lt;Node&gt;();</span>
+<span class="nc" id="L108">        TreeMap&lt;Integer, ArrayList&lt;Node&gt;&gt; columns = new TreeMap&lt;Integer, ArrayList&lt;Node&gt;&gt;(</span>
+<span class="nc" id="L109">                new Comparator&lt;Integer&gt;() {</span>
+
+            @Override
+            public int compare(Integer o1, Integer o2) {
+<span class="nc" id="L113">                return o2.compareTo(o1);</span>
+            }
+        });
+
+<span class="nc" id="L117">        convertToTableRow(node, variables, columns, 0);</span>
+<span class="nc" id="L118">        return buildTableRow(variables, columns);</span>
+    }
+
+    private static void convertToTableRow(Node node, List&lt;Node&gt; variables, TreeMap&lt;Integer, ArrayList&lt;Node&gt;&gt; columns, int level) {
+<span class="nc bnc" id="L122" title="All 2 branches missed.">        for (Node children : node.getChildren()) {</span>
+<span class="nc" id="L123">            convertToTableRow(children, variables, columns, level + 1);</span>
+<span class="nc" id="L124">        }</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        if (NodeHelper.isVariableOrNegatedVariable(node)) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">            if (!NodeHelper.nodeExists(variables, node)) {</span>
+<span class="nc" id="L128">                variables.add(node);</span>
+            }
+        } else {
+<span class="nc" id="L131">            columns.putIfAbsent(level, new ArrayList&lt;Node&gt;());</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">            if (!NodeHelper.nodeExists(columns.get(level), node)) {</span>
+<span class="nc" id="L134">                columns.get(level).add(node);</span>
+            }
+        }
+<span class="nc" id="L137">    }</span>
+
+    private static List&lt;Node&gt; buildTableRow(List&lt;Node&gt; variables, TreeMap&lt;Integer, ArrayList&lt;Node&gt;&gt; columns) {
+<span class="nc" id="L140">        List&lt;Node&gt; result = new ArrayList&lt;Node&gt;();</span>
+
+<span class="nc" id="L142">        variables = from(variables).orderBy(&quot;getText&quot;).all();</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        for (int i = 0; i &lt; variables.size(); i++) {</span>
+<span class="nc" id="L145">            result.add(variables.get(i));</span>
+        }
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        for (Integer key : columns.keySet()) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">            for (Node node : columns.get(key)) {</span>
+<span class="nc" id="L150">                result.add(node);</span>
+<span class="nc" id="L151">            }</span>
+<span class="nc" id="L152">        }</span>
+
+<span class="nc" id="L154">        return result;</span>
+    }
+
+    private static List&lt;TruthTableColumn&gt; convertLinesToColumns(ArrayList&lt;ArrayList&lt;Node&gt;&gt; tableRows) {
+<span class="nc" id="L158">        int totalColumns = tableRows.get(0).size();</span>
+<span class="nc" id="L159">        List&lt;TruthTableColumn&gt; result = new ArrayList&lt;TruthTableColumn&gt;();</span>
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        for (int y = 0; y &lt; totalColumns; y++) {</span>
+<span class="nc" id="L162">            String columnName = tableRows.get(0).get(y).getText();</span>
+
+<span class="nc" id="L164">            TruthTableColumn column = new TruthTableColumn();</span>
+<span class="nc" id="L165">            column.setName(columnName);</span>
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">            for (int x = 0; x &lt; tableRows.size(); x++) {</span>
+<span class="nc" id="L168">                Boolean value = tableRows.get(x).get(y).getValue();</span>
+<span class="nc" id="L169">                column.getValues().add(value);</span>
+            }
+
+<span class="nc" id="L172">            result.add(column);</span>
+        }
+
+<span class="nc" id="L175">        return result;</span>
+    }
+
+    private static Boolean compareTruthTable(List&lt;TruthTableColumn&gt; table1, List&lt;TruthTableColumn&gt; table2, String formula) {
+<span class="nc" id="L179">        int totalColumns1 = table1.size();</span>
+<span class="nc" id="L180">        int totalColumns2 = table2.size();</span>
+<span class="nc" id="L181">        int totalLines1 = table1.get(0).getValues().size();</span>
+<span class="nc" id="L182">        int totalLines2 = table2.get(0).getValues().size();</span>
+
+<span class="nc bnc" id="L184" title="All 4 branches missed.">        if (totalColumns1 != totalColumns2 || totalLines1 != totalLines2) {</span>
+<span class="nc" id="L185">            return Boolean.FALSE;</span>
+        }
+
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        for (int y = 0; y &lt; totalColumns1; y++) {</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">            if (!compareColumnName(table1.get(y), table2.get(y), formula)) {</span>
+<span class="nc" id="L191">                return Boolean.FALSE;</span>
+            }
+
+<span class="nc bnc" id="L194" title="All 2 branches missed.">            for (int x = 0; x &lt; totalLines1; x++) {</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">                if (!Objects.equals(table1.get(y).getValues().get(x), table2.get(y).getValues().get(x))) {</span>
+<span class="nc" id="L196">                    return Boolean.FALSE;</span>
+                }
+            }
+        }
+
+<span class="nc" id="L201">        return Boolean.TRUE;</span>
+    }
+
+    private static Boolean compareColumnName(TruthTableColumn column1, TruthTableColumn column2, String formula) {
+<span class="nc" id="L205">        String temp1 = StringHelper.removeWhitesSpaces(TranslateAlias(column1.getName(), formula));</span>
+<span class="nc" id="L206">        String temp2 = StringHelper.removeWhitesSpaces(TranslateAlias(column2.getName(), formula));</span>
+        
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        if(StringHelper.containsExternalParentesis(temp1)) {</span>
+<span class="nc" id="L209">            temp1 = StringHelper.removeExternalParentesis(temp1);</span>
+        }
+        
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        if(StringHelper.containsExternalParentesis(temp2)) {</span>
+<span class="nc" id="L213">            temp2 = StringHelper.removeExternalParentesis(temp2);</span>
+        }
+
+<span class="nc" id="L216">        return temp1.equals(temp2);</span>
+    }
+
+    private static List&lt;TruthTableColumn&gt; compareTruthTablePartial(List&lt;TruthTableColumn&gt; generatedTable, List&lt;TruthTableColumn&gt; tableToEvaluate, String formula) {
+
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        for (int y = 0; y &lt; tableToEvaluate.size(); y++) {</span>
+<span class="nc" id="L222">            tableToEvaluate.get(y).setValuesEvaluateStatus(new ArrayList&lt;PartialEvaluateStatus&gt;());</span>
+
+<span class="nc bnc" id="L224" title="All 2 branches missed.">            if (y &gt;= generatedTable.size()) {</span>
+<span class="nc" id="L225">                tableToEvaluate.get(y).setColumnNameEvaluateStatus(PartialEvaluateStatus.Leftover);</span>
+
+<span class="nc bnc" id="L227" title="All 2 branches missed.">                for (int x = 0; x &lt; tableToEvaluate.get(y).getValues().size(); x++) {</span>
+<span class="nc" id="L228">                    tableToEvaluate.get(y).getValuesEvaluateStatus().add(PartialEvaluateStatus.Leftover);</span>
+                }
+
+<span class="nc" id="L231">                continue;</span>
+            }
+
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            if (StringHelper.isNullOrEmptyWhitespace(tableToEvaluate.get(y).getName())</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">                    || compareColumnName(tableToEvaluate.get(y), generatedTable.get(y), formula)) {</span>
+
+<span class="nc" id="L237">                tableToEvaluate.get(y).setColumnNameEvaluateStatus(PartialEvaluateStatus.Correct);</span>
+            } else {
+<span class="nc" id="L239">                tableToEvaluate.get(y).setColumnNameEvaluateStatus(PartialEvaluateStatus.Incorrect);</span>
+            }
+
+<span class="nc bnc" id="L242" title="All 2 branches missed.">            for (int x = 0; x &lt; tableToEvaluate.get(y).getValues().size(); x++) {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">                if (tableToEvaluate.get(y).getValues().get(x) == null</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                        || tableToEvaluate.get(y).getValues().get(x) == generatedTable.get(y).getValues().get(x)) {</span>
+
+<span class="nc" id="L246">                    tableToEvaluate.get(y).getValuesEvaluateStatus().add(PartialEvaluateStatus.Correct);</span>
+                } else {
+<span class="nc" id="L248">                    tableToEvaluate.get(y).getValuesEvaluateStatus().add(PartialEvaluateStatus.Incorrect);</span>
+                }
+            }
+        }
+
+<span class="nc" id="L253">        return tableToEvaluate;</span>
+    }
+    
+    private static String TranslateAlias(String columnName, String formula) {
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        if(StringHelper.removeWhitesSpaces(columnName).equalsIgnoreCase(ALIAS_END_FORMULA)) {</span>
+<span class="nc" id="L258">            return formula;</span>
+        }
+        
+<span class="nc" id="L261">        return columnName;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
@@ -22,14 +23,13 @@ public class ConnectionFactoryTest {
 
     @Test
     public void testGetConnection() throws Exception {
-        System.out.println("getConnection");
-        Connection expResult = null;
+        
         Connection result = ConnectionFactory.getConnection();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+        
     }
 
-    @Test
+    @Test@Ignore
     public void testCloseConnection_3args() throws Exception {
         System.out.println("closeConnection");
         Connection conn = null;
@@ -39,7 +39,7 @@ public class ConnectionFactoryTest {
         fail("The test case is a prototype.");
     }
 
-    @Test
+    @Test@Ignore
     public void testCloseConnection_Connection_Statement() throws Exception {
         System.out.println("closeConnection");
         Connection conn = null;
@@ -48,7 +48,7 @@ public class ConnectionFactoryTest {
         fail("The test case is a prototype.");
     }
 
-    @Test
+    @Test@Ignore
     public void testCloseConnection_Connection() throws Exception {
         System.out.println("closeConnection");
         Connection conn = null;

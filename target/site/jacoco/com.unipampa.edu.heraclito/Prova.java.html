@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Prova.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.heraclito</a> &gt; <span class="el_source">Prova.java</span></div><h1>Prova.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.heraclito;
+
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.constantes.Lado;
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.execption.LogicException;
+import com.unipampa.edu.regra.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
+import javax.servlet.http.HttpSession;
+
+
+/**
+ *
+ * @author Rafael
+ */
+public class Prova implements Cloneable {
+    
+    private String entrada;
+    private List&lt;String&gt; hipoteses;
+    private List&lt;String&gt; hipotesesAdicionadas;
+    private String resultado;
+    private List&lt;LinhaProva&gt; linhas;
+    private boolean finalizada;
+    private boolean podeAplicarRegra;
+    
+    private String studentId;
+    
+    private static final String SWAC_POST_INFORM = 
+            &quot;http://localhost:8090/swac/student_profile/proof_editor/inform&quot;;
+
+
+<span class="nc" id="L35">    public Prova(String student, String entrada) throws LogicException {</span>
+<span class="nc" id="L36">        Agente.getInstancia();</span>
+<span class="nc" id="L37">        this.entrada = FuncoesString.upperCaseNotV(entrada);</span>
+<span class="nc" id="L38">        this.linhas = new ArrayList();</span>
+<span class="nc" id="L39">        this.hipoteses = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L40">        this.hipotesesAdicionadas = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L41">        this.podeAplicarRegra = false;</span>
+<span class="nc" id="L42">        this.finalizada = false;</span>
+<span class="nc" id="L43">        this.studentId = student;</span>
+<span class="nc" id="L44">        this.processaEntrada(entrada);</span>
+<span class="nc" id="L45">    }</span>
+    
+    public String getEntrada() {
+<span class="nc" id="L48">        return this.entrada;</span>
+    }
+    
+    public List&lt;LinhaProva&gt; getLinhas() {
+<span class="nc" id="L52">        return this.linhas;</span>
+    }
+    
+    public void setLinhas(ArrayList&lt;LinhaProva&gt; linhas) {
+<span class="nc" id="L56">        this.linhas = linhas;</span>
+<span class="nc" id="L57">    }</span>
+    
+    public boolean estaFinalizada() {
+<span class="nc" id="L60">        return finalizada;</span>
+    }
+    
+    private void processaEntrada(String entrada) throws LogicException {
+<span class="nc bnc" id="L64" title="All 4 branches missed.">        if (entrada == null || entrada.isEmpty()) {</span>
+<span class="nc" id="L65">            throw new LogicException(&quot;É necessário digitar algo para a entrada&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (!FuncoesString.saoParentesesValidos(entrada)) {</span>
+<span class="nc" id="L69">            throw new LogicException(&quot;Parênteses inválidos!&quot;);</span>
+        }
+        
+<span class="nc" id="L72">        LinhaHipotese linhaEntrada = new LinhaHipotese(entrada);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (linhaEntrada.getOperadorPrincipal() != OperadorLogico.RESULTA) {</span>
+<span class="nc" id="L74">            throw new LogicException(&quot;Falta o operador &quot;</span>
+<span class="nc" id="L75">                    + OperadorLogico.RESULTA.getExpressao());</span>
+        }
+        
+<span class="nc" id="L78">        entrada = FuncoesString.removerEspacos(entrada);</span>
+        
+<span class="nc" id="L80">        int posicaoResulta = linhaEntrada.getPosicaoOperadorPrincipal();</span>
+        
+<span class="nc" id="L82">        StringBuilder sb = new StringBuilder(entrada);</span>
+        
+<span class="nc" id="L84">        String strhipoteses = sb.substring(0, posicaoResulta);</span>
+        
+<span class="nc" id="L86">        String resultado = sb.substring(posicaoResulta</span>
+<span class="nc" id="L87">                + OperadorLogico.RESULTA.getLength());</span>
+        
+<span class="nc" id="L89">        LinhaHipotese linhaSaida = new LinhaHipotese(resultado);</span>
+<span class="nc" id="L90">        this.resultado = linhaSaida.getLinha();</span>
+        
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (strhipoteses.length() &gt; 0) {</span>
+<span class="nc" id="L93">            String[] hipoteses = strhipoteses.split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            for (String hip : hipoteses) {</span>
+<span class="nc" id="L95">                linhaSaida = new LinhaHipotese(hip);</span>
+<span class="nc" id="L96">                this.hipoteses.add(linhaSaida.getLinha());</span>
+            }
+<span class="nc" id="L98">        } else {</span>
+<span class="nc" id="L99">            podeAplicarRegra = true;</span>
+        }
+        
+<span class="nc" id="L102">        this.informTutorNewArg();</span>
+<span class="nc" id="L103">    }</span>
+    
+    private void informTutorNewArg(){
+        // Inform tutor that a new argument (a new proof exercise) has started
+
+        // Check if there is some student logged
+<span class="nc bnc" id="L109" title="All 4 branches missed.">        if (studentId==null || studentId.isEmpty()) </span>
+<span class="nc" id="L110">            return;</span>
+        
+        // Type of message: new_arg
+<span class="nc" id="L113">        String content=&quot;new_arg&quot;;</span>
+<span class="nc" id="L114">        content += &quot;\n&quot;;</span>
+        
+        //Agente a = Agente.getInstancia();
+        //a.SendMessage(studentId );
+
+        // Proof argument
+<span class="nc" id="L120">        content +=&quot;[&quot;;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        for (Iterator&lt;String&gt; i = this.hipoteses.iterator(); i.hasNext();){</span>
+<span class="nc" id="L122">            String hip = i.next();</span>
+            // Hipotesis
+            
+<span class="nc" id="L125">            content += FuncoesString.toCanonicalFormula(hip.toString().toLowerCase());</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            if (i.hasNext())</span>
+<span class="nc" id="L127">                content += &quot;,&quot;;</span>
+<span class="nc" id="L128">        }</span>
+<span class="nc" id="L129">        content+=&quot;] :-- &quot;;</span>
+        // Conclusion
+<span class="nc" id="L131">        content+=FuncoesString.toCanonicalFormula(this.resultado.toLowerCase());</span>
+        
+        //Envia uma mensagem ao agente com o argumento
+<span class="nc" id="L134">        Agente a = Agente.getInstancia();</span>
+<span class="nc" id="L135">        System.out.println(this.studentId + &quot;#&quot; + content.split(&quot;\n&quot;)[1] + &quot;#NovoArgumento&quot;);</span>
+<span class="nc" id="L136">        a.SendMessage(this.studentId + &quot;#&quot; + content.split(&quot;\n&quot;)[1] + &quot;#NovoArgumento&quot;);</span>
+        
+<span class="nc" id="L138">        content+=&quot;\n&quot;;   </span>
+                
+        // Student's identification
+<span class="nc" id="L141">        content += this.studentId;</span>
+<span class="nc" id="L142">        content+=&quot;\n&quot;;  </span>
+        
+        // Post message to Heraclito tutoring server
+<span class="nc" id="L145">        NetClientPost.Post(SWAC_POST_INFORM, content);</span>
+<span class="nc" id="L146">    }</span>
+    
+    
+    
+    public boolean temHipotesesPendentes() {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        return !this.podeAplicarRegra;</span>
+    }
+    
+    public void mostrarHipoteses() {
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        for (String linha : this.hipoteses) {</span>
+            try {
+<span class="nc" id="L157">                adicionarHipotese(linha);</span>
+<span class="nc" id="L158">            } catch (LogicException e) {</span>
+<span class="nc" id="L159">            }</span>
+<span class="nc" id="L160">        }</span>
+<span class="nc" id="L161">    }</span>
+    
+    public void adicionarHipotese(String input) throws LogicException {
+<span class="nc" id="L164">        LinhaProva hipotese = new LinhaHipotese(input);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (finalizada) {</span>
+<span class="nc" id="L166">            throw new LogicException(&quot;A prova foi finalizada!&quot;);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        } else if (!this.hipoteses.contains(hipotese.getLinha())) {</span>
+<span class="nc" id="L168">            throw new LogicException(&quot;Hipótese inválida para esta prova!&quot;);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        } else if (this.hipotesesAdicionadas.contains(hipotese.getLinha())) {</span>
+<span class="nc" id="L170">            throw new LogicException(&quot;Hipótese já adicionada!&quot;);</span>
+        }
+        
+<span class="nc" id="L173">        this.linhas.add(hipotese);</span>
+<span class="nc" id="L174">        this.hipotesesAdicionadas.add(hipotese.getLinha());</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (this.hipoteses.size() == this.hipotesesAdicionadas.size()) {</span>
+<span class="nc" id="L176">            this.podeAplicarRegra = true;</span>
+        }
+<span class="nc" id="L178">        this.informTutorNewHypotLine();</span>
+
+<span class="nc" id="L180">    }</span>
+    
+    private List&lt;LinhaProva&gt; preAplicarRegra(List&lt;Integer&gt; linhas)
+            throws LogicException {
+        /* Cria lista de linhas (objetos), verificando validade destas */
+<span class="nc" id="L185">        List&lt;LinhaProva&gt; listaDeLinhas = new ArrayList&lt;LinhaProva&gt;();</span>
+<span class="nc bnc" id="L186" title="All 4 branches missed.">        if (linhas == null || linhas.isEmpty()) {</span>
+<span class="nc" id="L187">            return listaDeLinhas;</span>
+        }
+        
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        for (Integer l : linhas) {</span>
+<span class="nc bnc" id="L191" title="All 4 branches missed.">            if ((((int) l - 1) &lt; 0) || ((int) l - 1) &gt;= this.linhas.size()) {</span>
+<span class="nc" id="L192">                throw new LogicException(&quot;Linha &quot; + l + &quot; inválida!&quot;);</span>
+            }
+            
+<span class="nc" id="L195">            LinhaProva temp = this.linhas.get((int) l - 1);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            if (temp.estaTravada()) {</span>
+<span class="nc" id="L197">                throw new LogicException(&quot;Linha &quot; + l + &quot; inválida!&quot;);</span>
+            }
+<span class="nc" id="L199">            listaDeLinhas.add(temp);</span>
+<span class="nc" id="L200">        }</span>
+<span class="nc" id="L201">        return listaDeLinhas;</span>
+    }
+    
+//    public List&lt;LinhaProva&gt; preAplicarPCvRAA(List&lt;Integer&gt; linhas)
+    public List&lt;Integer&gt; preAplicarPCvRAA(List&lt;Integer&gt; linhas)
+            throws LogicException {
+<span class="nc" id="L207">        List&lt;Integer&gt; paramlist = new ArrayList&lt;Integer&gt;(2);</span>
+        
+<span class="nc bnc" id="L209" title="All 4 branches missed.">        if (linhas == null || linhas.size() != 1) {</span>
+<span class="nc" id="L210">            throw new LogicException(&quot;Número de linhas inválido. Número correto: 1&quot;);</span>
+        }
+        
+<span class="nc" id="L213">        int index = linhas.get(0) - 1;</span>
+        
+<span class="nc bnc" id="L215" title="All 4 branches missed.">        if (index &lt; 0 || index &gt;= this.linhas.size()) {</span>
+<span class="nc" id="L216">            throw new LogicException(&quot;Número de linha inválido!&quot;);</span>
+        }
+        
+<span class="nc" id="L219">        int nvhip = this.linhas.get(index).getNivelHipotese();</span>
+        
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        if (nvhip &lt; 1) {</span>
+<span class="nc" id="L222">            throw new LogicException(&quot;Linha inválida. Precisa fazer parte de uma hipótese!&quot;);</span>
+        }
+        
+<span class="nc" id="L225">        int i = 1, linicial = 0, lfinal = 0;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        for (LinhaProva it : this.linhas) {</span>
+<span class="nc bnc" id="L227" title="All 4 branches missed.">            if (!it.estaTravada() &amp;&amp; (it.getNivelHipotese() == nvhip)) {</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">                if (linicial == 0) {</span>
+<span class="nc" id="L229">                    linicial = i;</span>
+                }
+<span class="nc" id="L231">                lfinal = i;</span>
+<span class="nc bnc" id="L232" title="All 4 branches missed.">            } else if (!it.estaTravada() &amp;&amp; it.getNivelHipotese() &gt; nvhip) {</span>
+<span class="nc" id="L233">                throw new LogicException(&quot;Linha inválida. Há hipóteses a serem fechadas!&quot;);</span>
+<span class="nc bnc" id="L234" title="All 4 branches missed.">            } else if (it.getNivelHipotese() &lt; nvhip &amp;&amp; linicial != 0) {</span>
+<span class="nc" id="L235">                break;</span>
+            }
+<span class="nc" id="L237">            i++;</span>
+<span class="nc" id="L238">        }</span>
+        
+<span class="nc" id="L240">        paramlist.add(linicial);</span>
+<span class="nc" id="L241">        paramlist.add(lfinal);</span>
+        
+<span class="nc" id="L243">        return paramlist;</span>
+    }
+    
+    private void travarLinhas(List&lt;Integer&gt; linhas)
+            throws LogicException {
+<span class="nc bnc" id="L248" title="All 4 branches missed.">        if (linhas == null || linhas.size() != 1) {</span>
+<span class="nc" id="L249">            throw new LogicException(&quot;Número de linhas inválido. Número correto: 1&quot;);</span>
+        }
+        
+<span class="nc" id="L252">        int index = linhas.get(0) - 1;</span>
+        
+<span class="nc bnc" id="L254" title="All 4 branches missed.">        if (index &lt; 0 || index &gt;= this.linhas.size()) {</span>
+<span class="nc" id="L255">            throw new LogicException(&quot;Linha inválida!&quot;);</span>
+        }
+        
+<span class="nc" id="L258">        int nvhip = this.linhas.get(index).getNivelHipotese();</span>
+        
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        for (LinhaProva it : this.linhas) {</span>
+<span class="nc bnc" id="L261" title="All 4 branches missed.">            if (!it.estaTravada() &amp;&amp; (it.getNivelHipotese() &gt;= nvhip)) {</span>
+<span class="nc" id="L262">                it.Travar();</span>
+            }
+<span class="nc" id="L264">        }</span>
+<span class="nc" id="L265">    }</span>
+    
+    public void aplicarRegra(Regras regra, List&lt;Integer&gt; linhas,
+            String str, Lado lado, String sID) throws LogicException {
+<span class="nc" id="L269">        studentId = sID;</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">        if (!podeAplicarRegra) {</span>
+<span class="nc" id="L271">            throw new LogicException(&quot;Adicione primeiro as hipóteses!&quot;);</span>
+        }
+<span class="nc bnc" id="L273" title="All 2 branches missed.">        if (this.finalizada) {</span>
+<span class="nc" id="L274">            throw new LogicException(&quot;A prova foi finalizada!&quot;);</span>
+        }
+        
+<span class="nc" id="L277">        List&lt;LinhaProva&gt; listaDeLinhas = null;</span>
+<span class="nc" id="L278">        List&lt;Integer&gt; linhasPCvRAA = null;</span>
+        
+<span class="nc bnc" id="L280" title="All 4 branches missed.">        if (regra == Regras.PC || regra == Regras.RAA) {</span>
+<span class="nc" id="L281">            linhasPCvRAA = preAplicarPCvRAA(linhas);</span>
+<span class="nc" id="L282">            listaDeLinhas = preAplicarRegra(linhasPCvRAA);</span>
+        } else {
+<span class="nc" id="L284">            listaDeLinhas = preAplicarRegra(linhas);</span>
+        }
+        LinhaProva novaLinha;
+
+        /* Aplicada regra requisitada */
+<span class="nc bnc" id="L289" title="All 2 branches missed.">        if (regra == Regras.AD) {</span>
+<span class="nc" id="L290">            novaLinha = Adicao.aplicarRegra(listaDeLinhas, str, lado, studentId, getArgumento());</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">        } else if (regra == Regras.CH) {</span>
+<span class="nc" id="L292">            novaLinha = CriarHipotese.aplicarRegra(str);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        } else if (regra == Regras.HPC) {</span>
+<span class="nc" id="L294">            novaLinha = HipotesePC.aplicarRegra(str);</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">        } else if (regra == Regras.HRAA) {</span>
+<span class="nc" id="L296">            novaLinha = HipoteseRAA.aplicarRegra(str);</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">        } else if (regra == Regras.CJ) {</span>
+<span class="nc" id="L298">            novaLinha = Conjuncao.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">        } else if (regra == Regras.CL) {</span>
+<span class="nc" id="L300">            novaLinha = CopiarLinha.aplicarRegra(listaDeLinhas);</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">        } else if (regra == Regras.DC) {</span>
+<span class="nc" id="L302">            novaLinha = DilemaConstrutivo.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">        } else if (regra == Regras.DN) {</span>
+<span class="nc" id="L304">            novaLinha = DuplaNegacao.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">        } else if (regra == Regras.EXP) {</span>
+<span class="nc" id="L306">            novaLinha = Exportacao.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">        } else if (regra == Regras.INC) {</span>
+<span class="nc" id="L308">            novaLinha = Incosistencia.aplicarRegra(listaDeLinhas, str, studentId, getArgumento());</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">        } else if (regra == Regras.MDJ) {</span>
+<span class="nc" id="L310">            novaLinha = EliminacaoDisjuncao.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">        } else if (regra == Regras.MEQ) {</span>
+<span class="nc" id="L312">            novaLinha = EliminacaoEquivalencia.aplicarRegra(listaDeLinhas, lado, studentId, getArgumento());</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">        } else if (regra == Regras.MP) {</span>
+<span class="nc" id="L314">            novaLinha = ModusPonens.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        } else if (regra == Regras.MT) {</span>
+<span class="nc" id="L316">            novaLinha = ModusTollens.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">        } else if (regra == Regras.PC) {</span>
+<span class="nc" id="L318">            novaLinha = ProvaCondicional.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">        } else if (regra == Regras.PEQ) {</span>
+<span class="nc" id="L320">            novaLinha = IntroducaoEquivalencia.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        } else if (regra == Regras.RAA) {</span>
+<span class="nc" id="L322">            novaLinha = ReducaoAoAbsurdo.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">        } else if (regra == Regras.SD) {</span>
+<span class="nc" id="L324">            novaLinha = SilogismoDisjuntivo.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">        } else if (regra == Regras.SH) {</span>
+<span class="nc" id="L326">            novaLinha = SilogismoHipotetico.aplicarRegra(listaDeLinhas, studentId, getArgumento());</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        } else if (regra == Regras.SP) {</span>
+<span class="nc" id="L328">            novaLinha = Simplificacao.aplicarRegra(listaDeLinhas, lado, studentId, getArgumento());</span>
+        } else {
+<span class="nc" id="L330">            throw new LogicException(&quot;Operação inválida!&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        if (this.linhas.size()</span>
+                &gt; 0) {
+<span class="nc" id="L335">            LinhaProva ultimaLinha = this.linhas.get(this.linhas.size() - 1);</span>
+<span class="nc" id="L336">            novaLinha.setNivelHipotese(ultimaLinha.getNivelHipotese());</span>
+<span class="nc bnc" id="L337" title="All 4 branches missed.">            if (!novaLinha.getRegra().equals(Regras.HPC) &amp;&amp; !novaLinha.getRegra().equals(Regras.HRAA)) {</span>
+<span class="nc" id="L338">                novaLinha.setHipoteseResultado(ultimaLinha.getHipoteseResultado());</span>
+            }
+<span class="nc" id="L340">        } else {</span>
+<span class="nc" id="L341">            novaLinha.setNivelHipotese(0);</span>
+        }
+        
+<span class="nc bnc" id="L344" title="All 2 branches missed.">        if (regra.equals(Regras.PC)</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">                || regra.equals(Regras.RAA)) {</span>
+<span class="nc" id="L346">            travarLinhas(linhas);</span>
+<span class="nc" id="L347">            novaLinha.setNivelHipotese(novaLinha.getNivelHipotese() - 1);</span>
+<span class="nc bnc" id="L348" title="All 6 branches missed.">        } else if (regra.equals(Regras.CH) || regra.equals(Regras.HPC) || regra.equals(Regras.HRAA)) {</span>
+<span class="nc" id="L349">            novaLinha.setNivelHipotese(novaLinha.getNivelHipotese() + 1);</span>
+        }
+        
+<span class="nc" id="L352">        this.linhas.add(novaLinha);</span>
+        
+<span class="nc" id="L354">        if (novaLinha.getLinha()</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">                .equals(this.resultado)</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">                &amp;&amp; (novaLinha.getNivelHipotese() == 0)) {</span>
+<span class="nc" id="L357">            this.finalizada = true;</span>
+        }
+        
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        if (novaLinha instanceof LinhaDeduzida) {</span>
+<span class="nc" id="L361">            LinhaDeduzida ld = (LinhaDeduzida) novaLinha;</span>
+<span class="nc bnc" id="L362" title="All 4 branches missed.">            if (regra == Regras.PC || regra == Regras.RAA) {</span>
+<span class="nc" id="L363">                ld.setLinhas(linhasPCvRAA);</span>
+            } else {
+<span class="nc" id="L365">                ld.setLinhas(linhas);</span>
+            }
+        }
+        
+<span class="nc" id="L369">        this.informTutorNewStepLine();</span>
+<span class="nc" id="L370">    }</span>
+    
+    private void informTutorNewHypotLine(){
+        // Inform tutor that a new hypothesis was added by the student
+        
+        // Check if there is some student logged
+<span class="nc bnc" id="L376" title="All 4 branches missed.">        if (studentId==null || studentId.isEmpty()) </span>
+<span class="nc" id="L377">            return;</span>
+        
+        // Type of message: new_hypot
+<span class="nc" id="L380">        String content=&quot;new_hypot\n&quot;;           </span>
+        
+        // Proof argument
+<span class="nc" id="L383">        content +=&quot;[&quot;;</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">        for (Iterator&lt;String&gt; i = this.hipoteses.iterator(); i.hasNext();){</span>
+<span class="nc" id="L385">            String hip = i.next();</span>
+            // Hipotesis
+<span class="nc" id="L387">            content += FuncoesString.toCanonicalFormula(hip.toString().toLowerCase());</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">            if (i.hasNext())</span>
+<span class="nc" id="L389">                content += &quot;,&quot;;</span>
+<span class="nc" id="L390">        }</span>
+<span class="nc" id="L391">        content+=&quot;] :-- &quot;;</span>
+        // Conclusion
+<span class="nc" id="L393">        content+=FuncoesString.toCanonicalFormula(this.resultado.toLowerCase());</span>
+<span class="nc" id="L394">        content+=&quot;\n&quot;;   </span>
+        
+        // List of steps of partial proof
+<span class="nc" id="L397">        int i = 1;</span>
+<span class="nc" id="L398">        content +=&quot;[&quot;;</span>
+<span class="nc bnc" id="L399" title="All 2 branches missed.">        for (LinhaProva lp : this.linhas) {</span>
+<span class="nc" id="L400">            content += &quot;step(&quot;;</span>
+            // Line index
+<span class="nc" id="L402">            content += Integer.toString(i)+&quot;,&quot;;</span>
+            // Proof level
+<span class="nc" id="L404">            content += Integer.toString(lp.getNivelHipotese())+&quot;,&quot;;</span>
+            // Formula
+<span class="nc" id="L406">            content += FuncoesString.toCanonicalFormula(lp.getLinha().toLowerCase())+&quot;,&quot;;</span>
+            // Rule
+<span class="nc" id="L408">            content += &quot;'&quot;+lp.getRegra().getTutorID()+&quot;'&quot;+&quot;,[&quot;;</span>
+            // References
+<span class="nc bnc" id="L410" title="All 2 branches missed.">            if (lp instanceof LinhaDeduzida) {</span>
+<span class="nc" id="L411">                LinhaDeduzida ld = (LinhaDeduzida) lp;</span>
+<span class="nc" id="L412">                content += ld.getRefs();</span>
+            };
+<span class="nc" id="L414">            content += &quot;])&quot;;</span>
+<span class="nc" id="L415">            i++;</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">            if (i&lt;=this.linhas.size())</span>
+<span class="nc" id="L417">                content+=&quot;,&quot;;</span>
+<span class="nc" id="L418">            }</span>
+<span class="nc" id="L419">        content += &quot;]&quot;;</span>
+<span class="nc" id="L420">        content+=&quot;\n&quot;;   </span>
+        
+        // Student's identification
+<span class="nc" id="L423">        content += this.studentId;</span>
+<span class="nc" id="L424">        content+=&quot;\n&quot;;  </span>
+        
+        // Post message to Heraclito tutoring server
+<span class="nc" id="L427">        NetClientPost.Post(SWAC_POST_INFORM, content);</span>
+<span class="nc" id="L428">    }</span>
+    
+    private void informTutorNewStepLine(){
+        // Inform tutor that a new step was added by the student
+        
+        // Check if there is some student logged
+<span class="nc bnc" id="L434" title="All 4 branches missed.">        if (studentId==null || studentId.isEmpty()) </span>
+<span class="nc" id="L435">            return;</span>
+        
+        // Type of message: new_step 
+<span class="nc" id="L438">        String content=&quot;new_step\n&quot;;</span>
+        
+        // Proof argument
+<span class="nc" id="L441">        content +=&quot;[&quot;;</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">        for (Iterator&lt;String&gt; i = this.hipoteses.iterator(); i.hasNext();){</span>
+<span class="nc" id="L443">            String hip = i.next();</span>
+            // Hipotesis
+<span class="nc" id="L445">            content += FuncoesString.toCanonicalFormula(hip.toString().toLowerCase());</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">            if (i.hasNext())</span>
+<span class="nc" id="L447">                content += &quot;,&quot;;</span>
+<span class="nc" id="L448">        }</span>
+<span class="nc" id="L449">        content+=&quot;] :-- &quot;;</span>
+        // Conclusion
+<span class="nc" id="L451">        content+=FuncoesString.toCanonicalFormula(this.resultado.toLowerCase());</span>
+<span class="nc" id="L452">        content+=&quot;\n&quot;;   </span>
+        
+        // List of steps of partial proof
+<span class="nc" id="L455">        int i = 1;</span>
+<span class="nc" id="L456">        content +=&quot;[&quot;;</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">        for (LinhaProva lp : this.linhas) {</span>
+<span class="nc" id="L458">            content += &quot;step(&quot;;</span>
+            // Line index
+<span class="nc" id="L460">            content += Integer.toString(i)+&quot;,&quot;;</span>
+            // Proof level
+<span class="nc" id="L462">            content += Integer.toString(lp.getNivelHipotese())+&quot;,&quot;;</span>
+            // Formula
+<span class="nc" id="L464">            content += FuncoesString.toCanonicalFormula(lp.getLinha().toLowerCase())+&quot;,&quot;;</span>
+            // Rule
+<span class="nc" id="L466">            content += &quot;'&quot;+lp.getRegra().getTutorID()+&quot;'&quot;+&quot;,[&quot;;</span>
+            // References
+<span class="nc bnc" id="L468" title="All 2 branches missed.">            if (lp instanceof LinhaDeduzida) {</span>
+<span class="nc" id="L469">                LinhaDeduzida ld = (LinhaDeduzida) lp;</span>
+<span class="nc" id="L470">                content += ld.getRefs();</span>
+            };
+<span class="nc" id="L472">            content += &quot;])&quot;;</span>
+<span class="nc" id="L473">            i++;</span>
+<span class="nc bnc" id="L474" title="All 2 branches missed.">            if (i&lt;=this.linhas.size())</span>
+<span class="nc" id="L475">                content+=&quot;,&quot;;</span>
+<span class="nc" id="L476">            }</span>
+<span class="nc" id="L477">        content += &quot;]&quot;;</span>
+<span class="nc" id="L478">        content+=&quot;\n&quot;;   </span>
+        
+        // Student's identification
+<span class="nc" id="L481">        content += this.studentId;</span>
+<span class="nc" id="L482">        content+=&quot;\n&quot;;  </span>
+        
+        // Post message to Heraclito tutoring server
+<span class="nc" id="L485">        NetClientPost.Post(SWAC_POST_INFORM, content);</span>
+<span class="nc" id="L486">    }</span>
+    
+
+    
+    @Override
+    public String toString() {
+        /*StringBuilder sb = new StringBuilder();
+         sb.append(this.entrada).append(&quot;\n&quot;);
+         int i = 1;
+         for (LinhaProva linha : this.linhas) {
+         sb.append(i + &quot; &quot;);
+         i++;
+         sb.append(linha.toString());
+         sb.append(&quot;\n&quot;);
+         }*/
+<span class="nc" id="L501">        return this.toHTMLString();</span>
+    }
+    
+    public String toHTMLString() {
+<span class="nc" id="L505">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L506">        sb.append(&quot;&lt;tr class=\&quot;linhatravada\&quot;&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;&quot;);</span>
+<span class="nc" id="L507">        sb.append(this.entrada);</span>
+<span class="nc" id="L508">        sb.append(&quot;&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&quot;);</span>
+<span class="nc" id="L509">        int i = 1;</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">        for (LinhaProva linha : this.linhas) {</span>
+<span class="nc" id="L511">            sb.append(&quot;&lt;tr id\&quot;linha&quot;).append(i);</span>
+<span class="nc bnc" id="L512" title="All 2 branches missed.">            if (linha.estaTravada()) {</span>
+<span class="nc" id="L513">                sb.append(&quot;\&quot; class=\&quot;linhatravada&quot;);</span>
+            }
+<span class="nc" id="L515">            sb.append(&quot;\&quot;&gt;&lt;td&gt;&quot;).append(i).append(&quot;&lt;/td&gt;&quot;);</span>
+<span class="nc" id="L516">            i++;</span>
+<span class="nc" id="L517">            sb.append(&quot;&lt;td&gt;&quot;).append(linha.toString()).append(&quot;&lt;/td&gt;&quot;);</span>
+<span class="nc" id="L518">            sb.append(&quot;&lt;td&gt;&quot;).append(linha.getRegra().toString());</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">            if (linha instanceof LinhaDeduzida) {</span>
+<span class="nc" id="L520">                LinhaDeduzida ld = (LinhaDeduzida) linha;</span>
+<span class="nc" id="L521">                sb.append(ld.getStringLinhas());</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">                if (linha.getRegra().equals(Regras.HPC) </span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">                        || linha.getRegra().equals(Regras.HRAA)) {</span>
+<span class="nc" id="L524">                    sb.append(&quot; (&quot;).append(linha.getHipoteseResultado()).append(&quot;)&quot;);</span>
+                }                
+            }
+<span class="nc" id="L527">            sb.append(&quot;&lt;/td&gt;&quot;);</span>
+<span class="nc" id="L528">            sb.append(&quot;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&quot;);</span>
+<span class="nc" id="L529">        }</span>
+<span class="nc" id="L530">        return sb.toString();</span>
+    }
+    
+    public List&lt;String&gt; getHipoteses() {
+<span class="nc" id="L534">        return hipoteses;</span>
+    }
+    
+    public void setHipoteses(List&lt;String&gt; hipoteses) {
+<span class="nc" id="L538">        this.hipoteses = hipoteses;</span>
+<span class="nc" id="L539">    }</span>
+    
+    public List&lt;String&gt; getHipotesesAdicionadas() {
+<span class="nc" id="L542">        return hipotesesAdicionadas;</span>
+    }
+    
+    public void setHipotesesAdicionadas(List&lt;String&gt; hipotesesAdicionadas) {
+<span class="nc" id="L546">        this.hipotesesAdicionadas = hipotesesAdicionadas;</span>
+<span class="nc" id="L547">    }</span>
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+<span class="nc" id="L551">        Prova cloned = (Prova) super.clone();</span>
+        
+<span class="nc" id="L553">        ArrayList&lt;LinhaProva&gt; clonedL = new ArrayList&lt;LinhaProva&gt;();</span>
+<span class="nc bnc" id="L554" title="All 2 branches missed.">        for (LinhaProva l : this.linhas) {</span>
+<span class="nc" id="L555">            clonedL.add((LinhaProva) l.clone());</span>
+<span class="nc" id="L556">        }</span>
+<span class="nc" id="L557">        cloned.setLinhas(clonedL);</span>
+        
+<span class="nc" id="L559">        ArrayList&lt;String&gt; clonedH = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">        for (String l : this.hipoteses) {</span>
+<span class="nc" id="L561">            clonedH.add(l);</span>
+<span class="nc" id="L562">        }</span>
+<span class="nc" id="L563">        cloned.setHipoteses(clonedH);</span>
+        
+<span class="nc" id="L565">        ArrayList&lt;String&gt; clonedHA = new ArrayList&lt;String&gt;();</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">        for (String l : this.hipotesesAdicionadas) {</span>
+<span class="nc" id="L567">            clonedHA.add(l);</span>
+<span class="nc" id="L568">        }</span>
+<span class="nc" id="L569">        cloned.setHipotesesAdicionadas(clonedHA);</span>
+        
+<span class="nc" id="L571">        return cloned;</span>
+    }
+    public String getArgumento(){
+<span class="nc" id="L574">        String content =&quot;[&quot;;</span>
+            
+<span class="nc bnc" id="L576" title="All 2 branches missed.">        for (Iterator&lt;String&gt; i = this.hipoteses.iterator(); i.hasNext();){</span>
+<span class="nc" id="L577">            String hip = i.next();</span>
+            // Hipotesis
+
+<span class="nc" id="L580">            content += FuncoesString.toCanonicalFormula(hip.toString().toLowerCase());</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">            if (i.hasNext())</span>
+<span class="nc" id="L582">                content += &quot;,&quot;;</span>
+<span class="nc" id="L583">        }</span>
+<span class="nc" id="L584">        content+=&quot;] :-- &quot;;</span>
+        // Conclusion
+<span class="nc" id="L586">        content+=FuncoesString.toCanonicalFormula(this.resultado.toLowerCase());</span>
+<span class="nc" id="L587">        return content;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

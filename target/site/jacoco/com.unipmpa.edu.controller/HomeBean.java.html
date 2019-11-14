@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>HomeBean.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipmpa.edu.controller</a> &gt; <span class="el_source">HomeBean.java</span></div><h1>HomeBean.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipmpa.edu.controller;
+
+import com.unipampa.edu.model.User;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Bean basica que controla ações da HOME
+ * @author heraclitoserver
+ */
+@ManagedBean
+@SessionScoped
+public class HomeBean {
+    
+    private String nameUser;
+    private int idUser;
+    private String userAcesso;
+   
+    /**
+     *
+     */
+<span class="nc" id="L32">    public HomeBean() {</span>
+<span class="nc" id="L33">        userLogado();</span>
+<span class="nc" id="L34">    }</span>
+    
+    /**
+     *
+     */
+    public final void userLogado() {
+<span class="nc" id="L40">        FacesContext fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L41">        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);</span>
+<span class="nc" id="L42">        User user = (User) session.getAttribute(&quot;User&quot;);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (user == null) {</span>
+            try {
+<span class="nc" id="L45">                FacesContext.getCurrentInstance().getExternalContext().redirect(&quot;login.xhtml&quot;);</span>
+<span class="nc" id="L46">            } catch (IOException ex) {</span>
+<span class="nc" id="L47">                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L48">            }</span>
+        }else{
+<span class="nc" id="L50">            nameUser = user.getName();</span>
+<span class="nc" id="L51">            idUser = user.getId();</span>
+<span class="nc" id="L52">            userAcesso = user.getAcesso();</span>
+        
+        }
+
+<span class="nc" id="L56">    }</span>
+
+    /**
+     *
+     * @return nameUser
+     */
+    public String getNameUser() {
+<span class="nc" id="L63">        return nameUser;</span>
+    }
+
+    /**
+     *
+     * @return idUser
+     */
+    public int getIdUser() {
+<span class="nc" id="L71">        return idUser;</span>
+    }
+
+    /**
+     *
+     * @return userAcesso
+     */
+    public String getUserAcesso() {
+<span class="nc" id="L79">        return userAcesso;</span>
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>IntroducaoEquivalencia.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.regra</a> &gt; <span class="el_source">IntroducaoEquivalencia.java</span></div><h1>IntroducaoEquivalencia.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.regra;
+
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.execption.LogicException;
+import com.unipampa.edu.heraclito.Agente;
+import com.unipampa.edu.heraclito.LinhaDeduzida;
+import com.unipampa.edu.heraclito.LinhaProva;
+
+import java.util.List;
+
+<span class="nc" id="L13">public class IntroducaoEquivalencia {</span>
+
+    public static LinhaProva aplicarRegra(List&lt;LinhaProva&gt; listaDeLinhas, String studentId, String Argumento)
+            throws LogicException {
+<span class="nc" id="L17">        Agente a = Agente.getInstancia();</span>
+        // A-&gt;B, B-&gt;A então A&lt;-&gt;B
+        /* Confere parâmetros */
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (listaDeLinhas.size() != 2) {</span>
+<span class="nc" id="L21">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeEquivalencia#0&quot;);</span>
+<span class="nc" id="L22">            throw new LogicException(&quot;Número de linhas inválido!&quot;);</span>
+        }
+
+        /* Cria variáveis temporárias */
+<span class="nc" id="L26">        LinhaProva linha1 = (LinhaProva) listaDeLinhas.get(0);</span>
+<span class="nc" id="L27">        LinhaProva linha2 = (LinhaProva) listaDeLinhas.get(1);</span>
+
+        /* Confere parâmetros */
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (linha1.getOperadorPrincipal() != OperadorLogico.CONDICIONAL &amp;&amp;</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">                linha2.getOperadorPrincipal() != OperadorLogico.CONDICIONAL) {</span>
+<span class="nc" id="L32">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeEquivalencia#0&quot;);</span>
+<span class="nc" id="L33">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+        }
+
+        /* Posição dos operadores principais */
+<span class="nc" id="L38">        int posicao1 = linha1.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L39">        int posicao2 = linha2.getPosicaoOperadorPrincipal();</span>
+
+        /* Subargumentos para tratar */
+<span class="nc" id="L42">        StringBuilder sblinha = new StringBuilder(linha1.getLinha());</span>
+<span class="nc" id="L43">        String linha1pre = sblinha.substring(0, posicao1);</span>
+<span class="nc" id="L44">        String linha1pos= sblinha.substring(posicao1 + </span>
+<span class="nc" id="L45">                OperadorLogico.CONDICIONAL.getLength());</span>
+<span class="nc" id="L46">        sblinha = new StringBuilder(linha2.getLinha());</span>
+<span class="nc" id="L47">        String linha2pre = sblinha.substring(0, posicao2);</span>
+<span class="nc" id="L48">        String linha2pos= sblinha.substring(posicao2 + </span>
+<span class="nc" id="L49">                OperadorLogico.CONDICIONAL.getLength());</span>
+
+        /* Remove parênteses */
+<span class="nc" id="L52">        linha1pre = FuncoesString.removerParentesesReduntantes(linha1pre);</span>
+<span class="nc" id="L53">        linha1pos = FuncoesString.removerParentesesReduntantes(linha1pos);</span>
+<span class="nc" id="L54">        linha2pre = FuncoesString.removerParentesesReduntantes(linha2pre);</span>
+<span class="nc" id="L55">        linha2pos = FuncoesString.removerParentesesReduntantes(linha2pos);</span>
+        
+        /* Confere parâmetros */
+<span class="nc bnc" id="L58" title="All 4 branches missed.">        if(!linha1pre.equals(linha2pos) || !linha1pos.equals(linha2pre)) {</span>
+<span class="nc" id="L59">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeEquivalencia#0&quot;);</span>
+<span class="nc" id="L60">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra&quot;);</span>
+        }
+
+<span class="nc" id="L63">        linha1pre = FuncoesString.adicionarParenteses(linha1pre);</span>
+<span class="nc" id="L64">        linha1pos = FuncoesString.adicionarParenteses(linha1pos);</span>
+<span class="nc" id="L65">        String retorno = linha1pre + OperadorLogico.BICONDICIONAL + linha1pos;</span>
+        
+        /* Retorno */
+<span class="nc" id="L68">        LinhaProva novalinha = new LinhaDeduzida(retorno, Regras.PEQ);</span>
+<span class="nc" id="L69">        a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeEquivalencia#1&quot;);</span>
+<span class="nc" id="L70">        return novalinha;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

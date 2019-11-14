@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Simplificacao.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.regra</a> &gt; <span class="el_source">Simplificacao.java</span></div><h1>Simplificacao.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.unipampa.edu.regra;
+
+import com.unipampa.edu.heraclito.Agente;
+import com.unipampa.edu.heraclito.LinhaDeduzida;
+import com.unipampa.edu.heraclito.LinhaProva;
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.constantes.Lado;
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.execption.LogicException;
+import java.util.List;
+
+/**
+ *
+ * @author gia
+ */
+<span class="nc" id="L23">public class Simplificacao {</span>
+
+    public static LinhaProva aplicarRegra(List&lt;LinhaProva&gt; listaDeLinhas, Lado lado, String studentId, String Argumento) throws LogicException {
+        
+<span class="nc" id="L27">        Agente a = Agente.getInstancia();</span>
+        /* Confere parâmetros */
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if(listaDeLinhas.size() != 1) {</span>
+<span class="nc" id="L30">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSimplificacao#0&quot;);</span>
+<span class="nc" id="L31">            throw new LogicException(&quot;Número de linhas inválido!&quot;);</span>
+        }
+        
+        /* Cria variáveis temporárias */
+<span class="nc" id="L35">        LinhaProva linha1 = (LinhaProva) listaDeLinhas.get(0);                </span>
+<span class="nc" id="L36">        StringBuilder sblinha = new StringBuilder(</span>
+<span class="nc" id="L37">                FuncoesString.removerParentesesReduntantes(linha1.getLinha()));</span>
+
+         /* Confere parâmetros */
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (linha1.getOperadorPrincipal() != OperadorLogico.CONJUNCAO) {</span>
+<span class="nc" id="L41">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSimplificacao#0&quot;);</span>
+<span class="nc" id="L42">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+        }
+        
+        /* Posição dos operadores principais */        
+<span class="nc" id="L47">        int posicao1 = linha1.getPosicaoOperadorPrincipal();       </span>
+        
+<span class="nc" id="L49">        String linha1pre = sblinha.substring(0, posicao1);</span>
+<span class="nc" id="L50">        String linha1pos = sblinha.substring(posicao1</span>
+<span class="nc" id="L51">                + OperadorLogico.CONJUNCAO.getLength());</span>
+        
+<span class="nc" id="L53">        linha1pre = FuncoesString.removerParentesesReduntantes(linha1pre);</span>
+<span class="nc" id="L54">        linha1pos = FuncoesString.removerParentesesReduntantes(linha1pos);</span>
+        
+        /* Prepara string de saída */        
+        
+        String strret;
+        
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if(lado.equals(Lado.ESQUERDA)) {</span>
+<span class="nc" id="L61">            strret = linha1pre;</span>
+        }
+        else {
+<span class="nc" id="L64">            strret = linha1pos;</span>
+        }
+        
+        /* Retorno */
+<span class="nc" id="L68">        a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSimplificacao#1&quot;);</span>
+<span class="nc" id="L69">        return new LinhaDeduzida(strret, Regras.SP);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

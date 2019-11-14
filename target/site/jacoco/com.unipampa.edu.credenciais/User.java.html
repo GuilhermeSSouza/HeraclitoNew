@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.credenciais</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.credenciais;
+
+/**
+ * @author Rafael Koch Peres
+ */
+public class User {
+
+    private String nome, sobrenome, email, senha, matricula;
+
+<span class="nc" id="L10">    public User(String nome, String sobrenome, String email, String senha) {</span>
+<span class="nc" id="L11">        this.nome = nome;</span>
+<span class="nc" id="L12">        this.sobrenome = sobrenome;</span>
+<span class="nc" id="L13">        this.email = email;</span>
+<span class="nc" id="L14">        this.senha = senha;</span>
+<span class="nc" id="L15">    }</span>
+
+<span class="nc" id="L17">    public User(String nome, String sobrenome, String email, String senha, String matricula) {</span>
+<span class="nc" id="L18">        this.nome = nome;</span>
+<span class="nc" id="L19">        this.sobrenome = sobrenome;</span>
+<span class="nc" id="L20">        this.email = email;</span>
+<span class="nc" id="L21">        this.senha = senha;</span>
+<span class="nc" id="L22">        this.matricula = matricula;</span>
+<span class="nc" id="L23">    }</span>
+
+    public String getMatricula() {
+<span class="nc" id="L26">        return matricula;</span>
+    }
+
+    public void setMatricula(String matricula) {
+<span class="nc" id="L30">        this.matricula = matricula;</span>
+<span class="nc" id="L31">    }</span>
+
+    public String getEmail() {
+<span class="nc" id="L34">        return email;</span>
+    }
+
+    public String getNome() {
+<span class="nc" id="L38">        return nome;</span>
+    }
+
+    public void setNome(String nome) {
+<span class="nc" id="L42">        this.nome = nome;</span>
+<span class="nc" id="L43">    }</span>
+
+    public String getSobrenome() {
+<span class="nc" id="L46">        return sobrenome;</span>
+    }
+
+    public void setSobrenome(String sobrenome) {
+<span class="nc" id="L50">        this.sobrenome = sobrenome;</span>
+<span class="nc" id="L51">    }</span>
+
+    public String getSenha() {
+<span class="nc" id="L54">        return senha;</span>
+    }
+
+    public void setSenha(String senha) {
+<span class="nc" id="L58">        this.senha = senha;</span>
+<span class="nc" id="L59">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

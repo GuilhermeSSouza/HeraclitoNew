@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ProposicionalLogicParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.proposicional</a> &gt; <span class="el_source">ProposicionalLogicParser.java</span></div><h1>ProposicionalLogicParser.java</h1><pre class="source lang-java linenums">// Generated from ProposicionalLogic.g4 by ANTLR 4.5.3
+
+package com.unipampa.edu.proposicional;
+
+import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.*;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
+
+@SuppressWarnings({&quot;all&quot;, &quot;warnings&quot;, &quot;unchecked&quot;, &quot;unused&quot;, &quot;cast&quot;})
+public class ProposicionalLogicParser extends Parser {
+<span class="nc" id="L16">	static { RuntimeMetaData.checkVersion(&quot;4.5.3&quot;, RuntimeMetaData.VERSION); }</span>
+
+	protected static final DFA[] _decisionToDFA;
+<span class="nc" id="L19">	protected static final PredictionContextCache _sharedContextCache =</span>
+		new PredictionContextCache();
+	public static final int
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, SIMBOLO_PROPOSICIONAL=8, 
+		SPACE=9;
+	public static final int
+		RULE_formula = 0;
+<span class="nc" id="L26">	public static final String[] ruleNames = {</span>
+		&quot;formula&quot;
+	};
+
+<span class="nc" id="L30">	private static final String[] _LITERAL_NAMES = {</span>
+		null, &quot;'('&quot;, &quot;')'&quot;, &quot;'~'&quot;, &quot;'^'&quot;, &quot;'v'&quot;, &quot;'-&gt;'&quot;, &quot;'&lt;-&gt;'&quot;
+	};
+<span class="nc" id="L33">	private static final String[] _SYMBOLIC_NAMES = {</span>
+		null, null, null, null, null, null, null, null, &quot;SIMBOLO_PROPOSICIONAL&quot;, 
+		&quot;SPACE&quot;
+	};
+<span class="nc" id="L37">	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);</span>
+
+	/**
+	 * @deprecated Use {@link #VOCABULARY} instead.
+	 */
+	@Deprecated
+	public static final String[] tokenNames;
+	static {
+<span class="nc" id="L45">		tokenNames = new String[_SYMBOLIC_NAMES.length];</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		for (int i = 0; i &lt; tokenNames.length; i++) {</span>
+<span class="nc" id="L47">			tokenNames[i] = VOCABULARY.getLiteralName(i);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">			if (tokenNames[i] == null) {</span>
+<span class="nc" id="L49">				tokenNames[i] = VOCABULARY.getSymbolicName(i);</span>
+			}
+
+<span class="nc bnc" id="L52" title="All 2 branches missed.">			if (tokenNames[i] == null) {</span>
+<span class="nc" id="L53">				tokenNames[i] = &quot;&lt;INVALID&gt;&quot;;</span>
+			}
+		}
+	}
+
+	@Override
+	@Deprecated
+	public String[] getTokenNames() {
+<span class="nc" id="L61">		return tokenNames;</span>
+	}
+
+	@Override
+
+	public Vocabulary getVocabulary() {
+<span class="nc" id="L67">		return VOCABULARY;</span>
+	}
+
+	@Override
+<span class="nc" id="L71">	public String getGrammarFileName() { return &quot;ProposicionalLogic.g4&quot;; }</span>
+
+	@Override
+<span class="nc" id="L74">	public String[] getRuleNames() { return ruleNames; }</span>
+
+	@Override
+<span class="nc" id="L77">	public String getSerializedATN() { return _serializedATN; }</span>
+
+	@Override
+<span class="nc" id="L80">	public ATN getATN() { return _ATN; }</span>
+
+	public ProposicionalLogicParser(TokenStream input) {
+<span class="nc" id="L83">		super(input);</span>
+<span class="nc" id="L84">		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);</span>
+<span class="nc" id="L85">	}</span>
+	public static class FormulaContext extends ParserRuleContext {
+<span class="nc" id="L87">		public TerminalNode SIMBOLO_PROPOSICIONAL() { return getToken(ProposicionalLogicParser.SIMBOLO_PROPOSICIONAL, 0); }</span>
+		public List&lt;FormulaContext&gt; formula() {
+<span class="nc" id="L89">			return getRuleContexts(FormulaContext.class);</span>
+		}
+		public FormulaContext formula(int i) {
+<span class="nc" id="L92">			return getRuleContext(FormulaContext.class,i);</span>
+		}
+<span class="nc" id="L94">		public List&lt;TerminalNode&gt; SPACE() { return getTokens(ProposicionalLogicParser.SPACE); }</span>
+		public TerminalNode SPACE(int i) {
+<span class="nc" id="L96">			return getToken(ProposicionalLogicParser.SPACE, i);</span>
+		}
+		public FormulaContext(ParserRuleContext parent, int invokingState) {
+<span class="nc" id="L99">			super(parent, invokingState);</span>
+<span class="nc" id="L100">		}</span>
+<span class="nc" id="L101">		@Override public int getRuleIndex() { return RULE_formula; }</span>
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			if ( listener instanceof ProposicionalLogicListener ) ((ProposicionalLogicListener)listener).enterFormula(this);</span>
+<span class="nc" id="L105">		}</span>
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if ( listener instanceof ProposicionalLogicListener ) ((ProposicionalLogicListener)listener).exitFormula(this);</span>
+<span class="nc" id="L109">		}</span>
+	}
+
+	public final FormulaContext formula() throws RecognitionException {
+<span class="nc" id="L113">		return formula(0);</span>
+	}
+
+	private FormulaContext formula(int _p) throws RecognitionException {
+<span class="nc" id="L117">		ParserRuleContext _parentctx = _ctx;</span>
+<span class="nc" id="L118">		int _parentState = getState();</span>
+<span class="nc" id="L119">		FormulaContext _localctx = new FormulaContext(_ctx, _parentState);</span>
+<span class="nc" id="L120">		FormulaContext _prevctx = _localctx;</span>
+<span class="nc" id="L121">		int _startState = 0;</span>
+<span class="nc" id="L122">		enterRecursionRule(_localctx, 0, RULE_formula, _p);</span>
+		int _la;
+		try {
+			int _alt;
+<span class="nc" id="L126">			enterOuterAlt(_localctx, 1);</span>
+			{
+<span class="nc" id="L128">			setState(28);</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">			switch (_input.LA(1)) {</span>
+			case SIMBOLO_PROPOSICIONAL:
+				{
+<span class="nc" id="L132">				setState(3);</span>
+<span class="nc" id="L133">				match(SIMBOLO_PROPOSICIONAL);</span>
+				}
+<span class="nc" id="L135">				break;</span>
+			case T__0:
+				{
+<span class="nc" id="L138">				setState(4);</span>
+<span class="nc" id="L139">				match(T__0);</span>
+<span class="nc" id="L140">				setState(8);</span>
+<span class="nc" id="L141">				_errHandler.sync(this);</span>
+<span class="nc" id="L142">				_la = _input.LA(1);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">				while (_la==SPACE) {</span>
+					{
+					{
+<span class="nc" id="L146">					setState(5);</span>
+<span class="nc" id="L147">					match(SPACE);</span>
+					}
+					}
+<span class="nc" id="L150">					setState(10);</span>
+<span class="nc" id="L151">					_errHandler.sync(this);</span>
+<span class="nc" id="L152">					_la = _input.LA(1);</span>
+				}
+<span class="nc" id="L154">				setState(11);</span>
+<span class="nc" id="L155">				formula(0);</span>
+<span class="nc" id="L156">				setState(15);</span>
+<span class="nc" id="L157">				_errHandler.sync(this);</span>
+<span class="nc" id="L158">				_la = _input.LA(1);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				while (_la==SPACE) {</span>
+					{
+					{
+<span class="nc" id="L162">					setState(12);</span>
+<span class="nc" id="L163">					match(SPACE);</span>
+					}
+					}
+<span class="nc" id="L166">					setState(17);</span>
+<span class="nc" id="L167">					_errHandler.sync(this);</span>
+<span class="nc" id="L168">					_la = _input.LA(1);</span>
+				}
+<span class="nc" id="L170">				setState(18);</span>
+<span class="nc" id="L171">				match(T__1);</span>
+				}
+<span class="nc" id="L173">				break;</span>
+			case T__2:
+				{
+<span class="nc" id="L176">				setState(20);</span>
+<span class="nc" id="L177">				match(T__2);</span>
+<span class="nc" id="L178">				setState(24);</span>
+<span class="nc" id="L179">				_errHandler.sync(this);</span>
+<span class="nc" id="L180">				_la = _input.LA(1);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">				while (_la==SPACE) {</span>
+					{
+					{
+<span class="nc" id="L184">					setState(21);</span>
+<span class="nc" id="L185">					match(SPACE);</span>
+					}
+					}
+<span class="nc" id="L188">					setState(26);</span>
+<span class="nc" id="L189">					_errHandler.sync(this);</span>
+<span class="nc" id="L190">					_la = _input.LA(1);</span>
+				}
+<span class="nc" id="L192">				setState(27);</span>
+<span class="nc" id="L193">				formula(5);</span>
+				}
+<span class="nc" id="L195">				break;</span>
+			default:
+<span class="nc" id="L197">				throw new NoViableAltException(this);</span>
+			}
+<span class="nc" id="L199">			_ctx.stop = _input.LT(-1);</span>
+<span class="nc" id="L200">			setState(92);</span>
+<span class="nc" id="L201">			_errHandler.sync(this);</span>
+<span class="nc" id="L202">			_alt = getInterpreter().adaptivePredict(_input,13,_ctx);</span>
+<span class="nc bnc" id="L203" title="All 4 branches missed.">			while ( _alt!=2 &amp;&amp; _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">				if ( _alt==1 ) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">					if ( _parseListeners!=null ) triggerExitRuleEvent();</span>
+<span class="nc" id="L206">					_prevctx = _localctx;</span>
+					{
+<span class="nc" id="L208">					setState(90);</span>
+<span class="nc" id="L209">					_errHandler.sync(this);</span>
+<span class="nc bnc" id="L210" title="All 5 branches missed.">					switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {</span>
+					case 1:
+						{
+<span class="nc" id="L213">						_localctx = new FormulaContext(_parentctx, _parentState);</span>
+<span class="nc" id="L214">						pushNewRecursionContext(_localctx, _startState, RULE_formula);</span>
+<span class="nc" id="L215">						setState(30);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, &quot;precpred(_ctx, 4)&quot;);</span>
+<span class="nc" id="L217">						setState(34);</span>
+<span class="nc" id="L218">						_errHandler.sync(this);</span>
+<span class="nc" id="L219">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L223">							setState(31);</span>
+<span class="nc" id="L224">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L227">							setState(36);</span>
+<span class="nc" id="L228">							_errHandler.sync(this);</span>
+<span class="nc" id="L229">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L231">						setState(37);</span>
+<span class="nc" id="L232">						match(T__3);</span>
+<span class="nc" id="L233">						setState(41);</span>
+<span class="nc" id="L234">						_errHandler.sync(this);</span>
+<span class="nc" id="L235">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L239">							setState(38);</span>
+<span class="nc" id="L240">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L243">							setState(43);</span>
+<span class="nc" id="L244">							_errHandler.sync(this);</span>
+<span class="nc" id="L245">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L247">						setState(44);</span>
+<span class="nc" id="L248">						formula(5);</span>
+						}
+<span class="nc" id="L250">						break;</span>
+					case 2:
+						{
+<span class="nc" id="L253">						_localctx = new FormulaContext(_parentctx, _parentState);</span>
+<span class="nc" id="L254">						pushNewRecursionContext(_localctx, _startState, RULE_formula);</span>
+<span class="nc" id="L255">						setState(45);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, &quot;precpred(_ctx, 3)&quot;);</span>
+<span class="nc" id="L257">						setState(49);</span>
+<span class="nc" id="L258">						_errHandler.sync(this);</span>
+<span class="nc" id="L259">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L263">							setState(46);</span>
+<span class="nc" id="L264">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L267">							setState(51);</span>
+<span class="nc" id="L268">							_errHandler.sync(this);</span>
+<span class="nc" id="L269">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L271">						setState(52);</span>
+<span class="nc" id="L272">						match(T__4);</span>
+<span class="nc" id="L273">						setState(56);</span>
+<span class="nc" id="L274">						_errHandler.sync(this);</span>
+<span class="nc" id="L275">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L279">							setState(53);</span>
+<span class="nc" id="L280">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L283">							setState(58);</span>
+<span class="nc" id="L284">							_errHandler.sync(this);</span>
+<span class="nc" id="L285">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L287">						setState(59);</span>
+<span class="nc" id="L288">						formula(4);</span>
+						}
+<span class="nc" id="L290">						break;</span>
+					case 3:
+						{
+<span class="nc" id="L293">						_localctx = new FormulaContext(_parentctx, _parentState);</span>
+<span class="nc" id="L294">						pushNewRecursionContext(_localctx, _startState, RULE_formula);</span>
+<span class="nc" id="L295">						setState(60);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, &quot;precpred(_ctx, 2)&quot;);</span>
+<span class="nc" id="L297">						setState(64);</span>
+<span class="nc" id="L298">						_errHandler.sync(this);</span>
+<span class="nc" id="L299">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L303">							setState(61);</span>
+<span class="nc" id="L304">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L307">							setState(66);</span>
+<span class="nc" id="L308">							_errHandler.sync(this);</span>
+<span class="nc" id="L309">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L311">						setState(67);</span>
+<span class="nc" id="L312">						match(T__5);</span>
+<span class="nc" id="L313">						setState(71);</span>
+<span class="nc" id="L314">						_errHandler.sync(this);</span>
+<span class="nc" id="L315">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L319">							setState(68);</span>
+<span class="nc" id="L320">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L323">							setState(73);</span>
+<span class="nc" id="L324">							_errHandler.sync(this);</span>
+<span class="nc" id="L325">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L327">						setState(74);</span>
+<span class="nc" id="L328">						formula(3);</span>
+						}
+<span class="nc" id="L330">						break;</span>
+					case 4:
+						{
+<span class="nc" id="L333">						_localctx = new FormulaContext(_parentctx, _parentState);</span>
+<span class="nc" id="L334">						pushNewRecursionContext(_localctx, _startState, RULE_formula);</span>
+<span class="nc" id="L335">						setState(75);</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, &quot;precpred(_ctx, 1)&quot;);</span>
+<span class="nc" id="L337">						setState(79);</span>
+<span class="nc" id="L338">						_errHandler.sync(this);</span>
+<span class="nc" id="L339">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L343">							setState(76);</span>
+<span class="nc" id="L344">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L347">							setState(81);</span>
+<span class="nc" id="L348">							_errHandler.sync(this);</span>
+<span class="nc" id="L349">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L351">						setState(82);</span>
+<span class="nc" id="L352">						match(T__6);</span>
+<span class="nc" id="L353">						setState(86);</span>
+<span class="nc" id="L354">						_errHandler.sync(this);</span>
+<span class="nc" id="L355">						_la = _input.LA(1);</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">						while (_la==SPACE) {</span>
+							{
+							{
+<span class="nc" id="L359">							setState(83);</span>
+<span class="nc" id="L360">							match(SPACE);</span>
+							}
+							}
+<span class="nc" id="L363">							setState(88);</span>
+<span class="nc" id="L364">							_errHandler.sync(this);</span>
+<span class="nc" id="L365">							_la = _input.LA(1);</span>
+						}
+<span class="nc" id="L367">						setState(89);</span>
+<span class="nc" id="L368">						formula(2);</span>
+						}
+						break;
+					}
+					} 
+				}
+<span class="nc" id="L374">				setState(94);</span>
+<span class="nc" id="L375">				_errHandler.sync(this);</span>
+<span class="nc" id="L376">				_alt = getInterpreter().adaptivePredict(_input,13,_ctx);</span>
+			}
+			}
+		}
+<span class="nc" id="L380">		catch (RecognitionException re) {</span>
+<span class="nc" id="L381">			_localctx.exception = re;</span>
+<span class="nc" id="L382">			_errHandler.reportError(this, re);</span>
+<span class="nc" id="L383">			_errHandler.recover(this, re);</span>
+		}
+		finally {
+<span class="nc" id="L386">			unrollRecursionContexts(_parentctx);</span>
+<span class="nc" id="L387">		}</span>
+<span class="nc" id="L388">		return _localctx;</span>
+	}
+
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+<span class="nc bnc" id="L392" title="All 2 branches missed.">		switch (ruleIndex) {</span>
+		case 0:
+<span class="nc" id="L394">			return formula_sempred((FormulaContext)_localctx, predIndex);</span>
+		}
+<span class="nc" id="L396">		return true;</span>
+	}
+	private boolean formula_sempred(FormulaContext _localctx, int predIndex) {
+<span class="nc bnc" id="L399" title="All 5 branches missed.">		switch (predIndex) {</span>
+		case 0:
+<span class="nc" id="L401">			return precpred(_ctx, 4);</span>
+		case 1:
+<span class="nc" id="L403">			return precpred(_ctx, 3);</span>
+		case 2:
+<span class="nc" id="L405">			return precpred(_ctx, 2);</span>
+		case 3:
+<span class="nc" id="L407">			return precpred(_ctx, 1);</span>
+		}
+<span class="nc" id="L409">		return true;</span>
+	}
+
+	public static final String _serializedATN =
+		&quot;\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\13b\4\2\t\2\3\2\3&quot;+
+		&quot;\2\3\2\3\2\7\2\t\n\2\f\2\16\2\f\13\2\3\2\3\2\7\2\20\n\2\f\2\16\2\23\13&quot;+
+		&quot;\2\3\2\3\2\3\2\3\2\7\2\31\n\2\f\2\16\2\34\13\2\3\2\5\2\37\n\2\3\2\3\2&quot;+
+		&quot;\7\2#\n\2\f\2\16\2&amp;\13\2\3\2\3\2\7\2*\n\2\f\2\16\2-\13\2\3\2\3\2\3\2\7&quot;+
+		&quot;\2\62\n\2\f\2\16\2\65\13\2\3\2\3\2\7\29\n\2\f\2\16\2&lt;\13\2\3\2\3\2\3\2&quot;+
+		&quot;\7\2A\n\2\f\2\16\2D\13\2\3\2\3\2\7\2H\n\2\f\2\16\2K\13\2\3\2\3\2\3\2\7&quot;+
+		&quot;\2P\n\2\f\2\16\2S\13\2\3\2\3\2\7\2W\n\2\f\2\16\2Z\13\2\3\2\7\2]\n\2\f&quot;+
+		&quot;\2\16\2`\13\2\3\2\2\3\2\3\2\2\2q\2\36\3\2\2\2\4\5\b\2\1\2\5\37\7\n\2\2&quot;+
+		&quot;\6\n\7\3\2\2\7\t\7\13\2\2\b\7\3\2\2\2\t\f\3\2\2\2\n\b\3\2\2\2\n\13\3\2&quot;+
+		&quot;\2\2\13\r\3\2\2\2\f\n\3\2\2\2\r\21\5\2\2\2\16\20\7\13\2\2\17\16\3\2\2&quot;+
+		&quot;\2\20\23\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\24\3\2\2\2\23\21\3\2\2&quot;+
+		&quot;\2\24\25\7\4\2\2\25\37\3\2\2\2\26\32\7\5\2\2\27\31\7\13\2\2\30\27\3\2&quot;+
+		&quot;\2\2\31\34\3\2\2\2\32\30\3\2\2\2\32\33\3\2\2\2\33\35\3\2\2\2\34\32\3\2&quot;+
+		&quot;\2\2\35\37\5\2\2\7\36\4\3\2\2\2\36\6\3\2\2\2\36\26\3\2\2\2\37^\3\2\2\2&quot;+
+		&quot; $\f\6\2\2!#\7\13\2\2\&quot;!\3\2\2\2#&amp;\3\2\2\2$\&quot;\3\2\2\2$%\3\2\2\2%\'\3\2&quot;+
+		&quot;\2\2&amp;$\3\2\2\2\'+\7\6\2\2(*\7\13\2\2)(\3\2\2\2*-\3\2\2\2+)\3\2\2\2+,\3&quot;+
+		&quot;\2\2\2,.\3\2\2\2-+\3\2\2\2.]\5\2\2\7/\63\f\5\2\2\60\62\7\13\2\2\61\60&quot;+
+		&quot;\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\66\3\2\2\2\65\63&quot;+
+		&quot;\3\2\2\2\66:\7\7\2\2\679\7\13\2\28\67\3\2\2\29&lt;\3\2\2\2:8\3\2\2\2:;\3&quot;+
+		&quot;\2\2\2;=\3\2\2\2&lt;:\3\2\2\2=]\5\2\2\6&gt;B\f\4\2\2?A\7\13\2\2@?\3\2\2\2AD&quot;+
+		&quot;\3\2\2\2B@\3\2\2\2BC\3\2\2\2CE\3\2\2\2DB\3\2\2\2EI\7\b\2\2FH\7\13\2\2&quot;+
+		&quot;GF\3\2\2\2HK\3\2\2\2IG\3\2\2\2IJ\3\2\2\2JL\3\2\2\2KI\3\2\2\2L]\5\2\2\5&quot;+
+		&quot;MQ\f\3\2\2NP\7\13\2\2ON\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3\2\2\2RT\3\2\2&quot;+
+		&quot;\2SQ\3\2\2\2TX\7\t\2\2UW\7\13\2\2VU\3\2\2\2WZ\3\2\2\2XV\3\2\2\2XY\3\2&quot;+
+		&quot;\2\2Y[\3\2\2\2ZX\3\2\2\2[]\5\2\2\4\\ \3\2\2\2\\/\3\2\2\2\\&gt;\3\2\2\2\\&quot;+
+		&quot;M\3\2\2\2]`\3\2\2\2^\\\3\2\2\2^_\3\2\2\2_\3\3\2\2\2`^\3\2\2\2\20\n\21&quot;+
+		&quot;\32\36$+\63:BIQX\\^&quot;;
+<span class="nc" id="L440">	public static final ATN _ATN =</span>
+<span class="nc" id="L441">		new ATNDeserializer().deserialize(_serializedATN.toCharArray());</span>
+	static {
+<span class="nc" id="L443">		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">		for (int i = 0; i &lt; _ATN.getNumberOfDecisions(); i++) {</span>
+<span class="nc" id="L445">			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);</span>
+		}
+<span class="nc" id="L447">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

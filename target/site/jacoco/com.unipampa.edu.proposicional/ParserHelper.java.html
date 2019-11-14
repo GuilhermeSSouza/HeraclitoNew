@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ParserHelper.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.proposicional</a> &gt; <span class="el_source">ParserHelper.java</span></div><h1>ParserHelper.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.proposicional;
+
+import java.util.List;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
+
+/**
+ *
+ * @author Rafael
+ */
+<span class="nc" id="L13">public class ParserHelper {</span>
+
+    /**
+     *
+     * @param formula
+     * @return
+     * @throws heraclito.proposicional.SyntaxException
+     */
+    public static Node parseFormula(String formula) throws SyntaxException {
+<span class="nc" id="L22">        ANTLRInputStream input = new ANTLRInputStream(formula);</span>
+
+<span class="nc" id="L24">        ProposicionalLogicLexer lexer = new ProposicionalLogicLexer(input);</span>
+<span class="nc" id="L25">        CommonTokenStream tokens = new CommonTokenStream(lexer);</span>
+<span class="nc" id="L26">        ProposicionalLogicParser parser = new ProposicionalLogicParser(tokens);</span>
+<span class="nc" id="L27">        ProposicionalLogicParser.FormulaContext context = parser.formula();</span>
+
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (parser.getNumberOfSyntaxErrors() &gt; 0) {</span>
+<span class="nc" id="L30">            throw new SyntaxException();</span>
+        }
+
+<span class="nc" id="L33">        return translate(context);</span>
+    }
+
+    private static Node translate(ProposicionalLogicParser.FormulaContext context) {
+
+<span class="nc" id="L38">        Node node = new Node();</span>
+<span class="nc" id="L39">        node.setText(context.getText());</span>
+<span class="nc" id="L40">        node.setNodeType(evaluateNodeType(context));</span>
+
+<span class="nc" id="L42">        context = bypassEqualChild(context);</span>
+
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (node.getNodeType() == NodeType.NonTerminal) {</span>
+<span class="nc" id="L45">            node.setOperator(evaluateOperator(context));</span>
+        }
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        for (ProposicionalLogicParser.FormulaContext child : context.formula()) {</span>
+<span class="nc" id="L49">            translateInternal(child, node);</span>
+<span class="nc" id="L50">        }</span>
+
+<span class="nc" id="L52">        return node;</span>
+    }
+
+    private static void translateInternal(ProposicionalLogicParser.FormulaContext context, Node parent) {
+
+<span class="nc" id="L57">        Node node = new Node();</span>
+<span class="nc" id="L58">        node.setText(context.getText());</span>
+<span class="nc" id="L59">        node.setNodeType(evaluateNodeType(context));</span>
+
+<span class="nc" id="L61">        context = bypassEqualChild(context);</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (node.getNodeType() == NodeType.NonTerminal) {</span>
+<span class="nc" id="L64">            node.setOperator(evaluateOperator(context));</span>
+        }
+
+<span class="nc" id="L67">        parent.getChildren().add(node);</span>
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (ProposicionalLogicParser.FormulaContext child : context.formula()) {</span>
+<span class="nc" id="L70">            translateInternal(child, node);</span>
+<span class="nc" id="L71">        }</span>
+<span class="nc" id="L72">    }</span>
+
+    private static ProposicionalLogicParser.FormulaContext bypassEqualChild(ProposicionalLogicParser.FormulaContext context) {
+
+<span class="nc" id="L76">        String formula = context.getText();</span>
+<span class="nc" id="L77">        List&lt;ProposicionalLogicParser.FormulaContext&gt; childs = context.formula();</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (childs.size() == 1) {</span>
+<span class="nc" id="L80">            ProposicionalLogicParser.FormulaContext child = childs.get(0);</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            if (formula.equals(&quot;(&quot; + child.getText() + &quot;)&quot;)) {</span>
+<span class="nc" id="L83">                return child;</span>
+            }
+        }
+
+<span class="nc" id="L87">        return context;</span>
+    }
+
+    private static NodeType evaluateNodeType(ProposicionalLogicParser.FormulaContext context) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        return context.formula().isEmpty() ? NodeType.Terminal : NodeType.NonTerminal;</span>
+    }
+
+    private static Operator evaluateOperator(ProposicionalLogicParser.FormulaContext context) {
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (ParseTree child : context.children) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            if (child instanceof TerminalNodeImpl) {</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                if (child.getText() == &quot;~&quot;) {</span>
+<span class="nc" id="L100">                    return Operator.Negation;</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                } else if (child.getText() == &quot;^&quot;) {</span>
+<span class="nc" id="L103">                    return Operator.Conjuction;</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                } else if (child.getText() == &quot;v&quot;) {</span>
+<span class="nc" id="L106">                    return Operator.Disjuction;</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                } else if (child.getText() == &quot;-&gt;&quot;) {</span>
+<span class="nc" id="L109">                    return Operator.Implication;</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                } else if (child.getText() == &quot;&lt;-&gt;&quot;) {</span>
+<span class="nc" id="L112">                    return Operator.Biconditional;</span>
+
+                }
+<span class="nc" id="L115">                return null;</span>
+            }
+
+<span class="nc" id="L118">            return null;</span>
+        }
+        
+<span class="nc" id="L121">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

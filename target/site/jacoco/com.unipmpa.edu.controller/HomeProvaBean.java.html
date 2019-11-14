@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>HomeProvaBean.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipmpa.edu.controller</a> &gt; <span class="el_source">HomeProvaBean.java</span></div><h1>HomeProvaBean.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipmpa.edu.controller;
+
+import com.unipampa.edu.DAO.ExercicioDB;
+import com.unipampa.edu.execption.LogicException;
+import com.unipampa.edu.helper.Datehelp;
+import com.unipampa.edu.heraclito.Manager;
+import com.unipampa.edu.heraclito.Prova;
+import com.unipampa.edu.model.User;
+import java.io.IOException;
+import static java.lang.String.valueOf;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+/**
+ *
+ * @author heraclitoserver
+ */
+@ManagedBean
+@ApplicationScoped
+public class HomeProvaBean {
+
+    private String nameUser;
+    private int idUser;
+    private String userAcesso;
+    private String novaProva;
+    private String SelectProvaBasica;
+    private String selectProvaIntermediaria;
+    private String selectProvaAvancada;
+
+    /**
+     * Creates a new instance of HomeProva
+     */
+<span class="nc" id="L42">    public HomeProvaBean() {</span>
+<span class="nc" id="L43">        userLogado();</span>
+<span class="nc" id="L44">    }</span>
+
+    /**
+     *
+     */
+    public final void userLogado() {
+<span class="nc" id="L50">        FacesContext fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L51">        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);</span>
+<span class="nc" id="L52">        User user = (User) session.getAttribute(&quot;User&quot;);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (user == null) {</span>
+            try {
+<span class="nc" id="L55">                FacesContext.getCurrentInstance().getExternalContext().redirect(&quot;login.xhtml&quot;);</span>
+<span class="nc" id="L56">            } catch (IOException ex) {</span>
+<span class="nc" id="L57">                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L58">            }</span>
+        } else {
+<span class="nc" id="L60">            nameUser = user.getName();</span>
+<span class="nc" id="L61">            idUser = user.getId();</span>
+<span class="nc" id="L62">            userAcesso = user.getAcesso();</span>
+
+        }
+
+<span class="nc" id="L66">    }</span>
+
+    public void exercicoHipotese() {
+
+<span class="nc" id="L70">    }</span>
+
+    
+    
+    /**
+     * Refatorar este metodo a fim de que ele seja um so com os prava.
+     * Isso diminui o uso das session (Rever o Manager e sua necessidade)
+     * @throws Exception 
+     */
+    public void provaBasica() throws Exception {
+
+        try {
+
+<span class="nc" id="L83">            Prova prova = new Prova(String.valueOf(idUser), SelectProvaBasica);</span>
+
+<span class="nc" id="L85">            Manager manager = new Manager(String.valueOf(idUser), prova);</span>
+<span class="nc" id="L86">            FacesContext fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L87">            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);</span>
+<span class="nc" id="L88">            session.setAttribute(&quot;manager&quot;, manager);</span>
+
+            //Inserindo novo exercicio no banco
+<span class="nc" id="L91">            ExercicioDB eDB = new ExercicioDB();</span>
+<span class="nc" id="L92">            Datehelp dH = new Datehelp();</span>
+<span class="nc" id="L93">            String horaexercicio = dH.getDateTime();</span>
+
+            //Pegar nivel do exercicio
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (nameUser != null) {</span>
+<span class="nc" id="L97">                boolean insertOK = eDB.insertExercico(SelectProvaBasica, 0, 0, horaexercicio, null, 1, idUser);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if (insertOK) {</span>
+<span class="nc" id="L99">                    Integer idexercicio = eDB.selectByLastID(idUser);</span>
+<span class="nc" id="L100">                    fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L101">                    session = (HttpSession) fc.getExternalContext().getSession(false);</span>
+<span class="nc" id="L102">                    session.setAttribute(&quot;idExercicio&quot;, idexercicio);</span>
+
+                }
+
+            }
+
+<span class="nc" id="L108">        } catch (LogicException e) {</span>
+<span class="nc" id="L109">        }</span>
+
+<span class="nc" id="L111">    }</span>
+
+    public void provaIntermediarias() {
+
+<span class="nc" id="L115">    }</span>
+
+    public void provaAvancadas() {
+
+<span class="nc" id="L119">    }</span>
+
+    /**
+     *
+     * @return nameUser
+     */
+    public String getNameUser() {
+<span class="nc" id="L126">        return nameUser;</span>
+    }
+
+    /**
+     *
+     * @return idUser
+     */
+    public String getUserAcesso() {
+<span class="nc" id="L134">        return userAcesso;</span>
+    }
+
+    public String getNovaProva() {
+<span class="nc" id="L138">        return novaProva;</span>
+    }
+
+    public void setNovaProva(String novaProva) {
+<span class="nc" id="L142">        this.novaProva = novaProva;</span>
+<span class="nc" id="L143">    }</span>
+
+    public String getSelectProvaBasica() {
+<span class="nc" id="L146">        return SelectProvaBasica;</span>
+    }
+
+    public void setSelectProvaBasica(String SelectProvaBasica) {
+<span class="nc" id="L150">        this.SelectProvaBasica = SelectProvaBasica;</span>
+<span class="nc" id="L151">    }</span>
+
+    public String getSelectProvaIntermediaria() {
+<span class="nc" id="L154">        return selectProvaIntermediaria;</span>
+    }
+
+    public void setSelectProvaIntermediaria(String selectProvaIntermediaria) {
+<span class="nc" id="L158">        this.selectProvaIntermediaria = selectProvaIntermediaria;</span>
+<span class="nc" id="L159">    }</span>
+
+    public String getSelectProvaAvancada() {
+<span class="nc" id="L162">        return selectProvaAvancada;</span>
+    }
+
+    public void setSelectProvaAvancada(String selectProvaAvancada) {
+<span class="nc" id="L166">        this.selectProvaAvancada = selectProvaAvancada;</span>
+<span class="nc" id="L167">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

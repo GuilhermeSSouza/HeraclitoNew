@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LoginBean.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipmpa.edu.controller</a> &gt; <span class="el_source">LoginBean.java</span></div><h1>LoginBean.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipmpa.edu.controller;
+
+import com.unipampa.edu.DAO.ConnectionFactory;
+import com.unipampa.edu.model.User;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+/**
+ *
+ * @author heraclitoserver
+ */
+@ManagedBean
+@SessionScoped
+public class LoginBean {
+
+    private String usermane;
+    private String userpassword;
+<span class="nc" id="L32">    private Boolean isLogin = false;</span>
+<span class="nc" id="L33">    private User user = null;</span>
+
+    /**
+     *
+     */
+<span class="nc" id="L38">    public LoginBean() {</span>
+<span class="nc" id="L39">    }</span>
+
+    /**
+     *
+     */
+    public void logar() {
+
+        try {
+<span class="nc" id="L47">            user = login(usermane, userpassword);</span>
+<span class="nc" id="L48">        } catch (Exception ex) {</span>
+<span class="nc" id="L49">            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L50">        }</span>
+
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (user != null) {</span>
+
+<span class="nc" id="L54">            FacesContext fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L55">            HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);</span>
+<span class="nc" id="L56">            session.setAttribute(&quot;isLogin&quot;, true);</span>
+<span class="nc" id="L57">            session.setAttribute(&quot;iduser&quot;, user.getId());</span>
+<span class="nc" id="L58">            session.setAttribute(&quot;User&quot;, user);</span>
+
+            try {
+<span class="nc" id="L61">                FacesContext.getCurrentInstance().getExternalContext().redirect(&quot;Home.xhtml&quot;);</span>
+<span class="nc" id="L62">            } catch (IOException ex) {</span>
+<span class="nc" id="L63">                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L64">            }</span>
+
+        }
+
+<span class="nc" id="L68">        this.isLogin = false;</span>
+
+        try {
+<span class="nc" id="L71">            FacesContext.getCurrentInstance().getExternalContext().redirect(&quot;login.xhtml&quot;);</span>
+<span class="nc" id="L72">        } catch (IOException ex) {</span>
+<span class="nc" id="L73">            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L74">        }</span>
+<span class="nc" id="L75">    }</span>
+
+    /**
+     *
+     * @return
+     */
+    public String getUsermane() {
+<span class="nc" id="L82">        return usermane;</span>
+    }
+
+    /**
+     *
+     * @param usermane
+     */
+    public void setUsermane(String usermane) {
+<span class="nc" id="L90">        this.usermane = usermane;</span>
+<span class="nc" id="L91">    }</span>
+
+    /**
+     *
+     * @return
+     */
+    public String getUserpassword() {
+<span class="nc" id="L98">        return userpassword;</span>
+    }
+
+    /**
+     *
+     * @param userpassword
+     */
+    public void setUserpassword(String userpassword) {
+<span class="nc" id="L106">        this.userpassword = userpassword;</span>
+<span class="nc" id="L107">    }</span>
+
+    /**
+     *
+     * @return
+     */
+    public Boolean getIsLogin() {
+<span class="nc" id="L114">        return isLogin;</span>
+    }
+
+    /**
+     *
+     * @param isLogin
+     */
+    public void setIsLogin(Boolean isLogin) {
+<span class="nc" id="L122">        this.isLogin = isLogin;</span>
+<span class="nc" id="L123">    }</span>
+
+    /**
+     *
+     * @return user
+     */
+    public User getUser() {
+<span class="nc" id="L130">        return user;</span>
+    }
+
+    /**
+     *
+     * @param user
+     */
+    public void setUser(User user) {
+<span class="nc" id="L138">        this.user = user;</span>
+<span class="nc" id="L139">    }</span>
+
+    /**
+     *
+     * @param login
+     * @param senha
+     * @return User
+     * @throws Exception
+     */
+    public User login(String login, String senha) throws Exception {
+
+<span class="nc" id="L150">        User userlogin = null;</span>
+<span class="nc" id="L151">        String query = &quot;SELECT iduser, nomeuser, emailuser, acessouser FROM heraclitodb.user where emailuser = ? and senhauser = ?;&quot;;</span>
+
+        try {
+
+<span class="nc" id="L155">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L156">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L158">            st.setString(1, login);</span>
+
+<span class="nc" id="L160">            st.setString(2, senha);</span>
+<span class="nc" id="L161">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">            while (rs.next()) {</span>
+<span class="nc" id="L164">                userlogin = new User();</span>
+<span class="nc" id="L165">                userlogin.setId(rs.getInt(1));</span>
+<span class="nc" id="L166">                userlogin.setName(rs.getString(2));</span>
+<span class="nc" id="L167">                userlogin.setEmail(rs.getString(3));</span>
+<span class="nc" id="L168">                userlogin.setAcesso(rs.getString(4));</span>
+
+            }
+
+<span class="nc" id="L172">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L174">            return userlogin;</span>
+
+<span class="nc" id="L176">        } catch (SQLException e) {</span>
+<span class="nc" id="L177">            return null;</span>
+        }
+
+    }
+    
+    /**
+     *
+     */
+    public void logout(){
+    
+<span class="nc" id="L187">    FacesContext fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L188">            fc.getExternalContext().invalidateSession();</span>
+        try {
+<span class="nc" id="L190">            fc.getCurrentInstance().getExternalContext().redirect(&quot;Heraclito.xhtml&quot;);</span>
+<span class="nc" id="L191">        } catch (IOException ex) {</span>
+<span class="nc" id="L192">            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L193">        }</span>
+            
+    
+<span class="nc" id="L196">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

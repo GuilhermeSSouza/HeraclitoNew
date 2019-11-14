@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Node.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.proposicional</a> &gt; <span class="el_source">Node.java</span></div><h1>Node.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.proposicional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author Rafael Bueno
+ */
+public class Node {
+
+    private NodeType nodeType;
+    private Boolean value;
+    private String text;
+    private List&lt;Node&gt; children;
+    private Operator operator;
+    private PartialEvaluateStatus partialEvaluateStatus;
+    private int idNode;
+    private Boolean editable;
+
+<span class="nc" id="L21">    public Node() {</span>
+<span class="nc" id="L22">        children = new ArrayList&lt;Node&gt;();</span>
+<span class="nc" id="L23">    }</span>
+
+    /**
+     * @return the nodeType
+     */
+    public NodeType getNodeType() {
+<span class="nc" id="L29">        return nodeType;</span>
+    }
+
+    /**
+     * @param nodeType the nodeType to set
+     */
+    public void setNodeType(NodeType nodeType) {
+<span class="nc" id="L36">        this.nodeType = nodeType;</span>
+<span class="nc" id="L37">    }</span>
+
+    /**
+     * @return the value
+     */
+    public Boolean getValue() {
+<span class="nc" id="L43">        return this.value;</span>
+    }
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(Boolean value) {
+<span class="nc" id="L50">        this.value = value;</span>
+<span class="nc" id="L51">    }</span>
+
+    /**
+     * @return the text
+     */
+    public String getText() {
+<span class="nc" id="L57">        return text;</span>
+    }
+
+    /**
+     * @param text the text to set
+     */
+    public void setText(String text) {
+<span class="nc" id="L64">        this.text = text;</span>
+<span class="nc" id="L65">    }</span>
+
+    public List&lt;Node&gt; getChildren() {
+<span class="nc" id="L68">        return children;//.toArray(new Node[0]);</span>
+    }
+
+    /**
+     * @return the operator
+     */
+    public Operator getOperator() {
+<span class="nc" id="L75">        return operator;</span>
+    }
+
+    /**
+     * @param operator the connective to set
+     */
+    public void setOperator(Operator operator) {
+<span class="nc" id="L82">        this.operator = operator;</span>
+<span class="nc" id="L83">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L87">        return this.getText();</span>
+    }
+
+    /**
+     * @param children the children to set
+     */
+    public void setChildren(List&lt;Node&gt; children) {
+<span class="nc" id="L94">        this.children = children;</span>
+<span class="nc" id="L95">    }</span>
+
+    public void calculateValue() {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (nodeType == NodeType.Terminal) {</span>
+<span class="nc" id="L99">            return;</span>
+        }
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (children.size() == 1) {</span>
+<span class="nc" id="L103">            children.get(0).calculateValue();</span>
+<span class="nc" id="L104">            Boolean childValue = children.get(0).getValue();</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">            if (childValue != null) {</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">                this.value = (operator == Operator.Negation ? !childValue : childValue);</span>
+<span class="nc" id="L108">                return;</span>
+            }
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        } else if (children.size() == 2) {</span>
+<span class="nc" id="L111">            children.get(0).calculateValue();</span>
+<span class="nc" id="L112">            children.get(1).calculateValue();</span>
+
+<span class="nc" id="L114">            Boolean leftValue = children.get(0).getValue();</span>
+<span class="nc" id="L115">            Boolean rightValue = children.get(1).getValue();</span>
+
+<span class="nc bnc" id="L117" title="All 4 branches missed.">            if (leftValue != null &amp;&amp; rightValue != null) {</span>
+<span class="nc" id="L118">                this.value = ExpressionEvaluator.evaluateBinary(leftValue, rightValue, operator);</span>
+<span class="nc" id="L119">                return;</span>
+            }
+        }
+
+<span class="nc" id="L123">        this.value = null;</span>
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * @return the partialEvaluateStatus
+     */
+    public PartialEvaluateStatus getPartialEvaluateStatus() {
+<span class="nc" id="L130">        return partialEvaluateStatus;</span>
+    }
+
+    /**
+     * @param partialEvaluateStatus the partialEvaluateStatus to set
+     */
+    public void setPartialEvaluateStatus(PartialEvaluateStatus partialEvaluateStatus) {
+<span class="nc" id="L137">        this.partialEvaluateStatus = partialEvaluateStatus;</span>
+<span class="nc" id="L138">    }</span>
+
+    /**
+     * @return the idNode
+     */
+    public int getIdNode() {
+<span class="nc" id="L144">        return idNode;</span>
+    }
+
+    /**
+     * @param idNode the idNode to set
+     */
+    public void setIdNode(int idNode) {
+<span class="nc" id="L151">        this.idNode = idNode;</span>
+<span class="nc" id="L152">    }</span>
+
+    /**
+     * @return the editable
+     */
+    public Boolean getEditable() {
+<span class="nc" id="L158">        return editable;</span>
+    }
+
+    /**
+     * @param editable the editable to set
+     */
+    public void setEditable(Boolean editable) {
+<span class="nc" id="L165">        this.editable = editable;</span>
+<span class="nc" id="L166">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

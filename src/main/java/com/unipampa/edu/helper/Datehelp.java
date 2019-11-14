@@ -14,13 +14,9 @@ import java.text.SimpleDateFormat;
  * @author heraclitoserver
  */
 public class Datehelp {
-
-    public Datehelp() {
-    }
     
     
-    
-    public String getDateTime() { 
+    public static String getDateTime() { 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
 	Date date = new Date(System.currentTimeMillis()); 
 	return dateFormat.format(date); 

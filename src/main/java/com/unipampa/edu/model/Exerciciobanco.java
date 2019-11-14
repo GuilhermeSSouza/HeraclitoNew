@@ -5,7 +5,6 @@
  */
 package com.unipampa.edu.model;
 
-import java.sql.Date;
 
 /**
  *

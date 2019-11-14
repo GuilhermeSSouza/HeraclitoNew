@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Manager.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.heraclito</a> &gt; <span class="el_source">Manager.java</span></div><h1>Manager.java</h1><pre class="source lang-java linenums">
+package com.unipampa.edu.heraclito;
+
+import com.unipampa.edu.constantes.Lado;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.credenciais.CredentialsException;
+import com.unipampa.edu.credenciais.User;
+import com.unipampa.edu.execption.LogicException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+/** @author Rafael Koch Peres */
+public class Manager {
+    private Prova prova;
+    private Stack&lt;Prova&gt; undo;
+    private Stack&lt;Prova&gt; redo;
+    
+    private String studentId;
+    
+    private static Pattern pattern;
+
+    private static final String EMAIL_PATTERN = 
+		&quot;^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@&quot;
+		+ &quot;[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$&quot;;
+
+    private static final String SWAC_POST_REQUEST = 
+            &quot;http://localhost:8090/swac/student_profile/proof_editor/request&quot;;
+
+<span class="nc" id="L34">    public Manager(String student, Prova prova) {</span>
+<span class="nc" id="L35">        this.studentId = student;</span>
+<span class="nc" id="L36">        this.prova = prova;</span>
+<span class="nc" id="L37">        this.undo = new Stack();</span>
+<span class="nc" id="L38">        this.redo = new Stack();</span>
+<span class="nc" id="L39">    }</span>
+    
+    public String getArgumento(){
+<span class="nc" id="L42">        return this.prova.getArgumento();</span>
+    }
+
+    public Prova getProva() {
+<span class="nc" id="L46">        return prova;</span>
+    }
+
+    public void setProva(Prova prova) {
+<span class="nc" id="L50">        this.prova = prova;</span>
+<span class="nc" id="L51">    }</span>
+    
+    public boolean hasProva() {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        return this.prova!=null;</span>
+    }
+    
+    private void updateStack() throws CloneNotSupportedException {
+<span class="nc" id="L58">        this.undo.push((Prova) this.prova.clone());</span>
+<span class="nc" id="L59">        this.redo = new Stack();</span>
+<span class="nc" id="L60">    }</span>
+    
+    public void undo() {
+<span class="nc" id="L63">        this.redo.push(this.prova);</span>
+<span class="nc" id="L64">        this.prova = this.undo.pop();</span>
+<span class="nc" id="L65">    }</span>
+    
+    public void redo() {
+<span class="nc" id="L68">        this.undo.push(this.prova);</span>
+<span class="nc" id="L69">        this.prova = this.redo.pop();</span>
+<span class="nc" id="L70">    }</span>
+    
+    public boolean canUndo() {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if(this.undo.size() &gt; 0)</span>
+<span class="nc" id="L74">            return true;</span>
+<span class="nc" id="L75">        return false;</span>
+    }
+    
+    public boolean canRedo() {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if(this.redo.size() &gt; 0)</span>
+<span class="nc" id="L80">            return true;</span>
+<span class="nc" id="L81">        return false;</span>
+    }
+    
+    public void aplicarRegra(Regras regra, List&lt;Integer&gt; linhas,
+            String str, Lado lado, String sID) 
+            throws LogicException, CloneNotSupportedException {
+<span class="nc" id="L87">        this.updateStack();</span>
+<span class="nc" id="L88">        this.prova.aplicarRegra(regra, linhas, str, lado, sID);</span>
+<span class="nc" id="L89">    }</span>
+    
+    public void adicionarHipotese(String str) 
+            throws CloneNotSupportedException, LogicException {
+<span class="nc" id="L93">        this.updateStack();</span>
+<span class="nc" id="L94">        this.prova.adicionarHipotese(str);</span>
+<span class="nc" id="L95">    }</span>
+    
+    public void mostrarHipoteses() 
+            throws CloneNotSupportedException {
+<span class="nc" id="L99">        this.updateStack();</span>
+<span class="nc" id="L100">        this.prova.mostrarHipoteses();</span>
+<span class="nc" id="L101">    }</span>
+    
+    public void limparProva() 
+            throws LogicException, CloneNotSupportedException {
+<span class="nc" id="L105">        this.updateStack();</span>
+<span class="nc" id="L106">        this.prova = new Prova(this.studentId, this.prova.getEntrada());</span>
+<span class="nc" id="L107">    }</span>
+    
+    public boolean provaTemHipotesesPendentes() {
+<span class="nc" id="L110">        return this.prova.temHipotesesPendentes();</span>
+    }
+    
+    public boolean provaEstaFinalizada() {
+<span class="nc" id="L114">        return this.prova.estaFinalizada();</span>
+    }
+    
+    	/**
+	 * Validate email with regular expression
+	 * 
+	 * @param email
+	 *            email for validation
+	 * @return true valid email, false invalid email
+	 */
+    public static boolean emailValidate(String email) {
+        Matcher matcher;
+        
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (pattern==null)</span>
+<span class="nc" id="L128">            pattern = Pattern.compile(EMAIL_PATTERN);</span>
+<span class="nc" id="L129">	matcher = pattern.matcher(email);</span>
+<span class="nc" id="L130">	return matcher.matches();</span>
+
+    }
+
+
+    public static String cadastrar(String nome, String sobrenome, String email,
+            String senha, String matricula) throws CredentialsException {
+<span class="nc bnc" id="L137" title="All 4 branches missed.">        if(nome == null || nome.isEmpty()) {</span>
+<span class="nc" id="L138">            throw new CredentialsException(&quot;Favor, preencha o nome.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L141" title="All 4 branches missed.">        if(sobrenome == null || sobrenome.isEmpty()) {</span>
+<span class="nc" id="L142">            throw new CredentialsException(&quot;Favor, preencha o sobrenome.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L145" title="All 6 branches missed.">        if(email == null || email.isEmpty() || !emailValidate(email)) {</span>
+<span class="nc" id="L146">            throw new CredentialsException(&quot;Favor, preencha o email.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L149" title="All 4 branches missed.">        if(senha == null || senha.isEmpty()) {</span>
+<span class="nc" id="L150">            throw new CredentialsException(&quot;Favor, preencha a senha.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (!requestTutorEnroll(nome,sobrenome,email,senha)){</span>
+<span class="nc" id="L154">            throw new CredentialsException(&quot;Cadastro novo não aceito porque usuário já está cadastrado.&quot;);            </span>
+        }
+<span class="nc" id="L156">        return &quot;Cadastro realizado com sucesso!&quot;;</span>
+    }
+    
+ 
+    private static boolean requestTutorEnroll(
+                String nome, String sobrenome, String email, String senha){
+        // Request tutor to enroll a new student
+        // Type of command: enroll
+<span class="nc" id="L164">        String content=&quot;enroll&quot;;</span>
+<span class="nc" id="L165">        content += &quot;\n&quot;;</span>
+        
+        // E-Mail
+<span class="nc" id="L168">        content+=email.toLowerCase();</span>
+<span class="nc" id="L169">        content+=&quot;\n&quot;;   </span>
+        
+        // Password
+<span class="nc" id="L172">        content+=senha;</span>
+<span class="nc" id="L173">        content+=&quot;\n&quot;;   </span>
+        
+        // First name
+<span class="nc" id="L176">        content+=nome;</span>
+<span class="nc" id="L177">        content+=&quot;\n&quot;;   </span>
+
+        // Last name 
+<span class="nc" id="L180">        content+=sobrenome;</span>
+<span class="nc" id="L181">        content+=&quot;\n&quot;;  </span>
+        
+        // Post command to Heraclito tutoring server
+<span class="nc" id="L184">        return NetClientPost.Post(SWAC_POST_REQUEST, content);</span>
+    }
+
+    
+    public static String login(String userid, String senha) throws CredentialsException {
+<span class="nc bnc" id="L189" title="All 4 branches missed.">        if(userid == null || userid.isEmpty()) {</span>
+<span class="nc" id="L190">            throw new CredentialsException(&quot;Favor, preencha o login de usuário.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L193" title="All 4 branches missed.">        if(senha == null || senha.isEmpty()) {</span>
+<span class="nc" id="L194">            throw new CredentialsException(&quot;Favor, preencha a senha.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        if (!requestTutorLogin(userid,senha)){</span>
+<span class="nc" id="L198">            throw new CredentialsException(&quot;Login não aceito: email ou senha inválida.&quot;);            </span>
+        }
+<span class="nc" id="L200">        return &quot;Login realizado com sucesso!&quot;;</span>
+    }
+    
+ 
+    private static boolean requestTutorLogin(String userid, String senha){
+        // Request tutor to login a student
+        // Type of command: login
+<span class="nc" id="L207">        String content=&quot;login&quot;;</span>
+<span class="nc" id="L208">        content += &quot;\n&quot;;</span>
+        
+        // E-Mail
+<span class="nc" id="L211">        content+=userid.toLowerCase();</span>
+<span class="nc" id="L212">        content+=&quot;\n&quot;;   </span>
+        
+        // Password
+<span class="nc" id="L215">        content+=senha;</span>
+<span class="nc" id="L216">        content+=&quot;\n&quot;;   </span>
+        
+        // Post command to Heraclito tutoring server
+<span class="nc" id="L219">        return NetClientPost.Post(SWAC_POST_REQUEST, content);</span>
+    }
+
+    
+    public static String changePass(String userid, String oldpass, String newpass) throws CredentialsException {
+<span class="nc bnc" id="L224" title="All 4 branches missed.">        if(userid == null || userid.isEmpty()) {</span>
+<span class="nc" id="L225">            throw new CredentialsException(&quot;Favor, preencha o email.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L228" title="All 4 branches missed.">        if(oldpass == null || oldpass.isEmpty()) {</span>
+<span class="nc" id="L229">            throw new CredentialsException(&quot;Favor, preencha a senha antiga.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L232" title="All 4 branches missed.">        if(newpass == null || newpass.isEmpty()) {</span>
+<span class="nc" id="L233">            throw new CredentialsException(&quot;Favor, preencha a nova senha.&quot;);</span>
+        }
+        
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        if (!requestTutorChangePass(userid,oldpass,newpass)){</span>
+<span class="nc" id="L237">            throw new CredentialsException(&quot;Mudança de senha não aceita.&quot;);            </span>
+        }
+<span class="nc" id="L239">        return &quot;Senha alterada com sucesso!&quot;;</span>
+    }
+    
+ 
+    private static boolean requestTutorChangePass(String userid, String oldpass, String newpass){
+        // Request tutor to login a student
+        // Type of command: login
+<span class="nc" id="L246">        String content=&quot;changepass&quot;;</span>
+<span class="nc" id="L247">        content += &quot;\n&quot;;</span>
+        
+        // User ID
+<span class="nc" id="L250">        content+=userid.toLowerCase();</span>
+<span class="nc" id="L251">        content+=&quot;\n&quot;;   </span>
+        
+        // Old Password
+<span class="nc" id="L254">        content+=oldpass;</span>
+<span class="nc" id="L255">        content+=&quot;\n&quot;;   </span>
+        
+        // New Password
+<span class="nc" id="L258">        content+=newpass;</span>
+<span class="nc" id="L259">        content+=&quot;\n&quot;;   </span>
+        
+        // Post command to Heraclito tutoring server
+<span class="nc" id="L262">        return NetClientPost.Post(SWAC_POST_REQUEST, content);</span>
+    }
+
+    
+   public static String logout(String userid) throws CredentialsException {
+<span class="nc bnc" id="L267" title="All 2 branches missed.">       if (!requestTutorLogout(userid)){</span>
+<span class="nc" id="L268">            throw new CredentialsException(&quot;Logout não aceito.&quot;);            </span>
+        }
+<span class="nc" id="L270">        return &quot;Logout realizado com sucesso!&quot;;</span>
+    }
+    
+ 
+    private static boolean requestTutorLogout(String userid){
+        // Request tutor to login a student
+        // Type of command: login
+<span class="nc" id="L277">        String content=&quot;logout&quot;;</span>
+<span class="nc" id="L278">        content += &quot;\n&quot;;</span>
+        
+        // User ID
+<span class="nc" id="L281">        content+=userid.toLowerCase();</span>
+<span class="nc" id="L282">        content+=&quot;\n&quot;;   </span>
+        
+       // Post command to Heraclito tutoring server
+<span class="nc" id="L285">        return NetClientPost.Post(SWAC_POST_REQUEST, content);</span>
+    }
+
+    
+     
+    @Override
+    public String toString() {
+<span class="nc" id="L292">        return this.prova.toHTMLString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

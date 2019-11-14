@@ -5,6 +5,7 @@
  */
 package com.unipampa.edu.model;
 
+import com.unipampa.edu.helper.Datehelp;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,115 +21,118 @@ public class ExerciciobancoTest {
     @Test
     public void testGetId() {
         System.out.println("getId");
-        Exerciciobanco instance = null;
-        int expResult = 0;
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
+        int expResult = 1;
         int result = instance.getId();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        
     }
 
     @Test
     public void testSetId() {
         System.out.println("setId");
-        int id = 0;
-        Exerciciobanco instance = null;
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
+        int id = 0;        
         instance.setId(id);
-        fail("The test case is a prototype.");
+        assertEquals(id, instance.getId());
+        
     }
-
     @Test
     public void testGetCorreto() {
         System.out.println("getCorreto");
-        Exerciciobanco instance = null;
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
         int expResult = 0;
         int result = instance.getCorreto();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        
     }
 
     @Test
     public void testSetCorreto() {
         System.out.println("setCorreto");
-        int correto = 0;
-        Exerciciobanco instance = null;
+        int correto = 1;
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
         instance.setCorreto(correto);
-        fail("The test case is a prototype.");
+        assertEquals(correto, instance.getCorreto());
     }
 
     @Test
     public void testGetAjuda() {
         System.out.println("getAjuda");
-        Exerciciobanco instance = null;
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
         int expResult = 0;
         int result = instance.getAjuda();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        
     }
 
     @Test
     public void testSetAjuda() {
         System.out.println("setAjuda");
-        int ajuda = 0;
-        Exerciciobanco instance = null;
+        int ajuda = 1;
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
         instance.setAjuda(ajuda);
-        fail("The test case is a prototype.");
+        assertEquals(instance.getAjuda(), ajuda);
+        
     }
 
     @Test
     public void testGetFromula() {
         System.out.println("getFromula");
-        Exerciciobanco instance = null;
-        String expResult = "";
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
+        String expResult = "A->B-C|-B";
         String result = instance.getFromula();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        
     }
 
     @Test
     public void testSetFromula() {
         System.out.println("setFromula");
-        String fromula = "";
-        Exerciciobanco instance = null;
+        String fromula ="A->B-C|-C";
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
         instance.setFromula(fromula);
-        fail("The test case is a prototype.");
+        assertEquals(instance.getFromula(), fromula);
     }
 
     @Test
     public void testGetInico() {
         System.out.println("getInico");
-        Exerciciobanco instance = null;
-        String expResult = "";
-        String result = instance.getInico();
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), null);
+         String result = instance.getInico();
+        assertNotNull(result);
+        
     }
 
     @Test
     public void testSetInico() {
         System.out.println("setInico");
-        String inicio = "";
-        Exerciciobanco instance = null;
+        String inicio = Datehelp.getDateTime();
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", inicio, null);
         instance.setInico(inicio);
-        fail("The test case is a prototype.");
+        
+        assertEquals(inicio, instance.getInico());
+        
     }
 
     @Test
     public void testGetFim() {
         System.out.println("getFim");
-        Exerciciobanco instance = null;
-        String expResult = "";
+        String expResult = Datehelp.getDateTime();
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), expResult);
+        
         String result = instance.getFim();
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        
     }
 
     @Test
     public void testSetFim() {
         System.out.println("setFim");
-        String fim = "";
-        Exerciciobanco instance = null;
+        String fim = Datehelp.getDateTime();
+        Exerciciobanco instance = new Exerciciobanco(1, 0, 0, "A->B-C|-B", Datehelp.getDateTime(), fim);;
         instance.setFim(fim);
-        fail("The test case is a prototype.");
+        assertEquals(instance.getFim(), fim);
     }
     
 }

@@ -6,95 +6,109 @@
 package com.unipampa.edu.DAO;
 
 import com.unipampa.edu.model.Exerciciobanco;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 /**
  *
  * @author heraclitoserver
  */
 public class ExercicioDBTest {
-    
+
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        return dateFormat.format(date);
+    }
+
     public ExercicioDBTest() {
     }
 
     @Test
-    public void testInsertExercico() throws Exception {
+    public void testInsertExercico() {
         System.out.println("insertExercico");
-        String formula = "";
-        int correto = 0;
+        String formula = "B->A,B |-A";
+        int correto = 1;
         int ajuda = 0;
-        String inico = "";
-        String fim = "";
-        int nivel = 0;
-        int userid = 0;
-        boolean expResult = false;
-        boolean result = ExercicioDB.insertExercico(formula, correto, ajuda, inico, fim, nivel, userid);
+
+        String dStr = getDateTime();
+        boolean result = false;
+        String fim = null;
+        int nivel = 1;
+        int userid = 1;
+        boolean expResult = true;
+        try {
+            result = ExercicioDB.insertExercico(formula, correto, ajuda, dStr, fim, nivel, userid);
+        } catch (Exception e) {
+        }
+
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     @Test
     public void testSelectExercicio() throws Exception {
         System.out.println("selectExercicio");
-        int idexercicio = 0;
-        Exerciciobanco expResult = null;
-        Exerciciobanco result = ExercicioDB.selectExercicio(idexercicio);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        int idexercicio = 10;
+        
+            Exerciciobanco result = ExercicioDB.selectExercicio(idexercicio);
+            assertNotNull(result);
+        
+       
     }
 
     @Test
     public void testSelectExercicioList() throws Exception {
         System.out.println("selectExercicioList");
-        int iduser = 0;
-        List<Exerciciobanco> expResult = null;
+        int iduser = 1;
         List<Exerciciobanco> result = ExercicioDB.selectExercicioList(iduser);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+
     }
 
     @Test
     public void testUpdateExercicioHoraFim() throws Exception {
         System.out.println("updateExercicioHoraFim");
-        String fimexercicio = "";
-        int idexercicio = 0;
-        boolean expResult = false;
+        String fimexercicio = getDateTime();
+        int idexercicio = 15;
         boolean result = ExercicioDB.updateExercicioHoraFim(fimexercicio, idexercicio);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        assertEquals(true, result);
+
     }
 
     @Test
     public void testUpdateExercicioCorreto() throws Exception {
         System.out.println("updateExercicioCorreto");
-        int idexercicio = 0;
-        boolean expResult = false;
+        int idexercicio = 11;
+        boolean expResult = true;
         boolean result = ExercicioDB.updateExercicioCorreto(idexercicio);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+
     }
 
     @Test
     public void testUpdateExercicioAjuda() throws Exception {
         System.out.println("updateExercicioAjuda");
-        int ajuda = 0;
-        int idexercicio = 0;
-        boolean expResult = false;
+        int ajuda = 1;
+        int idexercicio = 13;
+        boolean expResult = true;
         boolean result = ExercicioDB.updateExercicioAjuda(ajuda, idexercicio);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+
     }
 
     @Test
     public void testSelectByLastID() {
         System.out.println("selectByLastID");
-        int iduser = 0;
-        int expResult = 0;
+        int iduser = 1;
+
         int result = ExercicioDB.selectByLastID(iduser);
-        assertEquals(expResult, result);
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+
     }
-    
+
 }

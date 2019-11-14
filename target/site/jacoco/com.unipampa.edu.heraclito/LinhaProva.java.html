@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LinhaProva.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.heraclito</a> &gt; <span class="el_source">LinhaProva.java</span></div><h1>LinhaProva.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.heraclito;
+
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.execption.LogicException;
+
+/**
+ *
+ * @author Rafael
+ */
+public abstract class LinhaProva implements Cloneable {
+
+    protected String input;
+    protected Regras regraAplicada;
+    protected boolean estaTravada;
+    protected int nivelHipotese;
+    protected String hipoteseResultado;
+
+    public LinhaProva(String input)
+<span class="nc" id="L26">            throws LogicException {        </span>
+<span class="nc" id="L27">        input = FuncoesString.upperCaseNotV(FuncoesString.removerEspacos(input));</span>
+<span class="nc bnc" id="L28" title="All 4 branches missed.">        if (input == null || input.isEmpty()) {</span>
+<span class="nc" id="L29">            throw new LogicException(&quot;Linha vazia! Digite um valor.&quot;);</span>
+        }
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (!FuncoesString.saoParentesesValidos(input)) {</span>
+<span class="nc" id="L32">            throw new LogicException(&quot;Linha inválida! Faltam ou sobram parênteses.&quot;);</span>
+        }
+<span class="nc" id="L34">        this.input = FuncoesString.removerParentesesReduntantes(input);</span>
+<span class="nc" id="L35">        this.estaTravada = false;</span>
+<span class="nc" id="L36">        this.nivelHipotese = 0;</span>
+<span class="nc" id="L37">        this.hipoteseResultado = &quot;NONE&quot;;</span>
+<span class="nc" id="L38">    }</span>
+
+    public LinhaProva(String input, int nivelHipotese)
+            throws LogicException {
+<span class="nc" id="L42">        this(input);</span>
+<span class="nc" id="L43">        this.nivelHipotese = nivelHipotese;</span>
+<span class="nc" id="L44">    }</span>
+
+    public boolean ehInputValido(String input) {
+<span class="nc" id="L47">        return FuncoesString.saoParentesesValidos(input);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L52">        StringBuilder sblinha = new StringBuilder(&quot;&quot;);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for (int i = 0; i &lt; this.nivelHipotese; i++) {</span>
+<span class="nc" id="L54">            sblinha.append(&quot;|&quot;);</span>
+        }
+<span class="nc" id="L56">        sblinha.append(input);</span>
+        /*if (estaTravada) {
+            sblinha.append(&quot; (lk)&quot;);
+        }*/
+<span class="nc" id="L60">        return sblinha.toString();</span>
+    }
+
+    public String getLinha() {
+<span class="nc" id="L64">        return this.input;</span>
+    }
+
+    public int getNivelHipotese() {
+<span class="nc" id="L68">        return this.nivelHipotese;</span>
+    }
+
+    public void setLinha(String input) {
+<span class="nc" id="L72">        this.input = input;</span>
+<span class="nc" id="L73">    }</span>
+    
+    public void setNivelHipotese(int nivelHipotese) {
+<span class="nc" id="L76">        this.nivelHipotese = nivelHipotese;</span>
+<span class="nc" id="L77">    }</span>
+
+    public Regras getRegra() {
+<span class="nc" id="L80">        return this.regraAplicada;</span>
+    }
+
+    public String getHipoteseResultado() {
+<span class="nc" id="L84">        return hipoteseResultado;</span>
+    }
+
+    public void setHipoteseResultado(String hipoteseResultado) {
+<span class="nc" id="L88">        this.hipoteseResultado = hipoteseResultado;</span>
+<span class="nc" id="L89">    }</span>
+    
+    public int getPosicaoOperadorPrincipal() {
+<span class="nc" id="L92">        OperadorLogico op = null;</span>
+<span class="nc" id="L93">        int posOp = -1;</span>
+<span class="nc" id="L94">        int parentesesCounter = 0;</span>
+<span class="nc" id="L95">        int parentesesOp = -1;</span>
+
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        for (int i = 0; i &lt; input.length(); i++) {</span>
+<span class="nc" id="L98">            char c = input.charAt(i);</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (c == '(') {</span>
+<span class="nc" id="L101">                parentesesCounter++;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            } else if (c == ')') {</span>
+<span class="nc" id="L103">                parentesesCounter--;</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">            } else if (parentesesOp == -1 || parentesesCounter &lt;= parentesesOp) {</span>
+<span class="nc" id="L105">                String currentStr = input.substring(i);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                for (OperadorLogico opIt : OperadorLogico.values()) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                    if (currentStr.startsWith(opIt.getExpressao())) {</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">                        if ((op == null)</span>
+                                || (parentesesCounter &lt; parentesesOp)
+<span class="nc bnc" id="L110" title="All 4 branches missed.">                                || ((opIt.getPrioridade() &gt; op.getPrioridade())</span>
+                                &amp;&amp; (parentesesOp == parentesesCounter))) {
+<span class="nc" id="L112">                            parentesesOp = parentesesCounter;</span>
+<span class="nc" id="L113">                            posOp = i;</span>
+<span class="nc" id="L114">                            op = opIt;</span>
+                        }
+                    }
+                }
+            }
+        }
+<span class="nc" id="L120">        return posOp;</span>
+    }
+
+    public OperadorLogico getOperadorPrincipal() {
+<span class="nc" id="L124">        OperadorLogico op = null;</span>
+<span class="nc" id="L125">        int posOp = -1;</span>
+<span class="nc" id="L126">        int parentesesCounter = 0;</span>
+<span class="nc" id="L127">        int parentesesOp = -1;</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for (int i = 0; i &lt; input.length(); i++) {</span>
+<span class="nc" id="L130">            char c = input.charAt(i);</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            if (c == '(') {</span>
+<span class="nc" id="L133">                parentesesCounter++;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            } else if (c == ')') {</span>
+<span class="nc" id="L135">                parentesesCounter--;</span>
+            }
+
+<span class="nc bnc" id="L138" title="All 4 branches missed.">            if (parentesesOp == -1 || parentesesCounter &lt;= parentesesOp) {</span>
+<span class="nc" id="L139">                String currentStr = input.substring(i);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                for (OperadorLogico opIt : OperadorLogico.values()) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                    if (currentStr.startsWith(opIt.getExpressao())) {</span>
+<span class="nc bnc" id="L142" title="All 4 branches missed.">                        if ((op == null)</span>
+                                || (parentesesCounter &lt; parentesesOp)
+<span class="nc bnc" id="L144" title="All 4 branches missed.">                                || ((opIt.getPrioridade() &gt; op.getPrioridade())</span>
+                                &amp;&amp; (parentesesOp == parentesesCounter))) {
+<span class="nc" id="L146">                            parentesesOp = parentesesCounter;</span>
+<span class="nc" id="L147">                            posOp = i;</span>
+<span class="nc" id="L148">                            op = opIt;</span>
+                        }
+                    }
+                }
+            }
+        }
+<span class="nc" id="L154">        return op;</span>
+    }
+
+    public Boolean estaTravada() {
+<span class="nc" id="L158">        return estaTravada;</span>
+    }
+
+    public void Travar() {
+<span class="nc" id="L162">        estaTravada = true;</span>
+<span class="nc" id="L163">    }</span>
+
+    @Override
+    public boolean equals(Object obj) {
+        try {
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            if (((LinhaProva) obj).input.equals(this.input)) {</span>
+<span class="nc" id="L169">                return true;</span>
+            }
+<span class="nc" id="L171">        } catch (Exception e) {</span>
+<span class="nc" id="L172">        }</span>
+<span class="nc" id="L173">        return super.equals(obj); //To change body of generated methods, choose Tools | Templates.</span>
+    }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+<span class="nc" id="L178">        return super.clone();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

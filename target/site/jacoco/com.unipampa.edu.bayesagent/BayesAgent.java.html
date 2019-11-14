@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BayesAgent.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.bayesagent</a> &gt; <span class="el_source">BayesAgent.java</span></div><h1>BayesAgent.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.bayesagent;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BayesAgent{
+    
+<span class="nc" id="L13">    private Map&lt;String,Aluno&gt; Alunos = new HashMap();</span>
+<span class="nc" id="L14">    String prob = null;</span>
+<span class="nc" id="L15">    public BayesAgent(){</span>
+        
+<span class="nc" id="L17">    }</span>
+    
+    public void putMessage(Object myObject){
+        // create a Statement from the connection
+        //System.out.println(String.valueOf(myObject));
+
+        //Formato myObject: ALUNO#ARGUMENTO#EVIDENCIA#STATUS
+<span class="nc" id="L24">        String s[] = String.valueOf(myObject).split(&quot;#&quot;);</span>
+<span class="nc" id="L25">        String Key = s[0]+&quot;#&quot;+s[1];</span>
+
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if(!Alunos.containsKey(Key)){</span>
+<span class="nc" id="L28">            Alunos.put(Key, new Aluno(s[0], s[1]));</span>
+        }
+
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if(s.length == 4){</span>
+<span class="nc" id="L32">            System.out.println(&quot;O que chegou aqui: &quot; + s);</span>
+<span class="nc" id="L33">            Alunos.get(Key).evidence.put(Alunos.get(Key).net.getNode(s[2]),s[3]);</span>
+
+<span class="nc" id="L35">            Map&lt;String, String&gt; Rede = new HashMap();</span>
+<span class="nc" id="L36">            String Regra = getRegra(s[2]);</span>
+
+<span class="nc" id="L38">            Rede.putAll(Alunos.get(Key).AtualizarConhecimento(Alunos.get(Key).net, Alunos.get(Key).evidence, Regra));</span>
+
+<span class="nc" id="L40">            Alunos.get(Key).io.SalvarEvidencias(s[0], s[1], Regra, s[2], s[3], Rede.get(&quot;Conhecimento&quot; + Regra));</span>
+<span class="nc" id="L41">            prob = Rede.get(&quot;Conhecimento&quot; + Regra);</span>
+
+            //Alunos.get(s[0]).io.GravarEvidencias(s[0], Alunos.get(Key).evidence, Rede);
+<span class="nc" id="L44">        }else{</span>
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if(s[2].equals(&quot;NovoArgumento&quot;)){</span>
+<span class="nc" id="L47">                System.out.println(&quot;Novo Argumento Informado: &quot; + Key);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">                if(Alunos.containsKey(Key)){</span>
+<span class="nc" id="L49">                    Alunos.remove(Key);</span>
+                }
+<span class="nc" id="L51">                Alunos.put(Key, new Aluno(s[0], s[1]));</span>
+<span class="nc" id="L52">                Map&lt;String, String&gt; Rede = new HashMap();</span>
+<span class="nc" id="L53">                String Regra = getRegra(s[2]);</span>
+
+<span class="nc" id="L55">                Rede.putAll(Alunos.get(Key).AtualizarConhecimento(Alunos.get(Key).net, Alunos.get(Key).evidence, Regra));</span>
+                
+                
+                
+                /**
+                 * teste null e update banco com probabilidade
+                 */
+                
+                
+<span class="nc" id="L64">                prob = Rede.get(&quot;Conhecimento&quot; + Regra);</span>
+
+                //Alunos.get(s[0]).io.GravarEvidencias(s[0], Alunos.get(Key).evidence, Rede);
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            }else if(s[2].equals(&quot;Conceito&quot;)){</span>
+<span class="nc" id="L68">                Alunos.get(Key).Conceito = 1;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            }else if(s[2].equals(&quot;Exemplo&quot;)){</span>
+<span class="nc" id="L70">                Alunos.get(Key).Exemplo = 1;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            }else if(s[2].equals(&quot;Ajuda&quot;)){</span>
+<span class="nc" id="L72">                Alunos.get(Key).Ajuda = 1;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            }else if(s[2].equals(&quot;FimProva&quot;)){</span>
+                
+            }
+        }
+<span class="nc" id="L77">    }</span>
+        
+    private String getRegra(String ev){
+<span class="nc" id="L80">        String aux = ev.replace(&quot;Corretude&quot;, &quot;&quot;);</span>
+<span class="nc" id="L81">        aux = aux.replace(&quot;Ajuda&quot;, &quot;&quot;);</span>
+<span class="nc" id="L82">        aux = aux.replace(&quot;Exemplo&quot;, &quot;&quot;);</span>
+<span class="nc" id="L83">        aux = aux.replace(&quot;Conceito&quot;, &quot;&quot;);</span>
+<span class="nc" id="L84">        return aux;</span>
+    }
+    
+    public String getProb(){
+<span class="nc" id="L88">    return prob;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

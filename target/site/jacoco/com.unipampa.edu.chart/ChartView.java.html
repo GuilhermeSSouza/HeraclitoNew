@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ChartView.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.chart</a> &gt; <span class="el_source">ChartView.java</span></div><h1>ChartView.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.chart;
+
+
+import com.unipampa.edu.DAO.ConnectionFactory;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.ItemSelectEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.BarChartSeries;
+import org.primefaces.model.chart.BubbleChartModel;
+import org.primefaces.model.chart.BubbleChartSeries;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.DonutChartModel;
+import org.primefaces.model.chart.HorizontalBarChartModel;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
+import org.primefaces.model.chart.LinearAxis;
+import org.primefaces.model.chart.MeterGaugeChartModel;
+import org.primefaces.model.chart.OhlcChartModel;
+import org.primefaces.model.chart.OhlcChartSeries;
+import org.primefaces.model.chart.PieChartModel;
+
+/**
+ *
+ * @author heraclitoserver
+ * Essa classe contem exemplos de todos os modelos basicos de graficos possivéis 
+ * feitos com primeface. 
+ * Existem outras bibliotecas interessantes (Mas o prime foi devido a parte do 
+ * codigo usar bootsface, então usar um core comun é até certo ponto mais pratico que varias libs ao memso tempo )
+ * 
+ * Essa estrutura de classe pode ser replicada para cada grafico, ou para conjuntos deles
+ */
+@ManagedBean
+@SessionScoped
+<span class="nc" id="L59">public class ChartView implements Serializable {</span>
+
+    private LineChartModel lineModel1;
+    private LineChartModel lineModel2;
+    private LineChartModel zoomModel;
+    private CartesianChartModel combinedModel;
+    private CartesianChartModel fillToZero;
+    private LineChartModel areaModel;
+    private BarChartModel barModel;
+    private HorizontalBarChartModel horizontalBarModel;
+    private PieChartModel pieModel1;
+    private PieChartModel pieModel2;
+    private DonutChartModel donutModel1;
+    private DonutChartModel donutModel2;
+    private MeterGaugeChartModel meterGaugeModel1;
+    private MeterGaugeChartModel meterGaugeModel2;
+    private BubbleChartModel bubbleModel1;
+    private BubbleChartModel bubbleModel2;
+    private OhlcChartModel ohlcModel;
+    private OhlcChartModel ohlcModel2;
+    private PieChartModel livePieModel;
+    private LineChartModel animatedModel1;
+    private BarChartModel animatedModel2;
+    private LineChartModel multiAxisModel;
+    private LineChartModel dateModel;
+    
+    /**
+     *
+     */
+    @PostConstruct
+    public void init() {
+<span class="nc" id="L90">        createLineModels();</span>
+<span class="nc" id="L91">        createAreaModel();</span>
+<span class="nc" id="L92">        createPieModels();</span>
+<span class="nc" id="L93">        createDonutModels();</span>
+<span class="nc" id="L94">        createBubbleModels();</span>
+<span class="nc" id="L95">        createOhlcModels();</span>
+<span class="nc" id="L96">        createFillToZero();</span>
+<span class="nc" id="L97">        createMeterGaugeModels();</span>
+<span class="nc" id="L98">        createBarModels();</span>
+<span class="nc" id="L99">        createAnimatedModels();</span>
+<span class="nc" id="L100">        createCombinedModel();</span>
+<span class="nc" id="L101">        createMultiAxisModel();</span>
+<span class="nc" id="L102">        createDateModel();</span>
+        
+<span class="nc" id="L104">    }</span>
+
+    /**
+     *
+     * @param event
+     */
+    public void itemSelect(ItemSelectEvent event) {
+<span class="nc" id="L111">        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, &quot;Item selected&quot;,</span>
+<span class="nc" id="L112">                &quot;Item Index: &quot; + event.getItemIndex() + &quot;, Series Index:&quot; + event.getSeriesIndex());</span>
+
+<span class="nc" id="L114">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     *
+     * @return lineModel1
+     */
+    public LineChartModel getLineModel1() {
+<span class="nc" id="L122">        return lineModel1;</span>
+    }
+
+    /**
+     *
+     * @return lineModel2
+     */
+    public LineChartModel getLineModel2() {
+<span class="nc" id="L130">        return lineModel2;</span>
+    }
+
+    /**
+     *
+     * @return zoomModel
+     */
+    public LineChartModel getZoomModel() {
+<span class="nc" id="L138">        return zoomModel;</span>
+    }
+
+    /**
+     *
+     * @return combinedModel
+     */
+    public CartesianChartModel getCombinedModel() {
+<span class="nc" id="L146">        return combinedModel;</span>
+    }
+
+    /**
+     *
+     * @return areaModel
+     */
+    public CartesianChartModel getAreaModel() {
+<span class="nc" id="L154">        return areaModel;</span>
+    }
+
+    /**
+     *
+     * @return pieModel1
+     */
+    public PieChartModel getPieModel1() {
+<span class="nc" id="L162">        return pieModel1;</span>
+    }
+    
+    /**
+     *
+     * @return pieModel2
+     */
+    public PieChartModel getPieModel2() {
+<span class="nc" id="L170">        return pieModel2;</span>
+    }
+
+    /**
+     *
+     * @return meterGaugeModel1
+     */
+    public MeterGaugeChartModel getMeterGaugeModel1() {
+<span class="nc" id="L178">        return meterGaugeModel1;</span>
+    }
+
+    /**
+     *
+     * @return meterGaugeModel2
+     */
+    public MeterGaugeChartModel getMeterGaugeModel2() {
+<span class="nc" id="L186">        return meterGaugeModel2;</span>
+    }
+
+    /**
+     *
+     * @return donutModel1
+     */
+    public DonutChartModel getDonutModel1() {
+<span class="nc" id="L194">        return donutModel1;</span>
+    }
+
+    /**
+     *
+     * @return donutModel2
+     */
+    public DonutChartModel getDonutModel2() {
+<span class="nc" id="L202">        return donutModel2;</span>
+    }
+
+    /**
+     *
+     * @return fillToZero
+     */
+    public CartesianChartModel getFillToZero() {
+<span class="nc" id="L210">        return fillToZero;</span>
+    }
+
+    /**
+     *
+     * @return bubbleModel1
+     */
+    public BubbleChartModel getBubbleModel1() {
+<span class="nc" id="L218">        return bubbleModel1;</span>
+    }
+
+    /**
+     *
+     * @return bubbleModel2
+     */
+    public BubbleChartModel getBubbleModel2() {
+<span class="nc" id="L226">        return bubbleModel2;</span>
+    }
+
+    /**
+     *
+     * @return ohlcModel
+     */
+    public OhlcChartModel getOhlcModel() {
+<span class="nc" id="L234">        return ohlcModel;</span>
+    }
+
+    /**
+     *
+     * @return ohlcModel2
+     */
+    public OhlcChartModel getOhlcModel2() {
+<span class="nc" id="L242">        return ohlcModel2;</span>
+    }
+
+    /**
+     *
+     * @return barModel
+     */
+    public BarChartModel getBarModel() {
+<span class="nc" id="L250">        return barModel;</span>
+    }
+
+    /**
+     *
+     * @return
+     */
+    public HorizontalBarChartModel getHorizontalBarModel() {
+<span class="nc" id="L258">        return horizontalBarModel;</span>
+    }
+
+    /**
+     *
+     * @return horizontalBarModel
+     */
+    public LineChartModel getAnimatedModel1() {
+<span class="nc" id="L266">        return animatedModel1;</span>
+    }
+
+    /**
+     *
+     * @return animatedModel2
+     */
+    public BarChartModel getAnimatedModel2() {
+<span class="nc" id="L274">        return animatedModel2;</span>
+    }
+
+    /**
+     *
+     * @return multiAxisModel
+     */
+    public LineChartModel getMultiAxisModel() {
+<span class="nc" id="L282">        return multiAxisModel;</span>
+    }
+
+    /**
+     *
+     * @return dateModel
+     */
+    public LineChartModel getDateModel() {
+<span class="nc" id="L290">        return dateModel;</span>
+    }
+    /**
+     * 
+     * @return livePieModel tipo de grafico
+     */
+    public PieChartModel getLivePieModel() {
+<span class="nc" id="L297">        int random1 = (int) (Math.random() * 1000);</span>
+<span class="nc" id="L298">        int random2 = (int) (Math.random() * 1000);</span>
+
+<span class="nc" id="L300">        livePieModel.getData().put(&quot;Candidate 1&quot;, random1);</span>
+<span class="nc" id="L301">        livePieModel.getData().put(&quot;Candidate 2&quot;, random2);</span>
+
+<span class="nc" id="L303">        livePieModel.setTitle(&quot;Votes&quot;);</span>
+<span class="nc" id="L304">        livePieModel.setLegendPosition(&quot;ne&quot;);</span>
+
+<span class="nc" id="L306">        return livePieModel;</span>
+    }
+
+    /**
+     * 
+     * @return  Grafico de linhas. Com duas series de dados, que pode ser otimo compartivo
+     */
+    private LineChartModel initCategoryModel() {
+<span class="nc" id="L314">        LineChartModel model = new LineChartModel();</span>
+
+<span class="nc" id="L316">        ChartSeries boys = new ChartSeries();</span>
+<span class="nc" id="L317">        boys.setLabel(&quot;Boys&quot;);</span>
+<span class="nc" id="L318">        boys.set(&quot;2004&quot;, 120);</span>
+<span class="nc" id="L319">        boys.set(&quot;2005&quot;, 100);</span>
+<span class="nc" id="L320">        boys.set(&quot;2006&quot;, 44);</span>
+<span class="nc" id="L321">        boys.set(&quot;2007&quot;, 150);</span>
+<span class="nc" id="L322">        boys.set(&quot;2008&quot;, 25);</span>
+
+<span class="nc" id="L324">        ChartSeries girls = new ChartSeries();</span>
+<span class="nc" id="L325">        girls.setLabel(&quot;Girls&quot;);</span>
+<span class="nc" id="L326">        girls.set(&quot;2004&quot;, 52);</span>
+<span class="nc" id="L327">        girls.set(&quot;2005&quot;, 60);</span>
+<span class="nc" id="L328">        girls.set(&quot;2006&quot;, 110);</span>
+<span class="nc" id="L329">        girls.set(&quot;2007&quot;, 90);</span>
+<span class="nc" id="L330">        girls.set(&quot;2008&quot;, 120);</span>
+
+<span class="nc" id="L332">        model.addSeries(boys);</span>
+<span class="nc" id="L333">        model.addSeries(girls);</span>
+
+<span class="nc" id="L335">        return model;</span>
+    }
+
+    /**
+     * Definido e iniciando elemntos para renderizar graficos
+     */
+    private void createLineModels() {
+<span class="nc" id="L342">        lineModel1 = initLinearModel();</span>
+<span class="nc" id="L343">        lineModel1.setTitle(&quot;Linear Chart&quot;);</span>
+<span class="nc" id="L344">        lineModel1.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L345">        Axis yAxis = lineModel1.getAxis(AxisType.Y);</span>
+<span class="nc" id="L346">        yAxis.setMin(0);</span>
+<span class="nc" id="L347">        yAxis.setMax(10);</span>
+
+<span class="nc" id="L349">        lineModel2 = initCategoryModel();</span>
+<span class="nc" id="L350">        lineModel2.setTitle(&quot;Category Chart&quot;);</span>
+<span class="nc" id="L351">        lineModel2.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L352">        lineModel2.setShowPointLabels(true);</span>
+<span class="nc" id="L353">        lineModel2.getAxes().put(AxisType.X, new CategoryAxis(&quot;Years&quot;));</span>
+<span class="nc" id="L354">        yAxis = lineModel2.getAxis(AxisType.Y);</span>
+<span class="nc" id="L355">        yAxis.setLabel(&quot;Births&quot;);</span>
+<span class="nc" id="L356">        yAxis.setMin(0);</span>
+<span class="nc" id="L357">        yAxis.setMax(200);</span>
+
+<span class="nc" id="L359">        zoomModel = initLinearModel();</span>
+<span class="nc" id="L360">        zoomModel.setTitle(&quot;Zoom&quot;);</span>
+<span class="nc" id="L361">        zoomModel.setZoom(true);</span>
+<span class="nc" id="L362">        zoomModel.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L363">        yAxis = zoomModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L364">        yAxis.setMin(0);</span>
+<span class="nc" id="L365">        yAxis.setMax(10);</span>
+<span class="nc" id="L366">    }</span>
+
+    private void createAreaModel() {
+<span class="nc" id="L369">        areaModel = new LineChartModel();</span>
+
+<span class="nc" id="L371">        LineChartSeries boys = new LineChartSeries();</span>
+<span class="nc" id="L372">        boys.setFill(true);</span>
+<span class="nc" id="L373">        boys.setLabel(&quot;Boys&quot;);</span>
+<span class="nc" id="L374">        boys.set(&quot;2004&quot;, 120);</span>
+<span class="nc" id="L375">        boys.set(&quot;2005&quot;, 100);</span>
+<span class="nc" id="L376">        boys.set(&quot;2006&quot;, 44);</span>
+<span class="nc" id="L377">        boys.set(&quot;2007&quot;, 150);</span>
+<span class="nc" id="L378">        boys.set(&quot;2008&quot;, 25);</span>
+
+<span class="nc" id="L380">        LineChartSeries girls = new LineChartSeries();</span>
+<span class="nc" id="L381">        girls.setFill(true);</span>
+<span class="nc" id="L382">        girls.setLabel(&quot;Girls&quot;);</span>
+<span class="nc" id="L383">        girls.set(&quot;2004&quot;, 52);</span>
+<span class="nc" id="L384">        girls.set(&quot;2005&quot;, 60);</span>
+<span class="nc" id="L385">        girls.set(&quot;2006&quot;, 110);</span>
+<span class="nc" id="L386">        girls.set(&quot;2007&quot;, 90);</span>
+<span class="nc" id="L387">        girls.set(&quot;2008&quot;, 120);</span>
+
+<span class="nc" id="L389">        areaModel.addSeries(boys);</span>
+<span class="nc" id="L390">        areaModel.addSeries(girls);</span>
+
+<span class="nc" id="L392">        areaModel.setTitle(&quot;Area Chart&quot;);</span>
+<span class="nc" id="L393">        areaModel.setLegendPosition(&quot;ne&quot;);</span>
+<span class="nc" id="L394">        areaModel.setStacked(true);</span>
+<span class="nc" id="L395">        areaModel.setShowPointLabels(true);</span>
+
+<span class="nc" id="L397">        Axis xAxis = new CategoryAxis(&quot;Years&quot;);</span>
+<span class="nc" id="L398">        areaModel.getAxes().put(AxisType.X, xAxis);</span>
+<span class="nc" id="L399">        Axis yAxis = areaModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L400">        yAxis.setLabel(&quot;Births&quot;);</span>
+<span class="nc" id="L401">        yAxis.setMin(0);</span>
+<span class="nc" id="L402">        yAxis.setMax(300);</span>
+<span class="nc" id="L403">    }</span>
+
+    private BarChartModel initBarModel() {
+<span class="nc" id="L406">        BarChartModel model = new BarChartModel();</span>
+
+<span class="nc" id="L408">        ChartSeries boys = new ChartSeries();</span>
+<span class="nc" id="L409">        boys.setLabel(&quot;Boys&quot;);</span>
+<span class="nc" id="L410">        boys.set(&quot;2004&quot;, 120);</span>
+<span class="nc" id="L411">        boys.set(&quot;2005&quot;, 100);</span>
+<span class="nc" id="L412">        boys.set(&quot;2006&quot;, 44);</span>
+<span class="nc" id="L413">        boys.set(&quot;2007&quot;, 150);</span>
+<span class="nc" id="L414">        boys.set(&quot;2008&quot;, 25);</span>
+
+<span class="nc" id="L416">        ChartSeries girls = new ChartSeries();</span>
+<span class="nc" id="L417">        girls.setLabel(&quot;Girls&quot;);</span>
+<span class="nc" id="L418">        girls.set(&quot;2004&quot;, 52);</span>
+<span class="nc" id="L419">        girls.set(&quot;2005&quot;, 60);</span>
+<span class="nc" id="L420">        girls.set(&quot;2006&quot;, 110);</span>
+<span class="nc" id="L421">        girls.set(&quot;2007&quot;, 135);</span>
+<span class="nc" id="L422">        girls.set(&quot;2008&quot;, 120);</span>
+
+<span class="nc" id="L424">        model.addSeries(boys);</span>
+<span class="nc" id="L425">        model.addSeries(girls);</span>
+
+<span class="nc" id="L427">        return model;</span>
+    }
+
+    private void createBarModels() {
+<span class="nc" id="L431">        createBarModel();</span>
+<span class="nc" id="L432">        createHorizontalBarModel();</span>
+<span class="nc" id="L433">    }</span>
+
+    private void createBarModel() {
+<span class="nc" id="L436">        barModel = initBarModel();</span>
+
+<span class="nc" id="L438">        barModel.setTitle(&quot;Bar Chart&quot;);</span>
+<span class="nc" id="L439">        barModel.setLegendPosition(&quot;ne&quot;);</span>
+
+<span class="nc" id="L441">        Axis xAxis = barModel.getAxis(AxisType.X);</span>
+<span class="nc" id="L442">        xAxis.setLabel(&quot;Gender&quot;);</span>
+
+<span class="nc" id="L444">        Axis yAxis = barModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L445">        yAxis.setLabel(&quot;Births&quot;);</span>
+<span class="nc" id="L446">        yAxis.setMin(0);</span>
+<span class="nc" id="L447">        yAxis.setMax(200);</span>
+<span class="nc" id="L448">    }</span>
+
+    private void createHorizontalBarModel() {
+<span class="nc" id="L451">        horizontalBarModel = new HorizontalBarChartModel();</span>
+
+<span class="nc" id="L453">        ChartSeries boys = new ChartSeries();</span>
+<span class="nc" id="L454">        boys.setLabel(&quot;Boys&quot;);</span>
+<span class="nc" id="L455">        boys.set(&quot;2004&quot;, 50);</span>
+<span class="nc" id="L456">        boys.set(&quot;2005&quot;, 96);</span>
+<span class="nc" id="L457">        boys.set(&quot;2006&quot;, 44);</span>
+<span class="nc" id="L458">        boys.set(&quot;2007&quot;, 55);</span>
+<span class="nc" id="L459">        boys.set(&quot;2008&quot;, 25);</span>
+
+<span class="nc" id="L461">        ChartSeries girls = new ChartSeries();</span>
+<span class="nc" id="L462">        girls.setLabel(&quot;Girls&quot;);</span>
+<span class="nc" id="L463">        girls.set(&quot;2004&quot;, 52);</span>
+<span class="nc" id="L464">        girls.set(&quot;2005&quot;, 60);</span>
+<span class="nc" id="L465">        girls.set(&quot;2006&quot;, 82);</span>
+<span class="nc" id="L466">        girls.set(&quot;2007&quot;, 35);</span>
+<span class="nc" id="L467">        girls.set(&quot;2008&quot;, 120);</span>
+
+<span class="nc" id="L469">        horizontalBarModel.addSeries(boys);</span>
+<span class="nc" id="L470">        horizontalBarModel.addSeries(girls);</span>
+
+<span class="nc" id="L472">        horizontalBarModel.setTitle(&quot;Horizontal and Stacked&quot;);</span>
+<span class="nc" id="L473">        horizontalBarModel.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L474">        horizontalBarModel.setStacked(true);</span>
+
+<span class="nc" id="L476">        Axis xAxis = horizontalBarModel.getAxis(AxisType.X);</span>
+<span class="nc" id="L477">        xAxis.setLabel(&quot;Births&quot;);</span>
+<span class="nc" id="L478">        xAxis.setMin(0);</span>
+<span class="nc" id="L479">        xAxis.setMax(200);</span>
+
+<span class="nc" id="L481">        Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L482">        yAxis.setLabel(&quot;Gender&quot;);</span>
+<span class="nc" id="L483">    }</span>
+
+    private void createCombinedModel() {
+<span class="nc" id="L486">        combinedModel = new BarChartModel();</span>
+
+<span class="nc" id="L488">        BarChartSeries boys = new BarChartSeries();</span>
+<span class="nc" id="L489">        boys.setLabel(&quot;Boys&quot;);</span>
+
+<span class="nc" id="L491">        boys.set(&quot;2004&quot;, 120);</span>
+<span class="nc" id="L492">        boys.set(&quot;2005&quot;, 100);</span>
+<span class="nc" id="L493">        boys.set(&quot;2006&quot;, 44);</span>
+<span class="nc" id="L494">        boys.set(&quot;2007&quot;, 150);</span>
+<span class="nc" id="L495">        boys.set(&quot;2008&quot;, 25);</span>
+
+<span class="nc" id="L497">        LineChartSeries girls = new LineChartSeries();</span>
+<span class="nc" id="L498">        girls.setLabel(&quot;Girls&quot;);</span>
+
+<span class="nc" id="L500">        girls.set(&quot;2004&quot;, 52);</span>
+<span class="nc" id="L501">        girls.set(&quot;2005&quot;, 60);</span>
+<span class="nc" id="L502">        girls.set(&quot;2006&quot;, 110);</span>
+<span class="nc" id="L503">        girls.set(&quot;2007&quot;, 135);</span>
+<span class="nc" id="L504">        girls.set(&quot;2008&quot;, 120);</span>
+
+<span class="nc" id="L506">        combinedModel.addSeries(boys);</span>
+<span class="nc" id="L507">        combinedModel.addSeries(girls);</span>
+
+<span class="nc" id="L509">        combinedModel.setTitle(&quot;Bar and Line&quot;);</span>
+<span class="nc" id="L510">        combinedModel.setLegendPosition(&quot;ne&quot;);</span>
+<span class="nc" id="L511">        combinedModel.setMouseoverHighlight(false);</span>
+<span class="nc" id="L512">        combinedModel.setShowDatatip(false);</span>
+<span class="nc" id="L513">        combinedModel.setShowPointLabels(true);</span>
+<span class="nc" id="L514">        Axis yAxis = combinedModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L515">        yAxis.setMin(0);</span>
+<span class="nc" id="L516">        yAxis.setMax(200);</span>
+<span class="nc" id="L517">    }</span>
+
+    private void createMultiAxisModel() {
+<span class="nc" id="L520">        multiAxisModel = new LineChartModel();</span>
+
+<span class="nc" id="L522">        BarChartSeries boys = new BarChartSeries();</span>
+<span class="nc" id="L523">        boys.setLabel(&quot;Boys&quot;);</span>
+
+<span class="nc" id="L525">        boys.set(&quot;2004&quot;, 120);</span>
+<span class="nc" id="L526">        boys.set(&quot;2005&quot;, 100);</span>
+<span class="nc" id="L527">        boys.set(&quot;2006&quot;, 44);</span>
+<span class="nc" id="L528">        boys.set(&quot;2007&quot;, 150);</span>
+<span class="nc" id="L529">        boys.set(&quot;2008&quot;, 25);</span>
+
+<span class="nc" id="L531">        LineChartSeries girls = new LineChartSeries();</span>
+<span class="nc" id="L532">        girls.setLabel(&quot;Girls&quot;);</span>
+<span class="nc" id="L533">        girls.setXaxis(AxisType.X2);</span>
+<span class="nc" id="L534">        girls.setYaxis(AxisType.Y2);</span>
+
+<span class="nc" id="L536">        girls.set(&quot;A&quot;, 52);</span>
+<span class="nc" id="L537">        girls.set(&quot;B&quot;, 60);</span>
+<span class="nc" id="L538">        girls.set(&quot;C&quot;, 110);</span>
+<span class="nc" id="L539">        girls.set(&quot;D&quot;, 135);</span>
+<span class="nc" id="L540">        girls.set(&quot;E&quot;, 120);</span>
+
+<span class="nc" id="L542">        multiAxisModel.addSeries(boys);</span>
+<span class="nc" id="L543">        multiAxisModel.addSeries(girls);</span>
+
+<span class="nc" id="L545">        multiAxisModel.setTitle(&quot;Multi Axis Chart&quot;);</span>
+<span class="nc" id="L546">        multiAxisModel.setMouseoverHighlight(false);</span>
+
+<span class="nc" id="L548">        multiAxisModel.getAxes().put(AxisType.X, new CategoryAxis(&quot;Years&quot;));</span>
+<span class="nc" id="L549">        multiAxisModel.getAxes().put(AxisType.X2, new CategoryAxis(&quot;Period&quot;));</span>
+
+<span class="nc" id="L551">        Axis yAxis = multiAxisModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L552">        yAxis.setLabel(&quot;Birth&quot;);</span>
+<span class="nc" id="L553">        yAxis.setMin(0);</span>
+<span class="nc" id="L554">        yAxis.setMax(200);</span>
+
+<span class="nc" id="L556">        Axis y2Axis = new LinearAxis(&quot;Number&quot;);</span>
+<span class="nc" id="L557">        y2Axis.setMin(0);</span>
+<span class="nc" id="L558">        y2Axis.setMax(200);</span>
+
+<span class="nc" id="L560">        multiAxisModel.getAxes().put(AxisType.Y2, y2Axis);</span>
+<span class="nc" id="L561">    }</span>
+
+    private void createOhlcModels() {
+<span class="nc" id="L564">        createOhlcModel1();</span>
+<span class="nc" id="L565">        createOhlcModel2();</span>
+<span class="nc" id="L566">    }</span>
+
+    private void createOhlcModel1() {
+<span class="nc" id="L569">        ohlcModel = new OhlcChartModel();</span>
+
+<span class="nc" id="L571">        ohlcModel.add(new OhlcChartSeries(2007, 143.82, 144.56, 136.04, 136.97));</span>
+<span class="nc" id="L572">        ohlcModel.add(new OhlcChartSeries(2008, 138.7, 139.68, 135.18, 135.4));</span>
+<span class="nc" id="L573">        ohlcModel.add(new OhlcChartSeries(2009, 143.46, 144.66, 139.79, 140.02));</span>
+<span class="nc" id="L574">        ohlcModel.add(new OhlcChartSeries(2010, 140.67, 143.56, 132.88, 142.44));</span>
+<span class="nc" id="L575">        ohlcModel.add(new OhlcChartSeries(2011, 136.01, 139.5, 134.53, 139.48));</span>
+<span class="nc" id="L576">        ohlcModel.add(new OhlcChartSeries(2012, 124.76, 135.9, 124.55, 135.81));</span>
+<span class="nc" id="L577">        ohlcModel.add(new OhlcChartSeries(2013, 123.73, 129.31, 121.57, 122.5));</span>
+
+<span class="nc" id="L579">        ohlcModel.setTitle(&quot;OHLC Chart&quot;);</span>
+<span class="nc" id="L580">        ohlcModel.getAxis(AxisType.X).setLabel(&quot;Year&quot;);</span>
+<span class="nc" id="L581">        ohlcModel.getAxis(AxisType.Y).setLabel(&quot;Price Change $K/Unit&quot;);</span>
+<span class="nc" id="L582">    }</span>
+
+    private void createOhlcModel2() {
+<span class="nc" id="L585">        ohlcModel2 = new OhlcChartModel();</span>
+
+<span class="nc bnc" id="L587" title="All 2 branches missed.">        for (int i = 1; i &lt; 41; i++) {</span>
+<span class="nc" id="L588">            ohlcModel2.add(new OhlcChartSeries(i, Math.random() * 80 + 80, Math.random() * 50 + 110, Math.random() * 20 + 80, Math.random() * 80 + 80));</span>
+        }
+
+<span class="nc" id="L591">        ohlcModel2.setTitle(&quot;Candlestick&quot;);</span>
+<span class="nc" id="L592">        ohlcModel2.setCandleStick(true);</span>
+<span class="nc" id="L593">        ohlcModel2.getAxis(AxisType.X).setLabel(&quot;Sector&quot;);</span>
+<span class="nc" id="L594">        ohlcModel2.getAxis(AxisType.Y).setLabel(&quot;Index Value&quot;);</span>
+<span class="nc" id="L595">    }</span>
+
+    private void createBubbleModels() {
+<span class="nc" id="L598">        bubbleModel1 = initBubbleModel();</span>
+<span class="nc" id="L599">        bubbleModel1.setTitle(&quot;Bubble Chart&quot;);</span>
+<span class="nc" id="L600">        bubbleModel1.getAxis(AxisType.X).setLabel(&quot;Price&quot;);</span>
+<span class="nc" id="L601">        Axis yAxis = bubbleModel1.getAxis(AxisType.Y);</span>
+<span class="nc" id="L602">        yAxis.setMin(0);</span>
+<span class="nc" id="L603">        yAxis.setMax(250);</span>
+<span class="nc" id="L604">        yAxis.setLabel(&quot;Labels&quot;);</span>
+
+<span class="nc" id="L606">        bubbleModel2 = initBubbleModel();</span>
+<span class="nc" id="L607">        bubbleModel2.setTitle(&quot;Custom Options&quot;);</span>
+<span class="nc" id="L608">        bubbleModel2.setShadow(false);</span>
+<span class="nc" id="L609">        bubbleModel2.setBubbleGradients(true);</span>
+<span class="nc" id="L610">        bubbleModel2.setBubbleAlpha(0.8);</span>
+<span class="nc" id="L611">        bubbleModel2.getAxis(AxisType.X).setTickAngle(-50);</span>
+<span class="nc" id="L612">        yAxis = bubbleModel2.getAxis(AxisType.Y);</span>
+<span class="nc" id="L613">        yAxis.setMin(0);</span>
+<span class="nc" id="L614">        yAxis.setMax(250);</span>
+<span class="nc" id="L615">        yAxis.setTickAngle(50);</span>
+<span class="nc" id="L616">    }</span>
+    /**
+     * 
+     * @return  model
+     */
+    private BubbleChartModel initBubbleModel() {
+<span class="nc" id="L622">        BubbleChartModel model = new BubbleChartModel();</span>
+
+<span class="nc" id="L624">        model.add(new BubbleChartSeries(&quot;Acura&quot;, 70, 183, 55));</span>
+<span class="nc" id="L625">        model.add(new BubbleChartSeries(&quot;Alfa Romeo&quot;, 45, 92, 36));</span>
+<span class="nc" id="L626">        model.add(new BubbleChartSeries(&quot;AM General&quot;, 24, 104, 40));</span>
+<span class="nc" id="L627">        model.add(new BubbleChartSeries(&quot;Bugatti&quot;, 50, 123, 60));</span>
+<span class="nc" id="L628">        model.add(new BubbleChartSeries(&quot;BMW&quot;, 15, 89, 25));</span>
+<span class="nc" id="L629">        model.add(new BubbleChartSeries(&quot;Audi&quot;, 40, 180, 80));</span>
+<span class="nc" id="L630">        model.add(new BubbleChartSeries(&quot;Aston Martin&quot;, 70, 70, 48));</span>
+
+<span class="nc" id="L632">        return model;</span>
+    }
+    /**
+     * 
+     * @return  model
+     */
+    private LineChartModel initLinearModel() {
+<span class="nc" id="L639">        LineChartModel model = new LineChartModel();</span>
+
+<span class="nc" id="L641">        LineChartSeries series1 = new LineChartSeries();</span>
+<span class="nc" id="L642">        series1.setLabel(&quot;Series 1&quot;);</span>
+
+<span class="nc" id="L644">        series1.set(1, 2);</span>
+<span class="nc" id="L645">        series1.set(2, 1);</span>
+<span class="nc" id="L646">        series1.set(3, 3);</span>
+<span class="nc" id="L647">        series1.set(4, 6);</span>
+<span class="nc" id="L648">        series1.set(5, 8);</span>
+
+<span class="nc" id="L650">        LineChartSeries series2 = new LineChartSeries();</span>
+<span class="nc" id="L651">        series2.setLabel(&quot;Series 2&quot;);</span>
+
+<span class="nc" id="L653">        series2.set(1, 6);</span>
+<span class="nc" id="L654">        series2.set(2, 3);</span>
+<span class="nc" id="L655">        series2.set(3, 2);</span>
+<span class="nc" id="L656">        series2.set(4, 7);</span>
+<span class="nc" id="L657">        series2.set(5, 9);</span>
+
+<span class="nc" id="L659">        model.addSeries(series1);</span>
+<span class="nc" id="L660">        model.addSeries(series2);</span>
+
+<span class="nc" id="L662">        return model;</span>
+    }
+
+    private void createPieModels() {
+<span class="nc" id="L666">        createPieModel1();</span>
+<span class="nc" id="L667">        createPieModel2();</span>
+<span class="nc" id="L668">        createLivePieModel();</span>
+<span class="nc" id="L669">    }</span>
+    
+    
+
+    private void createPieModel1() {
+       
+<span class="nc" id="L675">        List&lt;Dado&gt; dado = null;</span>
+        try {
+<span class="nc" id="L677">            dado = getDado(1);</span>
+<span class="nc" id="L678">        } catch (Exception ex) {</span>
+<span class="nc" id="L679">            Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L680">        }</span>
+        
+<span class="nc" id="L682">        pieModel1 = new PieChartModel();       </span>
+<span class="nc bnc" id="L683" title="All 2 branches missed.">        for (Dado dadolist : dado) {</span>
+<span class="nc" id="L684">            pieModel1.set(dadolist.getNomeparametro(), dadolist.getValorparametro());</span>
+<span class="nc" id="L685">        }</span>
+        
+       
+
+
+<span class="nc" id="L690">        pieModel1.setTitle(&quot;Total de Exercicios Realizados&quot;);</span>
+<span class="nc" id="L691">        pieModel1.setLegendPosition(&quot;w&quot;);</span>
+<span class="nc" id="L692">        pieModel1.setShadow(false);</span>
+<span class="nc" id="L693">    }</span>
+    
+    /**
+     *
+     * @param iduser
+     * @return List Dado
+     * @throws Exception
+     */
+    public static List&lt;Dado&gt; getDado(int iduser) throws Exception{
+<span class="nc" id="L702">    List&lt;Dado&gt; dado = new ArrayList&lt;Dado&gt;();</span>
+        Dado novoDado;
+<span class="nc" id="L704">        String query = &quot;SELECT exercicio.corretoexercicio, count(exercicio.corretoexercicio) FROM heraclitodb.exercicio where exercicio.user_iduser = ? group by exercicio.corretoexercicio&quot;;</span>
+        
+        try {
+             
+<span class="nc" id="L708">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L709">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L711">            st.setInt(1, iduser);</span>
+
+<span class="nc" id="L713">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L715" title="All 2 branches missed.">            while (rs.next()) {</span>
+
+<span class="nc" id="L717">                int correto = rs.getInt(1);</span>
+<span class="nc" id="L718">                int qtdade = rs.getInt(2);</span>
+                
+<span class="nc bnc" id="L720" title="All 2 branches missed.">                if(correto == 0){</span>
+<span class="nc" id="L721">                    novoDado = new Dado(&quot;Errado&quot;, qtdade);</span>
+                
+                }else{
+<span class="nc" id="L724">                    novoDado = new Dado(&quot;Correto&quot;, qtdade);</span>
+                }
+                
+<span class="nc" id="L727">                dado.add(novoDado);</span>
+
+                
+
+<span class="nc" id="L731">            }</span>
+
+<span class="nc" id="L733">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L735">            return dado;</span>
+
+<span class="nc" id="L737">        } catch (SQLException e) {</span>
+<span class="nc" id="L738">            return null;</span>
+        }
+    
+    
+    
+    
+    
+    
+    }
+    
+
+    private void createPieModel2() {
+<span class="nc" id="L750">        pieModel2 = new PieChartModel();</span>
+
+<span class="nc" id="L752">        pieModel2.set(&quot;Brand 1&quot;, 540);</span>
+<span class="nc" id="L753">        pieModel2.set(&quot;Brand 2&quot;, 325);</span>
+<span class="nc" id="L754">        pieModel2.set(&quot;Brand 3&quot;, 702);</span>
+<span class="nc" id="L755">        pieModel2.set(&quot;Brand 4&quot;, 421);</span>
+
+<span class="nc" id="L757">        pieModel2.setTitle(&quot;Custom Pie&quot;);</span>
+<span class="nc" id="L758">        pieModel2.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L759">        pieModel2.setFill(false);</span>
+<span class="nc" id="L760">        pieModel2.setShowDataLabels(true);</span>
+<span class="nc" id="L761">        pieModel2.setDiameter(150);</span>
+<span class="nc" id="L762">        pieModel2.setShadow(false);</span>
+<span class="nc" id="L763">    }</span>
+
+    private void createDonutModels() {
+<span class="nc" id="L766">        donutModel1 = initDonutModel();</span>
+<span class="nc" id="L767">        donutModel1.setTitle(&quot;Donut Chart&quot;);</span>
+<span class="nc" id="L768">        donutModel1.setLegendPosition(&quot;w&quot;);</span>
+
+<span class="nc" id="L770">        donutModel2 = initDonutModel();</span>
+<span class="nc" id="L771">        donutModel2.setTitle(&quot;Custom Options&quot;);</span>
+<span class="nc" id="L772">        donutModel2.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L773">        donutModel2.setSliceMargin(5);</span>
+<span class="nc" id="L774">        donutModel2.setShowDataLabels(true);</span>
+<span class="nc" id="L775">        donutModel2.setDataFormat(&quot;value&quot;);</span>
+<span class="nc" id="L776">        donutModel2.setShadow(false);</span>
+<span class="nc" id="L777">    }</span>
+    /**
+     * 
+     * @return  model
+     */
+    private DonutChartModel initDonutModel() {
+<span class="nc" id="L783">        DonutChartModel model = new DonutChartModel();</span>
+
+<span class="nc" id="L785">        Map&lt;String, Number&gt; circle1 = new LinkedHashMap&lt;String, Number&gt;();</span>
+<span class="nc" id="L786">        circle1.put(&quot;Brand 1&quot;, 150);</span>
+<span class="nc" id="L787">        circle1.put(&quot;Brand 2&quot;, 400);</span>
+<span class="nc" id="L788">        circle1.put(&quot;Brand 3&quot;, 200);</span>
+<span class="nc" id="L789">        circle1.put(&quot;Brand 4&quot;, 10);</span>
+<span class="nc" id="L790">        model.addCircle(circle1);</span>
+
+<span class="nc" id="L792">        Map&lt;String, Number&gt; circle2 = new LinkedHashMap&lt;String, Number&gt;();</span>
+<span class="nc" id="L793">        circle2.put(&quot;Brand 1&quot;, 540);</span>
+<span class="nc" id="L794">        circle2.put(&quot;Brand 2&quot;, 125);</span>
+<span class="nc" id="L795">        circle2.put(&quot;Brand 3&quot;, 702);</span>
+<span class="nc" id="L796">        circle2.put(&quot;Brand 4&quot;, 421);</span>
+<span class="nc" id="L797">        model.addCircle(circle2);</span>
+
+<span class="nc" id="L799">        Map&lt;String, Number&gt; circle3 = new LinkedHashMap&lt;String, Number&gt;();</span>
+<span class="nc" id="L800">        circle3.put(&quot;Brand 1&quot;, 40);</span>
+<span class="nc" id="L801">        circle3.put(&quot;Brand 2&quot;, 325);</span>
+<span class="nc" id="L802">        circle3.put(&quot;Brand 3&quot;, 402);</span>
+<span class="nc" id="L803">        circle3.put(&quot;Brand 4&quot;, 421);</span>
+<span class="nc" id="L804">        model.addCircle(circle3);</span>
+
+<span class="nc" id="L806">        return model;</span>
+    }
+
+    private void createLivePieModel() {
+<span class="nc" id="L810">        livePieModel = new PieChartModel();</span>
+
+<span class="nc" id="L812">        livePieModel.set(&quot;Candidate 1&quot;, 540);</span>
+<span class="nc" id="L813">        livePieModel.set(&quot;Candidate 2&quot;, 325);</span>
+<span class="nc" id="L814">    }</span>
+
+    private void createFillToZero() {
+<span class="nc" id="L817">        fillToZero = new CartesianChartModel();</span>
+
+<span class="nc" id="L819">        LineChartSeries series1 = new LineChartSeries();</span>
+<span class="nc" id="L820">        series1.setLabel(&quot;Series 1&quot;);</span>
+
+<span class="nc" id="L822">        series1.set(&quot;4, -3, 3, 6, 2, -2&quot;, 0);</span>
+
+<span class="nc" id="L824">        fillToZero.addSeries(series1);</span>
+<span class="nc" id="L825">    }</span>
+    /**
+     * 
+     * @return MeterGaugeChartModel
+     */
+    private MeterGaugeChartModel initMeterGaugeModel() {
+<span class="nc" id="L831">        List&lt;Number&gt; intervals = new ArrayList&lt;Number&gt;() {</span>
+            {
+<span class="nc" id="L833">                add(20);</span>
+<span class="nc" id="L834">                add(50);</span>
+<span class="nc" id="L835">                add(120);</span>
+<span class="nc" id="L836">                add(220);</span>
+<span class="nc" id="L837">            }</span>
+        };
+
+<span class="nc" id="L840">        return new MeterGaugeChartModel(140, intervals);</span>
+    }
+
+    private void createMeterGaugeModels() {
+<span class="nc" id="L844">        meterGaugeModel1 = initMeterGaugeModel();</span>
+<span class="nc" id="L845">        meterGaugeModel1.setTitle(&quot;MeterGauge Chart&quot;);</span>
+<span class="nc" id="L846">        meterGaugeModel1.setGaugeLabel(&quot;km/h&quot;);</span>
+<span class="nc" id="L847">        meterGaugeModel1.setGaugeLabelPosition(&quot;bottom&quot;);</span>
+
+<span class="nc" id="L849">        meterGaugeModel2 = initMeterGaugeModel();</span>
+<span class="nc" id="L850">        meterGaugeModel2.setTitle(&quot;Custom Options&quot;);</span>
+<span class="nc" id="L851">        meterGaugeModel2.setSeriesColors(&quot;66cc66,93b75f,E7E658,cc6666&quot;);</span>
+<span class="nc" id="L852">        meterGaugeModel2.setGaugeLabel(&quot;km/h&quot;);</span>
+<span class="nc" id="L853">        meterGaugeModel2.setGaugeLabelPosition(&quot;bottom&quot;);</span>
+<span class="nc" id="L854">        meterGaugeModel2.setShowTickLabels(false);</span>
+<span class="nc" id="L855">        meterGaugeModel2.setLabelHeightAdjust(110);</span>
+<span class="nc" id="L856">        meterGaugeModel2.setIntervalOuterRadius(100);</span>
+<span class="nc" id="L857">    }</span>
+
+    private void createAnimatedModels() {
+<span class="nc" id="L860">        animatedModel1 = initLinearModel();</span>
+<span class="nc" id="L861">        animatedModel1.setTitle(&quot;Line Chart&quot;);</span>
+<span class="nc" id="L862">        animatedModel1.setAnimate(true);</span>
+<span class="nc" id="L863">        animatedModel1.setLegendPosition(&quot;se&quot;);</span>
+<span class="nc" id="L864">        Axis yAxis = animatedModel1.getAxis(AxisType.Y);</span>
+<span class="nc" id="L865">        yAxis.setMin(0);</span>
+<span class="nc" id="L866">        yAxis.setMax(10);</span>
+
+<span class="nc" id="L868">        animatedModel2 = initBarModel();</span>
+<span class="nc" id="L869">        animatedModel2.setTitle(&quot;Bar Charts&quot;);</span>
+<span class="nc" id="L870">        animatedModel2.setAnimate(true);</span>
+<span class="nc" id="L871">        animatedModel2.setLegendPosition(&quot;ne&quot;);</span>
+<span class="nc" id="L872">        yAxis = animatedModel2.getAxis(AxisType.Y);</span>
+<span class="nc" id="L873">        yAxis.setMin(0);</span>
+<span class="nc" id="L874">        yAxis.setMax(200);</span>
+<span class="nc" id="L875">    }</span>
+
+    private void createDateModel() {
+<span class="nc" id="L878">        dateModel = new LineChartModel();</span>
+<span class="nc" id="L879">        LineChartSeries series1 = new LineChartSeries();</span>
+<span class="nc" id="L880">        series1.setLabel(&quot;Series 1&quot;);</span>
+
+<span class="nc" id="L882">        series1.set(&quot;2014-01-01&quot;, 51);</span>
+<span class="nc" id="L883">        series1.set(&quot;2014-01-06&quot;, 22);</span>
+<span class="nc" id="L884">        series1.set(&quot;2014-01-12&quot;, 65);</span>
+<span class="nc" id="L885">        series1.set(&quot;2014-01-18&quot;, 74);</span>
+<span class="nc" id="L886">        series1.set(&quot;2014-01-24&quot;, 24);</span>
+<span class="nc" id="L887">        series1.set(&quot;2014-01-30&quot;, 51);</span>
+
+<span class="nc" id="L889">        LineChartSeries series2 = new LineChartSeries();</span>
+<span class="nc" id="L890">        series2.setLabel(&quot;Series 2&quot;);</span>
+
+<span class="nc" id="L892">        series2.set(&quot;2014-01-01&quot;, 32);</span>
+<span class="nc" id="L893">        series2.set(&quot;2014-01-06&quot;, 73);</span>
+<span class="nc" id="L894">        series2.set(&quot;2014-01-12&quot;, 24);</span>
+<span class="nc" id="L895">        series2.set(&quot;2014-01-18&quot;, 12);</span>
+<span class="nc" id="L896">        series2.set(&quot;2014-01-24&quot;, 74);</span>
+<span class="nc" id="L897">        series2.set(&quot;2014-01-30&quot;, 62);</span>
+
+<span class="nc" id="L899">        dateModel.addSeries(series1);</span>
+<span class="nc" id="L900">        dateModel.addSeries(series2);</span>
+
+<span class="nc" id="L902">        dateModel.setTitle(&quot;Zoom for Details&quot;);</span>
+<span class="nc" id="L903">        dateModel.setZoom(true);</span>
+<span class="nc" id="L904">        dateModel.getAxis(AxisType.Y).setLabel(&quot;Values&quot;);</span>
+<span class="nc" id="L905">        DateAxis axis = new DateAxis(&quot;Dates&quot;);</span>
+<span class="nc" id="L906">        axis.setTickAngle(-50);</span>
+<span class="nc" id="L907">        axis.setMax(&quot;2014-02-01&quot;);</span>
+<span class="nc" id="L908">        axis.setTickFormat(&quot;%b %#d, %y&quot;);</span>
+
+<span class="nc" id="L910">        dateModel.getAxes().put(AxisType.X, axis);</span>
+<span class="nc" id="L911">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

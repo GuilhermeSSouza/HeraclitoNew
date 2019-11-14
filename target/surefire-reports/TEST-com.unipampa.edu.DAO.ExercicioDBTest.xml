@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.unipampa.edu.DAO.ExercicioDBTest" time="0.173" tests="7" errors="0" skipped="0" failures="7">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.unipampa.edu.DAO.ExercicioDBTest" time="0.329" tests="7" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64"/>
@@ -59,55 +59,11 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testUpdateExercicioCorreto" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.006">
-    <failure message="expected:&lt;false&gt; but was:&lt;true&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<false> but was:<true>
-	at com.unipampa.edu.DAO.ExercicioDBTest.testUpdateExercicioCorreto(ExercicioDBTest.java:75)
-]]></failure>
-    <system-out><![CDATA[updateExercicioCorreto
-]]></system-out>
-  </testcase>
-  <testcase name="testUpdateExercicioHoraFim" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.006">
-    <failure message="expected:&lt;false&gt; but was:&lt;true&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<false> but was:<true>
-	at com.unipampa.edu.DAO.ExercicioDBTest.testUpdateExercicioHoraFim(ExercicioDBTest.java:65)
-]]></failure>
-    <system-out><![CDATA[updateExercicioHoraFim
-]]></system-out>
-  </testcase>
-  <testcase name="testSelectExercicio" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.007">
-    <failure message="The test case is a prototype." type="java.lang.AssertionError">java.lang.AssertionError: The test case is a prototype.
-	at com.unipampa.edu.DAO.ExercicioDBTest.testSelectExercicio(ExercicioDBTest.java:45)
-</failure>
-    <system-out><![CDATA[selectExercicio
-]]></system-out>
-  </testcase>
-  <testcase name="testSelectExercicioList" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.032">
-    <failure message="expected:&lt;null&gt; but was:&lt;[]&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<null> but was:<[]>
-	at com.unipampa.edu.DAO.ExercicioDBTest.testSelectExercicioList(ExercicioDBTest.java:54)
-]]></failure>
-    <system-out><![CDATA[selectExercicioList
-]]></system-out>
-  </testcase>
-  <testcase name="testSelectByLastID" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.008">
-    <failure message="expected:&lt;0&gt; but was:&lt;-1&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<0> but was:<-1>
-	at com.unipampa.edu.DAO.ExercicioDBTest.testSelectByLastID(ExercicioDBTest.java:96)
-]]></failure>
-    <system-out><![CDATA[selectByLastID
-]]></system-out>
-  </testcase>
-  <testcase name="testUpdateExercicioAjuda" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.009">
-    <failure message="expected:&lt;false&gt; but was:&lt;true&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: expected:<false> but was:<true>
-	at com.unipampa.edu.DAO.ExercicioDBTest.testUpdateExercicioAjuda(ExercicioDBTest.java:86)
-]]></failure>
-    <system-out><![CDATA[updateExercicioAjuda
-]]></system-out>
-  </testcase>
-  <testcase name="testInsertExercico" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.105">
-    <failure message="The test case is a prototype." type="java.lang.AssertionError">java.lang.AssertionError: The test case is a prototype.
-	at com.unipampa.edu.DAO.ExercicioDBTest.testInsertExercico(ExercicioDBTest.java:35)
-</failure>
-    <system-out><![CDATA[insertExercico
-]]></system-out>
-    <system-err><![CDATA[Cannot add or update a child row: a foreign key constraint fails (`heraclitodb`.`exercicio`, CONSTRAINT `fk_exercicio_user` FOREIGN KEY (`user_iduser`) REFERENCES `user` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION)
-]]></system-err>
-  </testcase>
+  <testcase name="testUpdateExercicioCorreto" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.075"/>
+  <testcase name="testUpdateExercicioHoraFim" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.059"/>
+  <testcase name="testSelectExercicio" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.009"/>
+  <testcase name="testSelectExercicioList" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.011"/>
+  <testcase name="testSelectByLastID" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.006"/>
+  <testcase name="testUpdateExercicioAjuda" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.055"/>
+  <testcase name="testInsertExercico" classname="com.unipampa.edu.DAO.ExercicioDBTest" time="0.108"/>
 </testsuite>

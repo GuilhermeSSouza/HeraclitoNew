@@ -62,7 +62,7 @@ public class ExercicioDB {
             return false;
         }
         
-        return false;
+        return true;
     }
 
     public static Exerciciobanco selectExercicio(int idexercicio) throws Exception {

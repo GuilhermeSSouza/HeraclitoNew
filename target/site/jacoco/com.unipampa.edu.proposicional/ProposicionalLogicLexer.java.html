@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ProposicionalLogicLexer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.proposicional</a> &gt; <span class="el_source">ProposicionalLogicLexer.java</span></div><h1>ProposicionalLogicLexer.java</h1><pre class="source lang-java linenums">// Generated from ProposicionalLogic.g4 by ANTLR 4.5.3
+
+package com.unipampa.edu.proposicional;
+
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.*;
+
+@SuppressWarnings({&quot;all&quot;, &quot;warnings&quot;, &quot;unchecked&quot;, &quot;unused&quot;, &quot;cast&quot;})
+public class ProposicionalLogicLexer extends Lexer {
+<span class="nc" id="L16">	static { RuntimeMetaData.checkVersion(&quot;4.5.3&quot;, RuntimeMetaData.VERSION); }</span>
+
+	protected static final DFA[] _decisionToDFA;
+<span class="nc" id="L19">	protected static final PredictionContextCache _sharedContextCache =</span>
+		new PredictionContextCache();
+	public static final int
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, SIMBOLO_PROPOSICIONAL=8, 
+		SPACE=9;
+<span class="nc" id="L24">	public static String[] modeNames = {</span>
+		&quot;DEFAULT_MODE&quot;
+	};
+
+<span class="nc" id="L28">	public static final String[] ruleNames = {</span>
+		&quot;T__0&quot;, &quot;T__1&quot;, &quot;T__2&quot;, &quot;T__3&quot;, &quot;T__4&quot;, &quot;T__5&quot;, &quot;T__6&quot;, &quot;SIMBOLO_PROPOSICIONAL&quot;, 
+		&quot;SPACE&quot;
+	};
+
+<span class="nc" id="L33">	private static final String[] _LITERAL_NAMES = {</span>
+		null, &quot;'('&quot;, &quot;')'&quot;, &quot;'~'&quot;, &quot;'^'&quot;, &quot;'v'&quot;, &quot;'-&gt;'&quot;, &quot;'&lt;-&gt;'&quot;
+	};
+<span class="nc" id="L36">	private static final String[] _SYMBOLIC_NAMES = {</span>
+		null, null, null, null, null, null, null, null, &quot;SIMBOLO_PROPOSICIONAL&quot;, 
+		&quot;SPACE&quot;
+	};
+<span class="nc" id="L40">	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);</span>
+
+	/**
+	 * @deprecated Use {@link #VOCABULARY} instead.
+	 */
+	@Deprecated
+	public static final String[] tokenNames;
+	static {
+<span class="nc" id="L48">		tokenNames = new String[_SYMBOLIC_NAMES.length];</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (int i = 0; i &lt; tokenNames.length; i++) {</span>
+<span class="nc" id="L50">			tokenNames[i] = VOCABULARY.getLiteralName(i);</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">			if (tokenNames[i] == null) {</span>
+<span class="nc" id="L52">				tokenNames[i] = VOCABULARY.getSymbolicName(i);</span>
+			}
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">			if (tokenNames[i] == null) {</span>
+<span class="nc" id="L56">				tokenNames[i] = &quot;&lt;INVALID&gt;&quot;;</span>
+			}
+		}
+	}
+
+	@Override
+	@Deprecated
+	public String[] getTokenNames() {
+<span class="nc" id="L64">		return tokenNames;</span>
+	}
+
+	@Override
+
+	public Vocabulary getVocabulary() {
+<span class="nc" id="L70">		return VOCABULARY;</span>
+	}
+
+
+	public ProposicionalLogicLexer(CharStream input) {
+<span class="nc" id="L75">		super(input);</span>
+<span class="nc" id="L76">		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);</span>
+<span class="nc" id="L77">	}</span>
+
+	@Override
+<span class="nc" id="L80">	public String getGrammarFileName() { return &quot;ProposicionalLogic.g4&quot;; }</span>
+
+	@Override
+<span class="nc" id="L83">	public String[] getRuleNames() { return ruleNames; }</span>
+
+	@Override
+<span class="nc" id="L86">	public String getSerializedATN() { return _serializedATN; }</span>
+
+	@Override
+<span class="nc" id="L89">	public String[] getModeNames() { return modeNames; }</span>
+
+	@Override
+<span class="nc" id="L92">	public ATN getATN() { return _ATN; }</span>
+
+	public static final String _serializedATN =
+		&quot;\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2\13-\b\1\4\2\t\2\4&quot;+
+		&quot;\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3\2&quot;+
+		&quot;\3\3\3\3\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3&quot;+
+		&quot;\t\5\t*\n\t\3\n\3\n\2\2\13\3\3\5\4\7\5\t\6\13\7\r\b\17\t\21\n\23\13\3&quot;+
+		&quot;\2\5\3\2C\\\3\2\62;\4\2\13\13\&quot;\&quot;-\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2&quot;+
+		&quot;\2\t\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3&quot;+
+		&quot;\2\2\2\3\25\3\2\2\2\5\27\3\2\2\2\7\31\3\2\2\2\t\33\3\2\2\2\13\35\3\2\2&quot;+
+		&quot;\2\r\37\3\2\2\2\17\&quot;\3\2\2\2\21)\3\2\2\2\23+\3\2\2\2\25\26\7*\2\2\26\4&quot;+
+		&quot;\3\2\2\2\27\30\7+\2\2\30\6\3\2\2\2\31\32\7\u0080\2\2\32\b\3\2\2\2\33\34&quot;+
+		&quot;\7`\2\2\34\n\3\2\2\2\35\36\7x\2\2\36\f\3\2\2\2\37 \7/\2\2 !\7@\2\2!\16&quot;+
+		&quot;\3\2\2\2\&quot;#\7&gt;\2\2#$\7/\2\2$%\7@\2\2%\20\3\2\2\2&amp;*\t\2\2\2\'(\t\2\2\2&quot;+
+		&quot;(*\t\3\2\2)&amp;\3\2\2\2)\'\3\2\2\2*\22\3\2\2\2+,\t\4\2\2,\24\3\2\2\2\4\2&quot;+
+		&quot;)\2&quot;;
+<span class="nc" id="L108">	public static final ATN _ATN =</span>
+<span class="nc" id="L109">		new ATNDeserializer().deserialize(_serializedATN.toCharArray());</span>
+	static {
+<span class="nc" id="L111">		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (int i = 0; i &lt; _ATN.getNumberOfDecisions(); i++) {</span>
+<span class="nc" id="L113">			_decisionToDFA[i] = new DFA(_ATN.getDecisionState(i), i);</span>
+		}
+<span class="nc" id="L115">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

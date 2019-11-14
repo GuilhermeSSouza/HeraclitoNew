@@ -98,7 +98,7 @@ public class PassoDB {
 
         Passobanco pb = null;
         String query = "SELECT * FROM heraclitodb.passo WHERE exercicio_idexercicio =" + idexercicio;
-
+        List<Passobanco> pblist = new ArrayList<Passobanco>();
         try {
 
             Connection conn = ConnectionFactory.getConnection();
@@ -107,7 +107,7 @@ public class PassoDB {
 
             rs = stmt.executeQuery(query);
 
-            List<Passobanco> pblist = new ArrayList<Passobanco>();
+            
             while (rs.next()) {
 
                 int id = rs.getInt("idpasso");
@@ -122,14 +122,14 @@ public class PassoDB {
             }
             stmt.close();
             ConnectionFactory.closeConnection(conn, stmt, rs);
-            return pblist;
+            
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
 
         }
-
+        return pblist;
     }
 
     public static boolean updatePassoCorreto(int idpasso, String prob) throws Exception {
@@ -144,12 +144,12 @@ public class PassoDB {
             st.executeUpdate();
             st.close();
             ConnectionFactory.closeConnection(conn, st);
-            return true;
+            
         } catch (SQLException e) {
 
             return false;
         }
-
+        return true;
     }
 
     public static int selectByLastIDPasso(int iduser) {
@@ -174,8 +174,9 @@ public class PassoDB {
 
             st.close();
             ConnectionFactory.closeConnection(conn, st);
-            return idpassolast;
+            
         } catch (Exception e) {
+            return idpassolast;
         }
         return idpassolast;
     }

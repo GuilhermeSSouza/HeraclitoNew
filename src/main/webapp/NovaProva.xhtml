@@ -15,8 +15,7 @@
                 <title> Nova Prova</title>
 
                 <meta http-equiv="X-UA-Compatible" content="IE=Edge" ></meta>
-                <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
-                <link rel="stylesheet" type="text/css" href="resources/css/menu-style.css"></link>
+                 <link rel="stylesheet" type="text/css" href="resources/css/menu-style.css"></link>
             </ui:define>
 
             <ui:define name="content">
@@ -24,12 +23,12 @@
                 <div class="jumbotron title" style=" background-color:#009045; border-radius: 10px">
                     <div class="container" >
                         <h1 class="text-center" style="font-size: 200% ">
-                            Bem-Vindo ao Ambiente Heráclito: #{homeBean.nameUser}
+                            Bem-Vindo ao Ambiente HerÃ¡clito: #{homeBean.nameUser}
                         </h1>
                         <p class="text-right" style="font-size: 120%">
                             <i> 
                                 O debate é pai e rei de todas as coisas
-                                (Heráclito de Éfeso, circa 504 AC)
+                                (Heréclito de Éfeso, circa 504 AC)
                             </i>
                         </p>
                     </div>
@@ -37,7 +36,7 @@
                 <br></br>
 
 
-                <!-- Alguns simblos dentro do codigo nÃÂ£o ÃÂ© reconhecido pelo UTF-8...-->
+                <!-- Alguns simblos dentro do codigo nÃÂÃÂ£o ÃÂÃÂ© reconhecido pelo UTF-8...-->
 
 
 
@@ -68,7 +67,7 @@
                                         <h:inputText  class="form-control" value ="#{homeProvaBean.novaProva}" ></h:inputText>
                                     </div>
                                     <div class="form-group">
-                                        <h:commandButton class="btn btn-primary" value ="ComeÃ§ar" action="#{homeProvaBean.exercicoHipotese()}" ></h:commandButton>
+                                        <h:commandButton class="btn btn-primary" value ="Começar" action="#{homeProvaBean.exercicoHipotese()}" ></h:commandButton>
                                     </div>
                                 </h:form>
                             </div>
@@ -92,7 +91,7 @@
                             <div class="panel-body">
                                 <h:form role="form" id="optionExercicio">
                                     <div class="form-group">
-                                        <select value= "" class="form-control" name="cabecalho1">
+                                        
 
 
                                             <b:selectOneMenu value = "#{homeProvaBean.selectProvaBasica}"> 
@@ -125,10 +124,9 @@
                                             <option >(C->D)->C|-(C->D)->D</option>
                                             <option >~A,AvB|-B</option>
                                             <option >(A ^ B) -> C, A |- B -> C</option>-->
-                                        </select>
-                                    </div>
+                                         </div>
                                     <div class="form-group">
-                                        <h:commandButton  value= "ComeÃ§ar" class="btn btn-primary" action="#{homeProvaBean.provaBasica()}"></h:commandButton>
+                                        <h:commandButton  value= "Começar" class="btn btn-primary" action="#{homeProvaBean.provaBasica()}"></h:commandButton>
                                     </div>
                                 </h:form>
                             </div>

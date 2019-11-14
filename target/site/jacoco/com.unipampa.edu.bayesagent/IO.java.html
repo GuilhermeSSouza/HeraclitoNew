@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>IO.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.bayesagent</a> &gt; <span class="el_source">IO.java</span></div><h1>IO.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.bayesagent;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import org.eclipse.recommenders.jayes.BayesNet;
+import org.eclipse.recommenders.jayes.BayesNode;
+
+/**
+ *
+ * @author Cristiano
+ */
+public class IO {
+    
+<span class="nc" id="L26">    public IO(){</span>
+        //connection = OpenConnection();
+<span class="nc" id="L28">    }</span>
+    
+    public void GravarEvidencias(String aluno, Map&lt;BayesNode, String&gt; Evidencias, Map&lt;String, String&gt; Conhecimento){
+        
+<span class="nc" id="L32">        File ArquivoEvidencias = new File (aluno + &quot;_Evidencias.data&quot;);</span>
+        try{
+<span class="nc" id="L34">            FileWriter fileW = new FileWriter(ArquivoEvidencias);</span>
+<span class="nc" id="L35">            BufferedWriter buffW = new BufferedWriter (fileW);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            for (Map.Entry&lt;BayesNode, String&gt; ev : Evidencias.entrySet())</span>
+            {
+<span class="nc" id="L38">                buffW.write(ev.getKey() + &quot; &quot; + ev.getValue());</span>
+<span class="nc" id="L39">                buffW.newLine();</span>
+<span class="nc" id="L40">            }</span>
+<span class="nc" id="L41">            buffW.close ();</span>
+<span class="nc" id="L42">        } catch (IOException e) {</span>
+<span class="nc" id="L43">            e.printStackTrace();</span>
+<span class="nc" id="L44">        }</span>
+            
+<span class="nc" id="L46">        File ArquivoConhecimento = new File (aluno + &quot;_Conhecimento.data&quot;);</span>
+        try{
+<span class="nc" id="L48">            FileWriter fileW = new FileWriter(ArquivoConhecimento);</span>
+<span class="nc" id="L49">            BufferedWriter buffW = new BufferedWriter (fileW);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; nodo : Conhecimento.entrySet())</span>
+            {
+                //System.out.println(nodo.getKey() + &quot; &quot; + nodo.getValue());
+<span class="nc" id="L53">                buffW.write(nodo.getKey() + &quot; &quot; + nodo.getValue());</span>
+<span class="nc" id="L54">                buffW.newLine();</span>
+<span class="nc" id="L55">            }</span>
+<span class="nc" id="L56">            buffW.close ();</span>
+<span class="nc" id="L57">        } catch (IOException e) {</span>
+<span class="nc" id="L58">            e.printStackTrace();</span>
+<span class="nc" id="L59">        }</span>
+<span class="nc" id="L60">    }</span>
+    
+    public Map&lt;BayesNode,String&gt; LerEvidencias(String aluno, BayesNet net){
+<span class="nc" id="L63">        Map&lt;BayesNode,String&gt; ev = new HashMap();</span>
+        
+<span class="nc" id="L65">        String fileName = aluno + &quot;_Evidencias.data&quot;;</span>
+
+<span class="nc" id="L67">        String line = null;</span>
+        try {
+            // FileReader reads text files in the default encoding.
+<span class="nc" id="L70">            FileReader fileReader = new FileReader(fileName);</span>
+            
+            // Always wrap FileReader in BufferedReader.
+<span class="nc" id="L73">            BufferedReader bufferedReader = new BufferedReader(fileReader);</span>
+            
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            while((line = bufferedReader.readLine()) != null) {</span>
+<span class="nc" id="L76">                String s[] = line.split(&quot; &quot;);</span>
+<span class="nc" id="L77">                ev.put(net.getNode(s[0]),s[1]);</span>
+<span class="nc" id="L78">            }</span>
+            
+<span class="nc" id="L80">            bufferedReader.close();         </span>
+<span class="nc" id="L81">        }catch(FileNotFoundException ex) {</span>
+            try{
+<span class="nc" id="L83">                FileWriter fileW = new FileWriter(&quot;bayes.log&quot;);</span>
+<span class="nc" id="L84">                BufferedWriter buffW = new BufferedWriter (fileW);</span>
+//                buffW.write(System.getProperty(&quot;user.dir&quot;));
+<span class="nc" id="L86">                buffW.close ();</span>
+<span class="nc" id="L87">            } catch (IOException e) {</span>
+<span class="nc" id="L88">                e.printStackTrace();</span>
+<span class="nc" id="L89">            }            </span>
+//            System.out.println(System.getProperty(&quot;user.dir&quot;));
+<span class="nc" id="L91">            System.out.println(&quot;Unable to open file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L92">        }catch(IOException ex) {</span>
+            try{
+<span class="nc" id="L94">                FileWriter fileW = new FileWriter(&quot;bayes.log&quot;);</span>
+<span class="nc" id="L95">                BufferedWriter buffW = new BufferedWriter (fileW);</span>
+//                buffW.write(System.getProperty(&quot;user.dir&quot;));
+<span class="nc" id="L97">                buffW.write(&quot;\nError reading file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L98">                buffW.close ();</span>
+<span class="nc" id="L99">            } catch (IOException e) {</span>
+<span class="nc" id="L100">                e.printStackTrace();</span>
+<span class="nc" id="L101">            }</span>
+//            System.out.println(System.getProperty(&quot;user.dir&quot;));
+<span class="nc" id="L103">            System.out.println(&quot;Error reading file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L104">        }</span>
+<span class="nc" id="L105">        return ev;</span>
+    }
+    
+    public Map&lt;BayesNode,String&gt; InicializarEvidencias(BayesNet net){
+<span class="nc" id="L109">        Map&lt;BayesNode,String&gt; ev = new HashMap();</span>
+
+<span class="nc" id="L111">        String fileName = &quot;EvidenciaBase.data&quot;;</span>
+
+        String line;
+        try {
+            // FileReader reads text files in the default encoding.
+<span class="nc" id="L116">            FileReader fileReader = new FileReader(fileName);</span>
+            
+            // Always wrap FileReader in BufferedReader.
+<span class="nc" id="L119">            BufferedReader bufferedReader = new BufferedReader(fileReader);</span>
+            
+<span class="nc bnc" id="L121" title="All 2 branches missed.">            while((line = bufferedReader.readLine()) != null) {</span>
+<span class="nc" id="L122">                String s[] = line.split(&quot; &quot;);</span>
+<span class="nc" id="L123">                ev.put(net.getNode(s[0]),s[1]);</span>
+<span class="nc" id="L124">            }</span>
+            
+<span class="nc" id="L126">            bufferedReader.close();         </span>
+<span class="nc" id="L127">        }catch(FileNotFoundException ex) {</span>
+            try{
+<span class="nc" id="L129">                FileWriter fileW = new FileWriter(&quot;bayes.log&quot;);</span>
+<span class="nc" id="L130">                BufferedWriter buffW = new BufferedWriter (fileW);</span>
+//                buffW.write(System.getProperty(&quot;user.dir&quot;));
+<span class="nc" id="L132">                buffW.write(&quot;\nUnable to open file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L133">                buffW.close ();</span>
+<span class="nc" id="L134">            } catch (IOException e) {</span>
+<span class="nc" id="L135">                e.printStackTrace();</span>
+<span class="nc" id="L136">            }</span>
+<span class="nc" id="L137">            System.out.println(&quot;Unable to open file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L138">        }catch(IOException ex) {</span>
+            try{
+<span class="nc" id="L140">                FileWriter fileW = new FileWriter(&quot;bayes.log&quot;);</span>
+<span class="nc" id="L141">                BufferedWriter buffW = new BufferedWriter (fileW);</span>
+//                buffW.write(System.getProperty(&quot;user.dir&quot;));
+<span class="nc" id="L143">                buffW.write(&quot;\nError reading file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L144">                buffW.close ();</span>
+<span class="nc" id="L145">            } catch (IOException e) {</span>
+<span class="nc" id="L146">                e.printStackTrace();</span>
+<span class="nc" id="L147">            }</span>
+<span class="nc" id="L148">            System.out.println(&quot;Error reading file '&quot; + fileName + &quot;'&quot;);</span>
+<span class="nc" id="L149">        }</span>
+<span class="nc" id="L150">        return ev;</span>
+    }
+    /*
+    private static Connection OpenConnection(){
+        try {
+            String driverName = &quot;com.mysql.jdbc.Driver&quot;;                        
+            Class.forName(driverName);
+            // Configurando a nossa conexão com um banco de dados//
+            String serverName = &quot;cristiano&quot;;    //caminho do servidor do BD
+            String mydatabase = &quot;Gala!fassi18&quot;;        //nome do seu banco de dados
+
+            String url = &quot;jdbc:mysql://&quot; + serverName + &quot;/&quot; + mydatabase;
+            String username = &quot;cristiano&quot;;        //nome de um usuário de seu BD      
+            String password = &quot;Gala!fassi18&quot;;      //sua senha de acesso
+            Connection aux = DriverManager.getConnection(url, username, password);
+            System.out.println(&quot;Conexao OK&quot;);
+            return aux;
+        } catch (ClassNotFoundException e) {
+            //Driver não encontrado
+            System.out.println(&quot;O driver expecificado nao foi encontrado.&quot;);
+        } catch (SQLException e) {
+            //Não conseguindo se conectar ao banco
+            System.out.println(&quot;Nao foi possivel conectar ao Banco de Dados.&quot;);
+        }
+        return null;
+    }
+    */
+    public void SalvarEvidencias(String Aluno, String Argumento, String Regra, String Evidencia, String Status, String Prob){
+        try{
+<span class="nc" id="L179">            FileWriter fileW = new FileWriter(&quot;Dados.dat&quot;, true);</span>
+<span class="nc" id="L180">            BufferedWriter buffW = new BufferedWriter (fileW);</span>
+<span class="nc" id="L181">            buffW.write(java.time.Instant.now() +&quot;;&quot; + Aluno.trim() + &quot;;&quot; + Argumento.trim() + &quot;;&quot; + Evidencia.trim() + &quot;;&quot; + Status.trim() + &quot;;&quot; + Regra.trim() + &quot;;&quot; + Float.valueOf(Prob)+ &quot;\n&quot;);</span>
+<span class="nc" id="L182">            buffW.close ();</span>
+<span class="nc" id="L183">        } catch (IOException e) {</span>
+<span class="nc" id="L184">            e.printStackTrace();</span>
+<span class="nc" id="L185">        }</span>
+        
+        /*
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+            //Atualiza a tabela de Evidencias
+            statement.executeUpdate(&quot;INSERT INTO `evidencias`(`DATAHORA`, `ALUNO`, `ARGUMENTO`, `EVIDENCIA`, `STATUS`) &quot;
+                    + &quot;VALUES (NOW(), '&quot; + Aluno.trim() + &quot;', '&quot; + Argumento.trim() + &quot;', '&quot; + Evidencia.trim() + &quot;' ,&quot; + Status.trim() + &quot;)&quot;);
+            
+            // execute the query, and get a java resultset
+            ResultSet rs = statement.executeQuery(&quot;SELECT ID FROM evidencias ORDER BY ID DESC LIMIT 1&quot;);
+
+            // iterate through the java resultset
+            int id = -1;
+            while (rs.next())
+            {
+                id = rs.getInt(&quot;id&quot;);
+            }
+            
+            //Atualiza a tabela de Regras
+            statement.executeUpdate(&quot;INSERT INTO `regras_detalhe`(`ID_EVIDENCIAS`, `ALUNO`, `REGRA`, `PROBABILIDADE`) &quot;
+                    + &quot;VALUES (&quot; + id + &quot;, '&quot; + Aluno.trim() + &quot;', '&quot; + Regra.trim() + &quot;', &quot; + Float.valueOf(Prob) + &quot;)&quot;);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(BayesAgent.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception  ex){
+            System.out.println(&quot;NULO&quot;);
+        }
+        */
+<span class="nc" id="L215">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

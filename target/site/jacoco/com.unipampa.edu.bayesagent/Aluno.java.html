@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Aluno.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.bayesagent</a> &gt; <span class="el_source">Aluno.java</span></div><h1>Aluno.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.bayesagent;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import org.eclipse.recommenders.jayes.BayesNet;
+import org.eclipse.recommenders.jayes.BayesNode;
+import org.eclipse.recommenders.jayes.inference.IBayesInferer;
+import org.eclipse.recommenders.jayes.inference.junctionTree.JunctionTreeAlgorithm;
+
+public class Aluno {
+    
+<span class="nc" id="L18">    public IO io = new IO();</span>
+<span class="nc" id="L19">    public BayesNet net = new BayesNet();</span>
+<span class="nc" id="L20">    public Map&lt;BayesNode,String&gt; evidence = new HashMap();</span>
+    public String Aluno;
+    public String Argumento;
+        
+    public int Conceito;
+    public int Exemplo;
+    public int Ajuda;
+    
+<span class="nc" id="L28">    public Aluno(String aluno, String argumento){</span>
+<span class="nc" id="L29">        Aluno = aluno;</span>
+<span class="nc" id="L30">        Argumento = argumento;</span>
+<span class="nc" id="L31">        Conceito = 0;</span>
+<span class="nc" id="L32">        Exemplo = 0;</span>
+<span class="nc" id="L33">        Ajuda = 0;</span>
+        
+<span class="nc" id="L35">        net = newNet();</span>
+        /*
+        BayesNode ConhecimentoEquivalencia = CriarRegra(&quot;Equivalencia&quot;, net);
+        BayesNode ConhecimentoDuplaNegacao = CriarRegra(&quot;DuplaNegacao&quot;, net);
+        BayesNode ConhecimentoAdicao = CriarRegra(&quot;Adicao&quot;, net);
+        BayesNode ConhecimentoConjuncao = CriarRegra(&quot;Conjuncao&quot;, net);
+        
+        CriarRegra(&quot;SilogismoHipotetico&quot;, net, ConhecimentoDuplaNegacao);
+        CriarRegra(&quot;ProvaCondicional&quot;, net, ConhecimentoDuplaNegacao);
+        CriarRegra(&quot;ModusPonens&quot;, net, ConhecimentoDuplaNegacao);
+        CriarRegra(&quot;Inconsistencia&quot;, net, ConhecimentoDuplaNegacao);
+        
+        CriarRegra(&quot;ModusTollens&quot;, net, ConhecimentoEquivalencia, ConhecimentoDuplaNegacao);
+        CriarRegra(&quot;DilemaConstrutivo&quot;, net, ConhecimentoEquivalencia, ConhecimentoAdicao);
+        CriarRegra(&quot;Simplificacao&quot;, net, ConhecimentoAdicao, ConhecimentoConjuncao);
+        CriarRegra(&quot;SilogismoDisjuntivo&quot;, net, ConhecimentoDuplaNegacao, ConhecimentoConjuncao);
+        CriarRegra(&quot;ReducaoAbsurdo&quot;, net, ConhecimentoDuplaNegacao, ConhecimentoConjuncao);
+        CriarRegra(&quot;Exportacao&quot;, net, ConhecimentoEquivalencia, ConhecimentoConjuncao);
+        BayesNode ConhecimentoEliminacaoDisjuncao = CriarRegra(&quot;EliminacaoDisjuncao&quot;, net, ConhecimentoEquivalencia, ConhecimentoConjuncao);
+        CriarRegra(&quot;EliminacaoEquivalencia&quot;, net, ConhecimentoEliminacaoDisjuncao);
+        */        
+        
+<span class="nc" id="L57">        evidence = io.InicializarEvidencias(net);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (evidence.isEmpty()){</span>
+<span class="nc" id="L59">            evidence.putAll(InicializarEvidencias(&quot;Equivalencia&quot;, net));</span>
+<span class="nc" id="L60">            evidence.putAll(InicializarEvidencias(&quot;DuplaNegacao&quot;, net));</span>
+<span class="nc" id="L61">            evidence.putAll(InicializarEvidencias(&quot;Adicao&quot;, net));</span>
+<span class="nc" id="L62">            evidence.putAll(InicializarEvidencias(&quot;Conjuncao&quot;, net));</span>
+<span class="nc" id="L63">            evidence.putAll(InicializarEvidencias(&quot;SilogismoHipotetico&quot;, net));</span>
+<span class="nc" id="L64">            evidence.putAll(InicializarEvidencias(&quot;ProvaCondicional&quot;, net));</span>
+<span class="nc" id="L65">            evidence.putAll(InicializarEvidencias(&quot;ModusPonens&quot;, net));</span>
+<span class="nc" id="L66">            evidence.putAll(InicializarEvidencias(&quot;Inconsistencia&quot;, net));</span>
+<span class="nc" id="L67">            evidence.putAll(InicializarEvidencias(&quot;ModusTollens&quot;, net));</span>
+<span class="nc" id="L68">            evidence.putAll(InicializarEvidencias(&quot;DilemaConstrutivo&quot;, net));</span>
+<span class="nc" id="L69">            evidence.putAll(InicializarEvidencias(&quot;Simplificacao&quot;, net));</span>
+<span class="nc" id="L70">            evidence.putAll(InicializarEvidencias(&quot;SilogismoDisjuntivo&quot;, net));</span>
+<span class="nc" id="L71">            evidence.putAll(InicializarEvidencias(&quot;ReducaoAbsurdo&quot;, net));</span>
+<span class="nc" id="L72">            evidence.putAll(InicializarEvidencias(&quot;Exportacao&quot;, net));</span>
+<span class="nc" id="L73">            evidence.putAll(InicializarEvidencias(&quot;EliminacaoDisjuncao&quot;, net));</span>
+<span class="nc" id="L74">            evidence.putAll(InicializarEvidencias(&quot;EliminacaoEquivalencia&quot;, net));</span>
+        }
+        
+<span class="nc" id="L77">        Map&lt;String, String&gt; Rede = new HashMap();</span>
+        
+<span class="nc" id="L79">        Rede.putAll(AtualizarConhecimento(net, evidence, &quot;&quot;));</span>
+        
+        //io.GravarEvidencias(Aluno, evidence, Rede);
+        
+<span class="nc" id="L83">    }</span>
+    
+    
+    public BayesNet newNet(){
+<span class="nc" id="L87">        BayesNet net = new BayesNet();</span>
+<span class="nc" id="L88">        IO io = new IO();</span>
+<span class="nc" id="L89">        Map&lt;BayesNode,String&gt; evidence = new HashMap();</span>
+        
+<span class="nc" id="L91">        BayesNode ConhecimentoEquivalencia = CriarRegra(&quot;Equivalencia&quot;, net);</span>
+<span class="nc" id="L92">        BayesNode ConhecimentoDuplaNegacao = CriarRegra(&quot;DuplaNegacao&quot;, net);</span>
+<span class="nc" id="L93">        BayesNode ConhecimentoAdicao = CriarRegra(&quot;Adicao&quot;, net);</span>
+<span class="nc" id="L94">        BayesNode ConhecimentoConjuncao = CriarRegra(&quot;Conjuncao&quot;, net);</span>
+        
+<span class="nc" id="L96">        CriarRegra(&quot;SilogismoHipotetico&quot;, net, ConhecimentoDuplaNegacao);</span>
+<span class="nc" id="L97">        CriarRegra(&quot;ProvaCondicional&quot;, net, ConhecimentoDuplaNegacao);</span>
+<span class="nc" id="L98">        CriarRegra(&quot;ModusPonens&quot;, net, ConhecimentoDuplaNegacao);</span>
+<span class="nc" id="L99">        CriarRegra(&quot;Inconsistencia&quot;, net, ConhecimentoDuplaNegacao);</span>
+        
+<span class="nc" id="L101">        CriarRegra(&quot;ModusTollens&quot;, net, ConhecimentoEquivalencia, ConhecimentoDuplaNegacao);</span>
+<span class="nc" id="L102">        CriarRegra(&quot;DilemaConstrutivo&quot;, net, ConhecimentoEquivalencia, ConhecimentoAdicao);</span>
+<span class="nc" id="L103">        CriarRegra(&quot;Simplificacao&quot;, net, ConhecimentoAdicao, ConhecimentoConjuncao);</span>
+<span class="nc" id="L104">        CriarRegra(&quot;SilogismoDisjuntivo&quot;, net, ConhecimentoDuplaNegacao, ConhecimentoConjuncao);</span>
+<span class="nc" id="L105">        CriarRegra(&quot;ReducaoAbsurdo&quot;, net, ConhecimentoDuplaNegacao, ConhecimentoConjuncao);</span>
+<span class="nc" id="L106">        CriarRegra(&quot;Exportacao&quot;, net, ConhecimentoEquivalencia, ConhecimentoConjuncao);</span>
+<span class="nc" id="L107">        BayesNode ConhecimentoEliminacaoDisjuncao = CriarRegra(&quot;EliminacaoDisjuncao&quot;, net, ConhecimentoEquivalencia, ConhecimentoConjuncao);</span>
+<span class="nc" id="L108">        CriarRegra(&quot;EliminacaoEquivalencia&quot;, net, ConhecimentoEliminacaoDisjuncao);</span>
+        
+<span class="nc" id="L110">        return net;</span>
+    }
+    
+    public Map&lt;BayesNode, String&gt; InicializarEvidencias(String regra, BayesNet net){
+<span class="nc" id="L114">        Map&lt;BayesNode, String&gt; ev = new HashMap();</span>
+                
+<span class="nc" id="L116">        BayesNode Corretude = net.getNode(&quot;Corretude&quot; + regra);</span>
+<span class="nc" id="L117">        BayesNode Exemplo = net.getNode(&quot;Exemplo&quot; + regra);</span>
+<span class="nc" id="L118">        BayesNode Conceito = net.getNode(&quot;Conceito&quot; + regra);</span>
+<span class="nc" id="L119">        BayesNode Ajuda = net.getNode(&quot;Ajuda&quot; + regra);</span>
+<span class="nc" id="L120">        ev.put(Corretude, &quot;0&quot;);</span>
+<span class="nc" id="L121">        ev.put(Exemplo, &quot;0&quot;);</span>
+<span class="nc" id="L122">        ev.put(Conceito, &quot;0&quot;);</span>
+<span class="nc" id="L123">        ev.put(Ajuda, &quot;0&quot;);</span>
+
+<span class="nc" id="L125">        return ev;</span>
+    }
+    
+    public Map&lt;BayesNode, String&gt; AtualizarEvidencias(BayesNet net, Map&lt;BayesNode, String&gt; ev, String Regra){
+<span class="nc" id="L129">        ev.replace(net.getNode(&quot;Conceito&quot; + Regra), String.valueOf(Conceito));</span>
+<span class="nc" id="L130">        ev.replace(net.getNode(&quot;Exemplo&quot; + Regra), String.valueOf(Exemplo));</span>
+<span class="nc" id="L131">        ev.replace(net.getNode(&quot;Ajuda&quot; + Regra), String.valueOf(Ajuda));</span>
+
+<span class="nc" id="L133">        Conceito = 0;</span>
+<span class="nc" id="L134">        Exemplo = 0;</span>
+<span class="nc" id="L135">        Ajuda = 0;</span>
+        
+<span class="nc" id="L137">        return ev;</span>
+    }
+    
+    public Map&lt;String, String&gt; AtualizarConhecimento(BayesNet net, Map&lt;BayesNode, String&gt; ev, String Regra){
+<span class="nc" id="L141">        Map&lt;String, String&gt; rede = new HashMap();</span>
+        
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if(!Regra.equals(&quot;&quot;))</span>
+<span class="nc" id="L144">            ev = AtualizarEvidencias(net, ev, Regra);</span>
+        
+<span class="nc" id="L146">        IBayesInferer inferer = new JunctionTreeAlgorithm();</span>
+<span class="nc" id="L147">        inferer.setNetwork(net);</span>
+<span class="nc" id="L148">        inferer.setEvidence(ev);</span>
+        
+        /*
+        for(Map.Entry&lt;BayesNode, String&gt; entry : ev.entrySet()) {
+            BayesNode key = entry.getKey();
+            String value = entry.getValue();
+
+            System.out.println(key + &quot; - &quot; + value);
+        }
+        */
+        
+        
+        //System.out.println(ev.containsKey(net.getNode(&quot;Conceito&quot; + regra)));
+        
+<span class="nc" id="L162">        BayesNode ConhecimentoEquivalencia = net.getNode(&quot;ConhecimentoEquivalencia&quot;);</span>
+<span class="nc" id="L163">        BayesNode ConhecimentoDuplaNegacao = net.getNode(&quot;ConhecimentoDuplaNegacao&quot;);</span>
+<span class="nc" id="L164">        BayesNode ConhecimentoAdicao = net.getNode(&quot;ConhecimentoAdicao&quot;);</span>
+<span class="nc" id="L165">        BayesNode ConhecimentoConjuncao = net.getNode(&quot;ConhecimentoConjuncao&quot;);</span>
+<span class="nc" id="L166">        BayesNode ConhecimentoSilogismoHipotetico = net.getNode(&quot;ConhecimentoSilogismoHipotetico&quot;);</span>
+<span class="nc" id="L167">        BayesNode ConhecimentoProvaCondicional = net.getNode(&quot;ConhecimentoProvaCondicional&quot;);</span>
+<span class="nc" id="L168">        BayesNode ConhecimentoModusPonens = net.getNode(&quot;ConhecimentoModusPonens&quot;);</span>
+<span class="nc" id="L169">        BayesNode ConhecimentoInconsistencia = net.getNode(&quot;ConhecimentoInconsistencia&quot;);</span>
+<span class="nc" id="L170">        BayesNode ConhecimentoModusTollens = net.getNode(&quot;ConhecimentoModusTollens&quot;);</span>
+<span class="nc" id="L171">        BayesNode ConhecimentoDilemaConstrutivo = net.getNode(&quot;ConhecimentoDilemaConstrutivo&quot;);</span>
+<span class="nc" id="L172">        BayesNode ConhecimentoSimplificacao = net.getNode(&quot;ConhecimentoSimplificacao&quot;);</span>
+<span class="nc" id="L173">        BayesNode ConhecimentoSilogismoDisjuntivo = net.getNode(&quot;ConhecimentoSilogismoDisjuntivo&quot;);</span>
+<span class="nc" id="L174">        BayesNode ConhecimentoReducaoAbsurdo = net.getNode(&quot;ConhecimentoReducaoAbsurdo&quot;);</span>
+<span class="nc" id="L175">        BayesNode ConhecimentoExportacao = net.getNode(&quot;ConhecimentoExportacao&quot;);</span>
+<span class="nc" id="L176">        BayesNode ConhecimentoEliminacaoDisjuncao = net.getNode(&quot;ConhecimentoEliminacaoDisjuncao&quot;);</span>
+<span class="nc" id="L177">        BayesNode ConhecimentoEliminacaoEquivalencia = net.getNode(&quot;ConhecimentoEliminacaoEquivalencia&quot;);</span>
+        
+        double[] beliefsC;
+<span class="nc" id="L180">        beliefsC = inferer.getBeliefs(ConhecimentoEquivalencia);</span>
+<span class="nc" id="L181">        rede.put(ConhecimentoEquivalencia.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L182">        beliefsC = inferer.getBeliefs(ConhecimentoDuplaNegacao);</span>
+<span class="nc" id="L183">        rede.put(ConhecimentoDuplaNegacao.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L184">        beliefsC = inferer.getBeliefs(ConhecimentoAdicao);</span>
+<span class="nc" id="L185">        rede.put(ConhecimentoAdicao.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L186">        beliefsC = inferer.getBeliefs(ConhecimentoConjuncao);</span>
+<span class="nc" id="L187">        rede.put(ConhecimentoConjuncao.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L188">        beliefsC = inferer.getBeliefs(ConhecimentoSilogismoHipotetico);</span>
+<span class="nc" id="L189">        rede.put(ConhecimentoSilogismoHipotetico.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L190">        beliefsC = inferer.getBeliefs(ConhecimentoProvaCondicional);</span>
+<span class="nc" id="L191">        rede.put(ConhecimentoProvaCondicional.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L192">        beliefsC = inferer.getBeliefs(ConhecimentoModusPonens);</span>
+<span class="nc" id="L193">        rede.put(ConhecimentoModusPonens.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L194">        beliefsC = inferer.getBeliefs(ConhecimentoInconsistencia);</span>
+<span class="nc" id="L195">        rede.put(ConhecimentoInconsistencia.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L196">        beliefsC = inferer.getBeliefs(ConhecimentoModusTollens);</span>
+<span class="nc" id="L197">        rede.put(ConhecimentoModusTollens.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L198">        beliefsC = inferer.getBeliefs(ConhecimentoDilemaConstrutivo);</span>
+<span class="nc" id="L199">        rede.put(ConhecimentoDilemaConstrutivo.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L200">        beliefsC = inferer.getBeliefs(ConhecimentoSimplificacao);</span>
+<span class="nc" id="L201">        rede.put(ConhecimentoSimplificacao.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L202">        beliefsC = inferer.getBeliefs(ConhecimentoSilogismoDisjuntivo);</span>
+<span class="nc" id="L203">        rede.put(ConhecimentoSilogismoDisjuntivo.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L204">        beliefsC = inferer.getBeliefs(ConhecimentoReducaoAbsurdo);</span>
+<span class="nc" id="L205">        rede.put(ConhecimentoReducaoAbsurdo.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L206">        beliefsC = inferer.getBeliefs(ConhecimentoExportacao);</span>
+<span class="nc" id="L207">        rede.put(ConhecimentoExportacao.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L208">        beliefsC = inferer.getBeliefs(ConhecimentoEliminacaoDisjuncao);</span>
+<span class="nc" id="L209">        rede.put(ConhecimentoEliminacaoDisjuncao.getName(), String.valueOf(beliefsC[0]));</span>
+<span class="nc" id="L210">        beliefsC = inferer.getBeliefs(ConhecimentoEliminacaoEquivalencia);</span>
+<span class="nc" id="L211">        rede.put(ConhecimentoEliminacaoEquivalencia.getName(), String.valueOf(beliefsC[0]));</span>
+        
+<span class="nc" id="L213">        return rede;</span>
+    }
+    
+    public BayesNode CriarRegra(String regra, BayesNet net){
+        
+        //Criando as variaveis observaveis
+<span class="nc" id="L219">        BayesNode Corretude = net.createNode(&quot;Corretude&quot;+regra);</span>
+<span class="nc" id="L220">        Corretude.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L221">        Corretude.setProbabilities(0.8, 0.2);</span>
+        
+<span class="nc" id="L223">        BayesNode Exemplo = net.createNode(&quot;Exemplo&quot;+regra);</span>
+<span class="nc" id="L224">        Exemplo.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L225">        Exemplo.setProbabilities(0.5, 0.5);</span>
+
+<span class="nc" id="L227">        BayesNode Conceito = net.createNode(&quot;Conceito&quot;+regra);</span>
+<span class="nc" id="L228">        Conceito.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L229">        Conceito.setProbabilities(0.5, 0.5);</span>
+        
+<span class="nc" id="L231">        BayesNode Ajuda = net.createNode(&quot;Ajuda&quot;+regra);</span>
+<span class="nc" id="L232">        Ajuda.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L233">        Ajuda.setProbabilities(0.7, 0.3);</span>
+        
+<span class="nc" id="L235">        BayesNode Conhecimento = net.createNode(&quot;Conhecimento&quot;+regra);</span>
+<span class="nc" id="L236">        Conhecimento.addOutcomes(&quot;Conhece&quot;, &quot;Desconhece&quot;);</span>
+<span class="nc" id="L237">        Conhecimento.setParents(Arrays.asList(Corretude, Exemplo, Conceito, Ajuda));</span>
+<span class="nc" id="L238">        Conhecimento.setProbabilities(</span>
+            0.7, 0.3,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim
+            0.95, 0.05,  //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao
+            0.6, 0.4,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim
+            0.9, 0.1,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao
+            0.6, 0.4,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim
+            0.9, 0.1,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao
+            0.5, 0.5,    //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim
+            0.95, 0.05,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao
+
+            0.1, 0.9,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim
+            0.2, 0.8,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao
+            0.1, 0.9,    //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim
+            0.15, 0.85,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim
+            0.2, 0.8,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim
+            0.05, 0.95   //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim
+        );
+        
+<span class="nc" id="L258">        return Conhecimento;</span>
+    }
+    
+    public BayesNode CriarRegra(String regra, BayesNet net, BayesNode Regra){
+        
+        //Criando as variaveis observaveis
+<span class="nc" id="L264">        BayesNode Corretude = net.createNode(&quot;Corretude&quot;+regra);</span>
+<span class="nc" id="L265">        Corretude.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L266">        Corretude.setProbabilities(0.8, 0.2);</span>
+        
+<span class="nc" id="L268">        BayesNode Exemplo = net.createNode(&quot;Exemplo&quot;+regra);</span>
+<span class="nc" id="L269">        Exemplo.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L270">        Exemplo.setProbabilities(0.5, 0.5);</span>
+
+<span class="nc" id="L272">        BayesNode Conceito = net.createNode(&quot;Conceito&quot;+regra);</span>
+<span class="nc" id="L273">        Conceito.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L274">        Conceito.setProbabilities(0.5, 0.5);</span>
+        
+<span class="nc" id="L276">        BayesNode Ajuda = net.createNode(&quot;Ajuda&quot;+regra);</span>
+<span class="nc" id="L277">        Ajuda.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L278">        Ajuda.setProbabilities(0.7, 0.3);</span>
+        
+<span class="nc" id="L280">        BayesNode Conhecimento = net.createNode(&quot;Conhecimento&quot;+regra);</span>
+<span class="nc" id="L281">        Conhecimento.addOutcomes(&quot;Conhece&quot;, &quot;Desconhece&quot;);</span>
+<span class="nc" id="L282">        Conhecimento.setParents(Arrays.asList(Corretude, Exemplo, Conceito, Ajuda, Regra));</span>
+<span class="nc" id="L283">        Conhecimento.setProbabilities(</span>
+            0.7, 0.3,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra Sim
+            0.6, 0.4,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra Nao
+            0.95, 0.05,  //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra Sim
+            0.85, 0.15,  //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra Nao
+            0.6, 0.4,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra Sim
+            0.5, 0.5,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra Nao
+            0.9, 0.1,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra Sim
+            0.8, 0.2,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra Nao
+            0.6, 0.4,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra Sim
+            0.5, 0.5,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra Nao
+            0.9, 0.1,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra Sim
+            0.8, 0.2,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra Nao
+            0.5, 0.5,    //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra Sim
+            0.4, 0.6,    //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra Nao
+            0.95, 0.05,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra Sim
+            0.85, 0.15,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra Nao
+
+            0.1, 0.9,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra Nao
+            0.2, 0.8,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra Nao
+            0.1, 0.9,    //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra Nao
+            0.15, 0.85,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra Nao
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra Nao
+            0.2, 0.8,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra Nao
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra Sim
+            0.05, 0.95   //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra Nao
+        );
+        
+<span class="nc" id="L319">        return Conhecimento;</span>
+    }
+    
+    public BayesNode CriarRegra(String regra, BayesNet net, BayesNode Regra1, BayesNode Regra2){
+        
+        //Criando as variaveis observaveis
+<span class="nc" id="L325">        BayesNode Corretude = net.createNode(&quot;Corretude&quot;+regra);</span>
+<span class="nc" id="L326">        Corretude.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L327">        Corretude.setProbabilities(0.8, 0.2);</span>
+        
+<span class="nc" id="L329">        BayesNode Exemplo = net.createNode(&quot;Exemplo&quot;+regra);</span>
+<span class="nc" id="L330">        Exemplo.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L331">        Exemplo.setProbabilities(0.5, 0.5);</span>
+
+<span class="nc" id="L333">        BayesNode Conceito = net.createNode(&quot;Conceito&quot;+regra);</span>
+<span class="nc" id="L334">        Conceito.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L335">        Conceito.setProbabilities(0.5, 0.5);</span>
+        
+<span class="nc" id="L337">        BayesNode Ajuda = net.createNode(&quot;Ajuda&quot;+regra);</span>
+<span class="nc" id="L338">        Ajuda.addOutcomes(&quot;1&quot;, &quot;0&quot;);</span>
+<span class="nc" id="L339">        Ajuda.setProbabilities(0.7, 0.3);</span>
+        
+<span class="nc" id="L341">        BayesNode Conhecimento = net.createNode(&quot;Conhecimento&quot;+regra);</span>
+<span class="nc" id="L342">        Conhecimento.addOutcomes(&quot;Conhece&quot;, &quot;Desconhece&quot;);</span>
+<span class="nc" id="L343">        Conhecimento.setParents(Arrays.asList(Corretude, Exemplo, Conceito, Ajuda, Regra1, Regra2));</span>
+<span class="nc" id="L344">        Conhecimento.setProbabilities(</span>
+            0.8, 0.2,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.7, 0.3,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.6, 0.4,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.5, 0.5,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.95, 0.05,  //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.90, 0.1,   //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.85, 0.15,  //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.8, 0.2,    //Corretude Sim    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Nao
+            0.7, 0.3,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.6, 0.4,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.5, 0.5,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.4, 0.6,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.95, 0.05,  //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.9, 0.1,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.8, 0.2,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.7, 0.3,    //Corretude Sim    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Nao
+            0.7, 0.3,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.6, 0.4,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.5, 0.5,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.4, 0.6,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.95, 0.05,  //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.9, 0.1,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.8, 0.2,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.7, 0.3,    //Corretude Sim    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Nao
+            0.6, 0.4,    //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.5, 0.5,    //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.4, 0.6,    //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.45, 0.55,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.95, 0.05,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.95, 0.05,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.85, 0.15,  //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.80, 0.2,   //Corretude Sim    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Nao
+
+            0.2, 0.8,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.3, 0.7,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.2, 0.8,    //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Nao
+            0.2, 0.8,    //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.2, 0.8,    //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.15, 0.85,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Sim    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Nao
+            0.2, 0.8,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.3, 0.7,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.2, 0.8,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Sim     Ajuda Nao     Regra1 Nao     Regra2 Nao
+            0.2, 0.8,    //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Sim
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Sim     Regra1 Nao     Regra2 Nao
+            0.1, 0.9,    //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Sim
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Sim     Regra2 Nao
+            0.05, 0.95,  //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Sim
+            0.05, 0.95   //Corretude Não    Exemplo Nao    Conceito Nao     Ajuda Nao     Regra1 Nao     Regra2 Nao
+        );
+        
+<span class="nc" id="L412">        return Conhecimento;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

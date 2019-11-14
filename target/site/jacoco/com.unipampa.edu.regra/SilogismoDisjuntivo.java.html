@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SilogismoDisjuntivo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.regra</a> &gt; <span class="el_source">SilogismoDisjuntivo.java</span></div><h1>SilogismoDisjuntivo.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.regra;
+
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.execption.LogicException;
+import com.unipampa.edu.heraclito.Agente;
+import com.unipampa.edu.heraclito.LinhaDeduzida;
+import com.unipampa.edu.heraclito.LinhaProva;
+
+import java.util.List;
+
+/**
+ * REGRA POR ACEITAR Pv~Q, Q
+ * @author gia
+ */
+<span class="nc" id="L22">public class SilogismoDisjuntivo {</span>
+
+    public static LinhaProva aplicarRegra(List&lt;LinhaProva&gt; listaDeLinhas, String studentId, String Argumento)
+            throws LogicException {
+        
+<span class="nc" id="L27">        Agente a = Agente.getInstancia();</span>
+        
+        /* Confere parâmetros */
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (listaDeLinhas.size() != 2) {</span>
+<span class="nc" id="L31">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSilogismoDisjuntivo#0&quot;);</span>
+<span class="nc" id="L32">            throw new LogicException(&quot;Número de linhas inválido!&quot;);</span>
+        }
+
+        /* Cria variáveis temporárias */
+<span class="nc" id="L36">        LinhaProva linha1 = (LinhaProva) listaDeLinhas.get(0);</span>
+<span class="nc" id="L37">        LinhaProva linha2 = (LinhaProva) listaDeLinhas.get(1);</span>
+<span class="nc" id="L38">        LinhaProva linhaDisjuncao = null;</span>
+<span class="nc" id="L39">        LinhaProva linhaNegacao = null;</span>
+<span class="nc" id="L40">        LinhaProva linhaDisjuncaoNegada = null;</span>
+<span class="nc" id="L41">        LinhaProva linhaAfirmacao = null;</span>
+
+        /* Confere parâmetros */
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (linha1.getOperadorPrincipal() == OperadorLogico.DISJUNCAO</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                &amp;&amp; linha2.getOperadorPrincipal() == OperadorLogico.NEGACAO) {</span>
+<span class="nc" id="L46">            linhaDisjuncao = linha1;</span>
+<span class="nc" id="L47">            linhaNegacao = linha2;</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        } else if (linha2.getOperadorPrincipal() == OperadorLogico.DISJUNCAO</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                &amp;&amp; linha1.getOperadorPrincipal() == OperadorLogico.NEGACAO) {</span>
+<span class="nc" id="L50">            linhaDisjuncao = linha2;</span>
+<span class="nc" id="L51">            linhaNegacao = linha1;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        } else if (linha1.getOperadorPrincipal() == OperadorLogico.DISJUNCAO</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">                &amp;&amp; linha2.getOperadorPrincipal() == null) {</span>
+<span class="nc" id="L54">            linhaDisjuncaoNegada = linha1;</span>
+<span class="nc" id="L55">            linhaAfirmacao = linha2;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        } else if (linha2.getOperadorPrincipal() == OperadorLogico.DISJUNCAO</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                &amp;&amp; linha1.getOperadorPrincipal() == null) {</span>
+<span class="nc" id="L58">            linhaDisjuncaoNegada = linha2;</span>
+<span class="nc" id="L59">            linhaAfirmacao = linha1;</span>
+        } else {
+<span class="nc" id="L61">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSilogismoDisjuntivo#0&quot;);</span>
+<span class="nc" id="L62">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+        }
+
+<span class="nc" id="L66">        String strret = null;</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (linhaDisjuncao!=null) {</span>
+            /* Posição dos operadores principais */
+<span class="nc" id="L70">            int posicaodisjuncao = linhaDisjuncao.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L71">            int posicaonegacao = linhaNegacao.getPosicaoOperadorPrincipal();</span>
+
+            /* Subargumentos para tratar */
+<span class="nc" id="L74">            StringBuilder sblinha = new StringBuilder(linhaDisjuncao.getLinha());</span>
+<span class="nc" id="L75">            String linhadisjuncaopre = sblinha.substring(0, posicaodisjuncao);</span>
+<span class="nc" id="L76">            String linhadisjuncaopos = sblinha.substring(posicaodisjuncao</span>
+<span class="nc" id="L77">                    + OperadorLogico.DISJUNCAO.getLength());</span>
+<span class="nc" id="L78">            sblinha = new StringBuilder(linhaNegacao.getLinha());</span>
+<span class="nc" id="L79">            String linhanegacaoremov = sblinha.substring(posicaonegacao</span>
+<span class="nc" id="L80">                    + OperadorLogico.NEGACAO.getLength());</span>
+<span class="nc" id="L81">            linhanegacaoremov = FuncoesString.removerParentesesReduntantes(linhanegacaoremov);</span>
+            
+            /* Remove parênteses */
+<span class="nc" id="L84">            linhadisjuncaopre = FuncoesString.removerParentesesReduntantes(</span>
+                    linhadisjuncaopre);
+<span class="nc" id="L86">            linhadisjuncaopos = FuncoesString.removerParentesesReduntantes(</span>
+                    linhadisjuncaopos);
+        
+            /* Escolhe qual das duas premissas da disjunção é a saída */
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (!linhanegacaoremov.equals(linhadisjuncaopre)) {</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                if (!linhanegacaoremov.equals(linhadisjuncaopos)) {</span>
+<span class="nc" id="L92">                    a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSilogismoDisjuntivo#0&quot;);</span>
+<span class="nc" id="L93">                    throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra&quot;);</span>
+                } else {
+<span class="nc" id="L95">                    strret = linhadisjuncaopre;</span>
+                }
+            } else {
+<span class="nc" id="L98">                strret = linhadisjuncaopos;</span>
+            }
+            
+            
+<span class="nc" id="L102">        } else {</span>
+            
+            /* Posição dos operadores principais */
+<span class="nc" id="L105">            int posicaodisjuncaoneg = linhaDisjuncaoNegada.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L106">            int posicaoafirmacao = 0;</span>
+            /* Subargumentos para tratar */
+<span class="nc" id="L108">            StringBuilder sblinha = new StringBuilder(linhaDisjuncaoNegada.getLinha());</span>
+<span class="nc" id="L109">            String linhadisjuncaonegpre = sblinha.substring(0, posicaodisjuncaoneg);</span>
+<span class="nc" id="L110">            String linhadisjuncaonegpos = sblinha.substring(posicaodisjuncaoneg</span>
+<span class="nc" id="L111">                    + OperadorLogico.DISJUNCAO.getLength());</span>
+<span class="nc" id="L112">            sblinha = new StringBuilder(linhaAfirmacao.getLinha());</span>
+<span class="nc" id="L113">            String linhaafirmacaoneg = OperadorLogico.NEGACAO.toString()</span>
+<span class="nc" id="L114">                    +  sblinha.substring(posicaoafirmacao);</span>
+<span class="nc" id="L115">            linhaafirmacaoneg = FuncoesString.removerParentesesReduntantes(linhaafirmacaoneg);</span>
+            
+            /* Remove parênteses */
+<span class="nc" id="L118">            linhadisjuncaonegpre = FuncoesString.removerParentesesReduntantes(</span>
+                    linhadisjuncaonegpre);
+<span class="nc" id="L120">            linhadisjuncaonegpos = FuncoesString.removerParentesesReduntantes(</span>
+                    linhadisjuncaonegpos);
+        
+            /* Escolhe qual das duas premissas da disjunção é a saída */
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (!linhaafirmacaoneg.equals(linhadisjuncaonegpre)) {</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">                if (!linhaafirmacaoneg.equals(linhadisjuncaonegpos)) {</span>
+<span class="nc" id="L126">                    a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSilogismoDisjuntivo#0&quot;);</span>
+<span class="nc" id="L127">                    throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra&quot;);</span>
+                } else {
+<span class="nc" id="L129">                    strret = linhadisjuncaonegpre;</span>
+                }
+            } else {
+<span class="nc" id="L132">                strret = linhadisjuncaonegpos;</span>
+            }
+            
+            
+        }
+        /* Retorno */
+<span class="nc" id="L138">        LinhaProva novalinha = new LinhaDeduzida(strret, Regras.SD);</span>
+<span class="nc" id="L139">        a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeSilogismoDisjuntivo#1&quot;);</span>
+<span class="nc" id="L140">        return novalinha;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

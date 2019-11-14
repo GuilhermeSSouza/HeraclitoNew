@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>GraficoBean.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.chart</a> &gt; <span class="el_source">GraficoBean.java</span></div><h1>GraficoBean.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.unipampa.edu.chart;
+
+import com.unipampa.edu.DAO.ConnectionFactory;
+import com.unipampa.edu.model.User;
+import com.unipmpa.edu.controller.LoginBean;
+import java.io.IOException;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import org.primefaces.event.ItemSelectEvent;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
+
+import org.primefaces.model.chart.PieChartModel;
+
+/**
+ * Bean usada para gerar graficos basicos para o usuario que logar no sistema
+ * (Não existe cadastro, o banco é compartilhado pela versão antiga do Heraclito e essa que será talvez a nova versao)
+ * @author heraclitoserver
+ */
+@ManagedBean
+@SessionScoped
+public class GraficoBean implements Serializable {
+
+    private PieChartModel pieModel1;
+    private PieChartModel pieModel2;
+    private PieChartModel pieModel3;
+    private LineChartModel lineModel1;
+    private LineChartModel lineModel2;
+    private LineChartModel zoomModel;
+    
+    
+    
+    private String nameUser;
+    private int idUser;
+    private String userAcesso;
+
+    
+    /**
+     * Verifica se ao tentar acessar uma URL diretamente, o usuario existe, caso não, redireciona para o login.
+     * Essa não é a forma mais eficaz de realizar isso. Filter jsf, ou alguma API do hibernet, etc é seguramente melhor.
+     * Mas devido as informações aqui não serem de alto risto, um teste com sessio pode ser suficiente. (Verificar no futuro esse ponto)
+     */
+<span class="nc" id="L66">    public GraficoBean() {</span>
+<span class="nc" id="L67">        userLogado();</span>
+
+<span class="nc" id="L69">    }</span>
+
+    /**
+     *
+     */
+    @PostConstruct
+    public void init() {
+
+<span class="nc" id="L77">        createPieModels();</span>
+<span class="nc" id="L78">        createLineModels();</span>
+
+<span class="nc" id="L80">    }</span>
+
+    /**
+     *
+     */
+    public final void userLogado() {
+<span class="nc" id="L86">        FacesContext fc = FacesContext.getCurrentInstance();</span>
+<span class="nc" id="L87">        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);</span>
+<span class="nc" id="L88">        User user = (User) session.getAttribute(&quot;User&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (user == null) {</span>
+            try {
+<span class="nc" id="L91">                FacesContext.getCurrentInstance().getExternalContext().redirect(&quot;login.xhtml&quot;);</span>
+<span class="nc" id="L92">            } catch (IOException ex) {</span>
+<span class="nc" id="L93">                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L94">            }</span>
+        }else{
+<span class="nc" id="L96">            nameUser = user.getName();</span>
+<span class="nc" id="L97">            idUser = user.getId();</span>
+<span class="nc" id="L98">            userAcesso = user.getAcesso();</span>
+        
+        }
+
+<span class="nc" id="L102">    }</span>
+
+    /**
+     *
+     * @param event
+     */
+    public void itemSelect(ItemSelectEvent event) {
+<span class="nc" id="L109">        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, &quot;Item selected&quot;,</span>
+<span class="nc" id="L110">                &quot;Item Index: &quot; + event.getItemIndex() + &quot;, Series Index:&quot; + event.getSeriesIndex());</span>
+
+<span class="nc" id="L112">        FacesContext.getCurrentInstance().addMessage(null, msg);</span>
+<span class="nc" id="L113">    }</span>
+
+    /**
+     *
+     * @return
+     */
+    public PieChartModel getPieModel1() {
+<span class="nc" id="L120">        return pieModel1;</span>
+    }
+
+    /**
+     *
+     * @return
+     */
+    public PieChartModel getPieModel2() {
+<span class="nc" id="L128">        return pieModel2;</span>
+    }
+
+    /**
+     *
+     * @return
+     */
+    public PieChartModel getPieModel3() {
+<span class="nc" id="L136">        return pieModel3;</span>
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LineChartModel getLineModel1() {
+
+<span class="nc" id="L145">        return lineModel1;</span>
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LineChartModel getLineModel2() {
+
+<span class="nc" id="L154">        return lineModel2;</span>
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getNome(){
+<span class="nc" id="L162">        return nameUser;</span>
+    }
+    private void createPieModels() {
+<span class="nc" id="L165">        createPieModel1();</span>
+<span class="nc" id="L166">        createPieModel2();</span>
+<span class="nc" id="L167">        createPieModel3();</span>
+<span class="nc" id="L168">    }</span>
+
+    private LineChartModel initLinearModel() {
+<span class="nc" id="L171">        LineChartModel model = new LineChartModel();</span>
+
+<span class="nc" id="L173">        LineChartSeries series1 = new LineChartSeries();</span>
+<span class="nc" id="L174">        series1.setLabel(&quot;Series 1&quot;);</span>
+
+<span class="nc" id="L176">        series1.set(1, 2);</span>
+<span class="nc" id="L177">        series1.set(2, 1);</span>
+<span class="nc" id="L178">        series1.set(3, 3);</span>
+<span class="nc" id="L179">        series1.set(4, 6);</span>
+<span class="nc" id="L180">        series1.set(5, 8);</span>
+
+<span class="nc" id="L182">        LineChartSeries series2 = new LineChartSeries();</span>
+<span class="nc" id="L183">        series2.setLabel(&quot;Series 2&quot;);</span>
+
+<span class="nc" id="L185">        series2.set(1, 6);</span>
+<span class="nc" id="L186">        series2.set(2, 3);</span>
+<span class="nc" id="L187">        series2.set(3, 2);</span>
+<span class="nc" id="L188">        series2.set(4, 7);</span>
+<span class="nc" id="L189">        series2.set(5, 9);</span>
+
+<span class="nc" id="L191">        model.addSeries(series1);</span>
+<span class="nc" id="L192">        model.addSeries(series2);</span>
+
+<span class="nc" id="L194">        return model;</span>
+    }
+
+    private LineChartModel initCategoryModel() {
+<span class="nc" id="L198">        LineChartModel model = new LineChartModel();</span>
+
+<span class="nc" id="L200">        ChartSeries regras = new ChartSeries();</span>
+<span class="nc" id="L201">        List&lt;Dado&gt; dado = null;</span>
+<span class="nc" id="L202">        regras.setLabel(&quot;Regras&quot;);</span>
+
+        try {
+<span class="nc" id="L205">            dado = getDadoRegras(String.valueOf(idUser));</span>
+<span class="nc" id="L206">        } catch (Exception ex) {</span>
+<span class="nc" id="L207">            Logger.getLogger(GraficoBean.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L208">        }</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        for (Dado d : dado) {</span>
+<span class="nc" id="L210">            regras.set(d.getNomeparametro(), d.getValorparametro());</span>
+<span class="nc" id="L211">        }</span>
+
+        /*boys.set(&quot;2004&quot;, 120);
+        boys.set(&quot;2005&quot;, 100);
+        boys.set(&quot;2006&quot;, 44);
+        boys.set(&quot;2007&quot;, 150);
+        boys.set(&quot;2008&quot;, 25);
+
+        ChartSeries girls = new ChartSeries();
+        girls.setLabel(&quot;Girls&quot;);
+        girls.set(&quot;2004&quot;, 52);
+        girls.set(&quot;2005&quot;, 60);
+        girls.set(&quot;2006&quot;, 110);
+        girls.set(&quot;2007&quot;, 90);
+        girls.set(&quot;2008&quot;, 120);*/
+<span class="nc" id="L226">        model.addSeries(regras);</span>
+
+<span class="nc" id="L228">        return model;</span>
+    }
+
+    private void createLineModels() {
+<span class="nc" id="L232">        lineModel1 = initLinearModel();</span>
+<span class="nc" id="L233">        lineModel1.setTitle(&quot;Linear Chart&quot;);</span>
+<span class="nc" id="L234">        lineModel1.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L235">        Axis yAxis = lineModel1.getAxis(AxisType.Y);</span>
+<span class="nc" id="L236">        yAxis.setMin(0);</span>
+<span class="nc" id="L237">        yAxis.setMax(10);</span>
+
+<span class="nc" id="L239">        lineModel2 = initCategoryModel();</span>
+<span class="nc" id="L240">        lineModel2.setTitle(&quot;Número de Regras Aplicadas&quot;);</span>
+<span class="nc" id="L241">        lineModel2.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L242">        lineModel2.setShowPointLabels(true);</span>
+<span class="nc" id="L243">        lineModel2.getAxes().put(AxisType.X, new CategoryAxis(&quot;Nome&quot;));</span>
+<span class="nc" id="L244">        yAxis = lineModel2.getAxis(AxisType.Y);</span>
+<span class="nc" id="L245">        yAxis.setLabel(&quot;Qtdes&quot;);</span>
+<span class="nc" id="L246">        yAxis.setMin(0);</span>
+<span class="nc" id="L247">        yAxis.setMax(200);</span>
+
+<span class="nc" id="L249">        zoomModel = initLinearModel();</span>
+<span class="nc" id="L250">        zoomModel.setTitle(&quot;Zoom&quot;);</span>
+<span class="nc" id="L251">        zoomModel.setZoom(true);</span>
+<span class="nc" id="L252">        zoomModel.setLegendPosition(&quot;e&quot;);</span>
+<span class="nc" id="L253">        yAxis = zoomModel.getAxis(AxisType.Y);</span>
+<span class="nc" id="L254">        yAxis.setMin(0);</span>
+<span class="nc" id="L255">        yAxis.setMax(10);</span>
+<span class="nc" id="L256">    }</span>
+
+    private void createPieModel2() {
+<span class="nc" id="L259">        List&lt;Dado&gt; dado = null;</span>
+        try {
+<span class="nc" id="L261">            dado = getDadoNivel(String.valueOf(idUser));</span>
+<span class="nc" id="L262">        } catch (Exception ex) {</span>
+<span class="nc" id="L263">            Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L264">        }</span>
+
+<span class="nc" id="L266">        pieModel2 = new PieChartModel();</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        for (Dado dadolist : dado) {</span>
+<span class="nc" id="L268">            pieModel2.set(dadolist.getNomeparametro(), dadolist.getValorparametro());</span>
+<span class="nc" id="L269">        }</span>
+
+<span class="nc" id="L271">        pieModel2.setTitle(&quot;Total de Exercicios Realizados Por Nível&quot;);</span>
+<span class="nc" id="L272">        pieModel2.setLegendPosition(&quot;w&quot;);</span>
+<span class="nc" id="L273">        pieModel2.setShadow(false);</span>
+
+<span class="nc" id="L275">    }</span>
+
+    private void createPieModel1() {
+
+<span class="nc" id="L279">        List&lt;Dado&gt; dado = null;</span>
+        try {
+<span class="nc" id="L281">            dado = getDado(String.valueOf(idUser));</span>
+<span class="nc" id="L282">        } catch (Exception ex) {</span>
+<span class="nc" id="L283">            Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L284">        }</span>
+
+<span class="nc" id="L286">        pieModel1 = new PieChartModel();</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">        for (Dado dadolist : dado) {</span>
+<span class="nc" id="L288">            pieModel1.set(dadolist.getNomeparametro(), dadolist.getValorparametro());</span>
+<span class="nc" id="L289">        }</span>
+
+<span class="nc" id="L291">        pieModel1.setTitle(&quot;Total de Exercicios Realizados&quot;);</span>
+<span class="nc" id="L292">        pieModel1.setLegendPosition(&quot;w&quot;);</span>
+<span class="nc" id="L293">        pieModel1.setShadow(false);</span>
+<span class="nc" id="L294">    }</span>
+
+    private void createPieModel3() {
+
+<span class="nc" id="L298">        List&lt;Dado&gt; dado = null;</span>
+        try {
+<span class="nc" id="L300">            dado = getDado(String.valueOf(idUser));</span>
+<span class="nc" id="L301">        } catch (Exception ex) {</span>
+<span class="nc" id="L302">            Logger.getLogger(ChartView.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L303">        }</span>
+
+<span class="nc" id="L305">        pieModel3 = new PieChartModel();</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">        for (Dado dadolist : dado) {</span>
+<span class="nc" id="L307">            pieModel3.set(dadolist.getNomeparametro(), dadolist.getValorparametro());</span>
+<span class="nc" id="L308">        }</span>
+
+<span class="nc" id="L310">        pieModel3.setTitle(&quot;Total de Passo Realizados&quot;);</span>
+<span class="nc" id="L311">        pieModel3.setLegendPosition(&quot;w&quot;);</span>
+<span class="nc" id="L312">        pieModel3.setShadow(false);</span>
+<span class="nc" id="L313">    }</span>
+
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
+    public static List&lt;Dado&gt; getDado(String iduser) throws Exception {
+<span class="nc" id="L322">        List&lt;Dado&gt; dado = new ArrayList&lt;Dado&gt;();</span>
+        Dado novoDado;
+<span class="nc" id="L324">        String query = &quot;SELECT exercicio.corretoexercicio, count(exercicio.corretoexercicio) FROM heraclitodb.exercicio where exercicio.user_iduser = ? group by exercicio.corretoexercicio&quot;;</span>
+
+        try {
+
+<span class="nc" id="L328">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L329">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L331">            st.setString(1, iduser);</span>
+
+<span class="nc" id="L333">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L335" title="All 2 branches missed.">            while (rs.next()) {</span>
+
+<span class="nc" id="L337">                int correto = rs.getInt(1);</span>
+<span class="nc" id="L338">                int qtdade = rs.getInt(2);</span>
+
+<span class="nc bnc" id="L340" title="All 2 branches missed.">                if (correto == 0) {</span>
+<span class="nc" id="L341">                    novoDado = new Dado(&quot;Errado&quot;, qtdade);</span>
+
+                } else {
+<span class="nc" id="L344">                    novoDado = new Dado(&quot;Correto&quot;, qtdade);</span>
+                }
+
+<span class="nc" id="L347">                dado.add(novoDado);</span>
+
+<span class="nc" id="L349">            }</span>
+
+<span class="nc" id="L351">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L353">            return dado;</span>
+
+<span class="nc" id="L355">        } catch (SQLException e) {</span>
+<span class="nc" id="L356">            return null;</span>
+        }
+
+    }
+
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
+    public static List&lt;Dado&gt; getDadoNivel(String iduser) throws Exception {
+<span class="nc" id="L368">        List&lt;Dado&gt; dado = new ArrayList&lt;Dado&gt;();</span>
+        Dado novoDado;
+<span class="nc" id="L370">        String query = &quot;SELECT nivelexercicio, count(exercicio.nivelexercicio) FROM heraclitodb.exercicio where exercicio.user_iduser =?\n&quot;</span>
+                + &quot; group by exercicio.nivelexercicio&quot;;
+        try {
+
+<span class="nc" id="L374">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L375">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L377">            st.setString(1, iduser);</span>
+
+<span class="nc" id="L379">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L381" title="All 2 branches missed.">            while (rs.next()) {</span>
+
+<span class="nc" id="L383">                int nivel = rs.getInt(1);</span>
+<span class="nc" id="L384">                int qtdade = rs.getInt(2);</span>
+
+<span class="nc bnc" id="L386" title="All 2 branches missed.">                if (nivel == 1) {</span>
+<span class="nc" id="L387">                    novoDado = new Dado(&quot;Nível 1&quot;, qtdade);</span>
+
+<span class="nc bnc" id="L389" title="All 2 branches missed.">                } else if (nivel == 2) {</span>
+<span class="nc" id="L390">                    novoDado = new Dado(&quot;Nível 2&quot;, qtdade);</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">                } else if (nivel == 3) {</span>
+<span class="nc" id="L392">                    novoDado = new Dado(&quot;Nível 3&quot;, qtdade);</span>
+                } else {
+<span class="nc" id="L394">                    novoDado = new Dado(&quot;Nível 3&quot;, qtdade);</span>
+                }
+
+<span class="nc" id="L397">                dado.add(novoDado);</span>
+
+<span class="nc" id="L399">            }</span>
+
+<span class="nc" id="L401">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L403">            return dado;</span>
+
+<span class="nc" id="L405">        } catch (SQLException e) {</span>
+<span class="nc" id="L406">            return null;</span>
+        }
+
+    }
+
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
+    public static List&lt;Dado&gt; getDadoPasso(String iduser) throws Exception {
+<span class="nc" id="L418">        List&lt;Dado&gt; dado = new ArrayList&lt;Dado&gt;();</span>
+        Dado novoDado;
+<span class="nc" id="L420">        String query = &quot;SELECT passo.corretopasso, count(passo.corretopasso) FROM heraclitodb.passo where passo.user_iduser =?\n&quot;</span>
+                + &quot; group by passo.corretopasso&quot;;
+        try {
+
+<span class="nc" id="L424">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L425">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L427">            st.setString(1, iduser);</span>
+
+<span class="nc" id="L429">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L431" title="All 2 branches missed.">            while (rs.next()) {</span>
+
+<span class="nc" id="L433">                int correto = rs.getInt(1);</span>
+<span class="nc" id="L434">                int qtdade = rs.getInt(2);</span>
+
+<span class="nc bnc" id="L436" title="All 2 branches missed.">                if (correto == 1) {</span>
+<span class="nc" id="L437">                    novoDado = new Dado(&quot;Correto&quot;, qtdade);</span>
+
+                } else {
+<span class="nc" id="L440">                    novoDado = new Dado(&quot;Errado&quot;, qtdade);</span>
+                }
+
+<span class="nc" id="L443">                dado.add(novoDado);</span>
+
+<span class="nc" id="L445">            }</span>
+
+<span class="nc" id="L447">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L449">            return dado;</span>
+
+<span class="nc" id="L451">        } catch (SQLException e) {</span>
+<span class="nc" id="L452">            return null;</span>
+        }
+
+    }
+
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
+    public static List&lt;Dado&gt; getDadoRegras(String iduser) throws Exception {
+<span class="nc" id="L464">        List&lt;Dado&gt; dado = new ArrayList&lt;Dado&gt;();</span>
+        Dado novoDado;
+<span class="nc" id="L466">        String query = &quot;SELECT count(corretopasso), regrapasso FROM heraclitodb.passo where passo.user_iduser =? group by regrapasso;&quot;;</span>
+        try {
+
+<span class="nc" id="L469">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L470">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L472">            st.setString(1, iduser);</span>
+
+<span class="nc" id="L474">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L476" title="All 2 branches missed.">            while (rs.next()) {</span>
+
+<span class="nc" id="L478">                int qtdade = rs.getInt(1);</span>
+<span class="nc" id="L479">                String regra = rs.getString(2);</span>
+<span class="nc" id="L480">                novoDado = new Dado(regra, qtdade);</span>
+<span class="nc" id="L481">                dado.add(novoDado);</span>
+
+<span class="nc" id="L483">            }</span>
+
+<span class="nc" id="L485">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L487">            return dado;</span>
+
+<span class="nc" id="L489">        } catch (SQLException e) {</span>
+<span class="nc" id="L490">            return null;</span>
+        }
+
+    }
+
+    /**
+     *
+     * @param iduser
+     * @return
+     * @throws Exception
+     */
+    public static List&lt;Dado&gt; getDadoRegrasCorreto(String iduser) throws Exception {
+<span class="nc" id="L502">        List&lt;Dado&gt; dado = new ArrayList&lt;Dado&gt;();</span>
+        Dado novoDado;
+<span class="nc" id="L504">        String query = &quot;SELECT corretopasso, regrapasso FROM heraclitodb.passo where passo.user_iduser = ?&quot;;</span>
+        try {
+
+<span class="nc" id="L507">            Connection conn = ConnectionFactory.getConnection();</span>
+<span class="nc" id="L508">            PreparedStatement st = conn.prepareStatement(query);</span>
+
+<span class="nc" id="L510">            st.setString(1, iduser);</span>
+
+<span class="nc" id="L512">            ResultSet rs = st.executeQuery();</span>
+
+<span class="nc bnc" id="L514" title="All 2 branches missed.">            while (rs.next()) {</span>
+
+<span class="nc" id="L516">                int qtdade = rs.getInt(1);</span>
+<span class="nc" id="L517">                int regra = rs.getInt(2);</span>
+
+                /*
+                * criar um enum para as regras
+                 */
+                //dado.add(novoDado);
+<span class="nc" id="L523">            }</span>
+
+<span class="nc" id="L525">            ConnectionFactory.closeConnection(conn, st, rs);</span>
+
+<span class="nc" id="L527">            return dado;</span>
+
+<span class="nc" id="L529">        } catch (SQLException e) {</span>
+<span class="nc" id="L530">            return null;</span>
+        }
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

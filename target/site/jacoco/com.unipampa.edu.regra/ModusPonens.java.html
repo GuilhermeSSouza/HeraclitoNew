@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModusPonens.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.regra</a> &gt; <span class="el_source">ModusPonens.java</span></div><h1>ModusPonens.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.regra;
+
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.execption.LogicException;
+import com.unipampa.edu.heraclito.Agente;
+import com.unipampa.edu.heraclito.LinhaDeduzida;
+import com.unipampa.edu.heraclito.LinhaProva;
+
+import java.util.List;
+
+<span class="nc" id="L13">public class ModusPonens {</span>
+
+    public static LinhaProva aplicarRegra(List&lt;LinhaProva&gt; listaDeLinhas, String studentId, String Argumento)
+            throws LogicException {
+<span class="nc" id="L17">        Agente a = Agente.getInstancia();</span>
+        /* Confere parâmetros */
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        if (listaDeLinhas.size() != 2) {</span>
+<span class="nc" id="L20">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeModusPonens#0&quot;);</span>
+<span class="nc" id="L21">            throw new LogicException(&quot;Número de linhas inválido!&quot;);</span>
+        }
+
+        /* Cria variáveis temporárias */
+<span class="nc" id="L25">        LinhaProva linha1 = (LinhaProva) listaDeLinhas.get(0);</span>
+<span class="nc" id="L26">        LinhaProva linha2 = (LinhaProva) listaDeLinhas.get(1);</span>
+        String linhaRetorno;
+
+        /* Confere parâmetros */
+        try {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            if (OperadorLogico.CONDICIONAL.equals(linha1.getOperadorPrincipal())) {</span>
+<span class="nc" id="L32">                int posicao = linha1.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L33">                StringBuilder sblinha = new StringBuilder(linha1.getLinha());</span>
+<span class="nc" id="L34">                String linhaComparacao = sblinha.substring(0, posicao);</span>
+<span class="nc" id="L35">                linhaComparacao = FuncoesString.removerParentesesReduntantes(linhaComparacao);</span>
+
+<span class="nc bnc" id="L37" title="All 2 branches missed.">                if (!linhaComparacao.equals(linha2.getLinha())) {</span>
+<span class="nc" id="L38">                    a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeModusPonens#0&quot;);</span>
+<span class="nc" id="L39">                    throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                            + &quot;hipótese inválida&quot;);
+                }
+
+<span class="nc" id="L43">                linhaRetorno = sblinha.substring(posicao</span>
+<span class="nc" id="L44">                        + OperadorLogico.CONDICIONAL.getLength());</span>
+<span class="nc" id="L45">            } else {</span>
+<span class="nc" id="L46">                a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeModusPonens#0&quot;);</span>
+<span class="nc" id="L47">                throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                        + &quot;operador principal inválido&quot;);
+            }
+<span class="nc" id="L50">        } catch (LogicException e) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (OperadorLogico.CONDICIONAL.equals(linha2.getOperadorPrincipal())) {</span>
+<span class="nc" id="L52">                int posicao = linha2.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L53">                StringBuilder sblinha = new StringBuilder(linha2.getLinha());</span>
+<span class="nc" id="L54">                String linhaComparacao = sblinha.substring(0, posicao);</span>
+<span class="nc" id="L55">                linhaComparacao = FuncoesString.removerParentesesReduntantes(linhaComparacao);</span>
+
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                if (!linhaComparacao.equals(linha1.getLinha())) {</span>
+<span class="nc" id="L58">                    a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeModusPonens#0&quot;);</span>
+<span class="nc" id="L59">                    throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                            + &quot;hipótese inválida&quot;);
+                }
+
+<span class="nc" id="L63">                linhaRetorno = sblinha.substring(posicao</span>
+<span class="nc" id="L64">                        + OperadorLogico.CONDICIONAL.getLength());</span>
+<span class="nc" id="L65">            } else {</span>
+<span class="nc" id="L66">                a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeModusPonens#0&quot;);</span>
+<span class="nc" id="L67">                throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                        + &quot;operador principal inválido&quot;);
+            }
+<span class="nc" id="L70">        }</span>
+
+        /* Retorno */
+<span class="nc" id="L73">        LinhaProva novalinha = new LinhaDeduzida(linhaRetorno, Regras.MP);</span>
+<span class="nc" id="L74">        a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeModusPonens#1&quot;);</span>
+<span class="nc" id="L75">        return novalinha;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

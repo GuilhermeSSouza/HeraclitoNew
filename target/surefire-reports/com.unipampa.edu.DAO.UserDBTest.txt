@@ -1,16 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: com.unipampa.edu.DAO.UserDBTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.342 sec <<< FAILURE! - in com.unipampa.edu.DAO.UserDBTest
-testSelectUser2(com.unipampa.edu.DAO.UserDBTest)  Time elapsed: 0.126 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<null> but was:<com.unipampa.edu.model.User@1038d>
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.199 sec <<< FAILURE! - in com.unipampa.edu.DAO.UserDBTest
+testSelectUser2(com.unipampa.edu.DAO.UserDBTest)  Time elapsed: 0.113 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<null> but was:<com.unipampa.edu.model.User@109fe>
 	at com.unipampa.edu.DAO.UserDBTest.testSelectUser2(UserDBTest.java:39)
 
-testInsertUser(com.unipampa.edu.DAO.UserDBTest)  Time elapsed: 0.154 sec  <<< FAILURE!
+testInsertUser(com.unipampa.edu.DAO.UserDBTest)  Time elapsed: 0.073 sec  <<< FAILURE!
 java.lang.AssertionError: expected:<false> but was:<true>
 	at com.unipampa.edu.DAO.UserDBTest.testInsertUser(UserDBTest.java:28)
 
-testSelectUser(com.unipampa.edu.DAO.UserDBTest)  Time elapsed: 0.062 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<null> but was:<com.unipampa.edu.model.User@103ee>
+testSelectUser(com.unipampa.edu.DAO.UserDBTest)  Time elapsed: 0.013 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<null> but was:<com.unipampa.edu.model.User@10a5f>
 	at com.unipampa.edu.DAO.UserDBTest.testSelectUser(UserDBTest.java:49)
 

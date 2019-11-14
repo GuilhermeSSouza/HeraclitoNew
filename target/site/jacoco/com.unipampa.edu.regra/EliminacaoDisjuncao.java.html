@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EliminacaoDisjuncao.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Heraclito</a> &gt; <a href="index.source.html" class="el_package">com.unipampa.edu.regra</a> &gt; <span class="el_source">EliminacaoDisjuncao.java</span></div><h1>EliminacaoDisjuncao.java</h1><pre class="source lang-java linenums">package com.unipampa.edu.regra;
+
+import com.unipampa.edu.heraclito.Agente;
+import com.unipampa.edu.heraclito.LinhaDeduzida;
+import com.unipampa.edu.heraclito.LinhaProva;
+import com.unipampa.edu.constantes.FuncoesString;
+import com.unipampa.edu.constantes.OperadorLogico;
+import com.unipampa.edu.constantes.Regras;
+import com.unipampa.edu.execption.LogicException;
+import java.util.List;
+
+<span class="nc" id="L12">public class EliminacaoDisjuncao {</span>
+
+    public static LinhaProva aplicarRegra(List&lt;LinhaProva&gt; listaDeLinhas, String studentId, String Argumento) 
+        throws LogicException {
+<span class="nc" id="L16">        Agente a = Agente.getInstancia();</span>
+        /* Confere parâmetros */
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        if (listaDeLinhas.size() != 3) {</span>
+<span class="nc" id="L19">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L20">            throw new LogicException(&quot;Número de linhas inválido!&quot;);</span>
+        }
+
+         /* Cria variáveis temporárias */
+<span class="nc" id="L24">        LinhaProva linha1 = (LinhaProva) listaDeLinhas.get(0);</span>
+<span class="nc" id="L25">        LinhaProva linha2 = (LinhaProva) listaDeLinhas.get(1);</span>
+<span class="nc" id="L26">        LinhaProva linha3 = (LinhaProva) listaDeLinhas.get(2);</span>
+        LinhaProva linhaDisjuncao;
+        LinhaProva linhaCond1, linhaCond2;
+        
+        /* Confere parâmetros - operador principal (1) */
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (linha1.getOperadorPrincipal() == OperadorLogico.DISJUNCAO) {</span>
+<span class="nc" id="L32">            linhaDisjuncao = linha1;            </span>
+<span class="nc" id="L33">            linhaCond1 = linha2;</span>
+<span class="nc" id="L34">            linhaCond2 = linha3;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">            if(linha2.getOperadorPrincipal() != OperadorLogico.CONDICIONAL</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">                    || linha3.getOperadorPrincipal() != OperadorLogico.CONDICIONAL) {</span>
+<span class="nc" id="L37">                a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L38">                throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+            }
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        } else if (linha2.getOperadorPrincipal() == OperadorLogico.DISJUNCAO) {</span>
+<span class="nc" id="L42">            linhaDisjuncao = linha2;</span>
+<span class="nc" id="L43">            linhaCond1 = linha1;</span>
+<span class="nc" id="L44">            linhaCond2 = linha3;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            if(linha1.getOperadorPrincipal() != OperadorLogico.CONDICIONAL</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                    || linha3.getOperadorPrincipal() != OperadorLogico.CONDICIONAL) {</span>
+<span class="nc" id="L47">                a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L48">                throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+            }
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        } else if (linha3.getOperadorPrincipal() == OperadorLogico.DISJUNCAO) {</span>
+<span class="nc" id="L52">            linhaDisjuncao = linha3;</span>
+<span class="nc" id="L53">            linhaCond1 = linha1;</span>
+<span class="nc" id="L54">            linhaCond2 = linha2;</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">            if(linha1.getOperadorPrincipal() != OperadorLogico.CONDICIONAL</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">                    || linha2.getOperadorPrincipal() != OperadorLogico.CONDICIONAL) {</span>
+<span class="nc" id="L57">                a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L58">                throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+            }
+        } else {
+<span class="nc" id="L62">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L63">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;operador principal inválido&quot;);
+        }
+        
+        /* Posição dos operadores principais */
+<span class="nc" id="L68">        int posicao1 = linhaCond1.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L69">        int posicao2 = linhaCond2.getPosicaoOperadorPrincipal();</span>
+<span class="nc" id="L70">        int posdisjunc = linhaDisjuncao.getPosicaoOperadorPrincipal();</span>
+        
+        /* Subargumentos para tratar */
+<span class="nc" id="L73">        StringBuilder sblinha = new StringBuilder(linhaCond1.getLinha());</span>
+<span class="nc" id="L74">        String cond1pre = sblinha.substring(0, posicao1);</span>
+<span class="nc" id="L75">        String cond1pos = sblinha.substring(posicao1 + OperadorLogico.CONDICIONAL.getLength());</span>
+<span class="nc" id="L76">        sblinha = new StringBuilder(linhaCond2.getLinha());</span>
+<span class="nc" id="L77">        String cond2pre = sblinha.substring(0, posicao2);</span>
+<span class="nc" id="L78">        String cond2pos = sblinha.substring(posicao2 + OperadorLogico.CONDICIONAL.getLength());</span>
+<span class="nc" id="L79">        sblinha = new StringBuilder(linhaDisjuncao.getLinha());</span>
+<span class="nc" id="L80">        String disj1 = sblinha.substring(0, posdisjunc);</span>
+<span class="nc" id="L81">        String disj2 = sblinha.substring(posdisjunc + OperadorLogico.DISJUNCAO.getLength());</span>
+        
+        /* Remove parênteses */
+<span class="nc" id="L84">        cond1pre = FuncoesString.removerParentesesReduntantes(cond1pre);</span>
+<span class="nc" id="L85">        cond2pre = FuncoesString.removerParentesesReduntantes(cond2pre);</span>
+<span class="nc" id="L86">        disj1 = FuncoesString.removerParentesesReduntantes(disj1);</span>
+<span class="nc" id="L87">        disj2 = FuncoesString.removerParentesesReduntantes(disj2);</span>
+        
+        /* Confere parâmetros (2)
+         P-&gt;Q, R-&gt;Q, PvR - se P == P e R == R */
+<span class="nc bnc" id="L91" title="All 4 branches missed.">        if (!((disj1.equals(cond1pre) &amp;&amp; disj2.equals(cond2pre))</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">                || (disj1.equals(cond2pre) &amp;&amp; disj2.equals(cond1pre)))) {</span>
+<span class="nc" id="L93">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L94">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra&quot;);</span>
+        }        
+        /* P-&gt;Q, R-&gt;Q, PvR - se Q == Q */
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (!(cond1pos.equals(cond2pos))) {</span>
+<span class="nc" id="L98">            a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeElminacaoDisjuncao#0&quot;);</span>
+<span class="nc" id="L99">            throw new LogicException(&quot;Formato inválido das fórmula(s) selecionada(s) para a regra - &quot;</span>
+                    + &quot;termos após condicional devem ser iguais&quot;);
+        }
+        
+        /* Retorno */
+<span class="nc" id="L104">        System.out.println(a.toString());</span>
+<span class="nc" id="L105">        System.out.println(studentId);</span>
+<span class="nc" id="L106">        System.out.println(Argumento);</span>
+<span class="nc" id="L107">        a.SendMessage(studentId + &quot;#&quot; + Argumento + &quot;#CorretudeEliminacaoDisjuncao#1&quot;);</span>
+        
+<span class="nc" id="L109">        return new LinhaDeduzida(cond1pos, Regras.MDJ);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
